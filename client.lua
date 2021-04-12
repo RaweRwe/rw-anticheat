@@ -1,9 +1,8 @@
 ESX = nil
 TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 
-local lisans = '144.76.252.18'
 PerformHttpRequest('https://ip-check.online/myip.php', function(err, text, headers)
-  if text == lisans then
+  if text == '144.76.252.18' then
     print('^2 Lisans bulundu! ^0')
   else
     print('^1 Lisans bulunamadı! ^0')
@@ -65,21 +64,12 @@ AddEventHandler("onClientResourceStop", function(resourceName)
 TriggerServerEvent("rwe:siktirgitkoyunekrds", "Script Stoplama Tespit Edildi.")
 TriggerServerEvent("rwe:cheatlog", "Kişi script stopladı ve anticheat tarafından kicklendi "..resourceName, true, true)
 end)
---
-RegisterNetEvent('rwerev')
-AddEventHandler('rwerev', function()
-for i = 0, 4000 do
-   if NetworkIsPlayerActive(i) then
-      TriggerServerEvent('esx_ambulancejob:revive', GetPlayerServerId(i))
-   end
-end
-end)
 
-RegisterNetEvent('rweoyuncudondur')
-AddEventHandler('rweoyuncudondur', function()
-while true do
-   TriggerServerEvent('es_admin:freezePlayer', GetPlayerServerId(i))
-end
+AddEventHandler('onResourceStop', function(resourceName)
+  if (GetCurrentResourceName() ~= resourceName) then
+    return
+  end
+  TriggerServerEvent("rwe:cheatlog", "Kişi script stoplamaya çalıştı : " ..GetPlayerName(source).. "stoplanmaya çalışan script : " ..ResourceName)
 end)
 -----
 Citizen.CreateThread(function()
@@ -171,9 +161,8 @@ AddEventHandler('rwe:DeleteCars', function(vehicle)
 end)
 ------
 RegisterNUICallback('devtoolOpening', function()
-   local beklekrds = Citizen.Wait()
 	webhookualdimgonderdim("DevTool tespit edildi", GetPlayerName(source))
-   beklekrds(1500)
+   Citizen.Wait(1500)
    TriggerServerEvent('rwe:siktirgitkoyunekrds', 'Gülüm neden DevToolu açmaya çalışıyorsun')   
 end)
 ------
@@ -203,7 +192,7 @@ end
 ------
 
 if Config.AntiMenu == true then
-local i={{"Plane","6666, HamMafia, Brutan, Luminous"},{"capPa","6666, HamMafia, Brutan, Lynx Evo"},{"cappA","6666, HamMafia, Brutan, Lynx Evo"},{"HamMafia","HamMafia"},{"Resources","Lynx 10"},{"defaultVehAction","Lynx 10, Lynx Evo, Alikhan"},{"ApplyShockwave","Lynx 10, Lynx Evo, Alikhan"},{"zzzt","Lynx 8"},{"Lynx8","Lynx 8"},{"AKTeam","AKTeam"},{"LynxEvo","Lynx Evo"},{"badwolfMenu","Badwolf"},{"IlIlIlIlIlIlIlIlII","Alikhan"},{"AlikhanCheats","Alikhan"},{"TiagoMenu","Tiago"},{"gaybuild","Lynx (Stolen)"},{"KAKAAKAKAK","Brutan"},{"BrutanPremium","Brutan"},{"Crusader","Crusader"},{"FendinX","FendinX"},{"FlexSkazaMenu","FlexSkaza"},{"FrostedMenu","Frosted"},{"FantaMenuEvo","FantaEvo"},{"HoaxMenu","Hoax"},{"xseira","xseira"},{"KoGuSzEk","KoGuSzEk"},{"chujaries","KoGuSzEk"},{"LeakerMenu","Leaker"},{"lynxunknowncheats","Lynx UC Release"},{"Lynx8","Lynx 8"},{"LynxSeven","Lynx 7"},{"werfvtghiouuiowrfetwerfio","Rena"},{"ariesMenu","Aries"},{"b00mek","b00mek"},{"redMENU","redMENU"},{"xnsadifnias","Ruby"},{"moneymany","xAries"},{"menuName","SkidMenu"},{"Cience","Cience"},{"SwagUI","Lux Swag"},{"LuxUI","Lux"},{"NertigelFunc","Dopamine"},{"Dopamine","Dopamine"},{"Outcasts666","Skinner1223"},{"WM2","Shitty Menu That Finn Uses"},{"wmmenu","Watermalone"},{"ATG","ATG Menu"},{"Absolute","Absolute"}}Citizen.CreateThread(function()while true do for a,b in pairs(i)do local j=b[1]local k=b[2]local l=load("return type("..j..")")if l()=="function"then sendScreenshotBan("RAC:BanMySelf","Menu Bulundu #1 ("..k..")")Wait(5000)while true do 
+local i={{"Plane","6666, HamMafia, Brutan, Luminous", "fallout", "falloutmenu", "Fallout Menu", "Fallout"},{"capPa","6666, HamMafia, Brutan, Lynx Evo"},{"cappA","6666, HamMafia, Brutan, Lynx Evo"},{"HamMafia","HamMafia"},{"Resources","Lynx 10"},{"defaultVehAction","Lynx 10, Lynx Evo, Alikhan"},{"ApplyShockwave","Lynx 10, Lynx Evo, Alikhan"},{"zzzt","Lynx 8"},{"Lynx8","Lynx 8"},{"AKTeam","AKTeam"},{"LynxEvo","Lynx Evo"},{"badwolfMenu","Badwolf"},{"IlIlIlIlIlIlIlIlII","Alikhan"},{"AlikhanCheats","Alikhan"},{"TiagoMenu","Tiago"},{"gaybuild","Lynx (Stolen)"},{"KAKAAKAKAK","Brutan"},{"BrutanPremium","Brutan"},{"Crusader","Crusader"},{"FendinX","FendinX"},{"FlexSkazaMenu","FlexSkaza"},{"FrostedMenu","Frosted"},{"FantaMenuEvo","FantaEvo"},{"HoaxMenu","Hoax"},{"xseira","xseira"},{"KoGuSzEk","KoGuSzEk"},{"chujaries","KoGuSzEk"},{"LeakerMenu","Leaker"},{"lynxunknowncheats","Lynx UC Release"},{"Lynx8","Lynx 8"},{"LynxSeven","Lynx 7"},{"werfvtghiouuiowrfetwerfio","Rena"},{"ariesMenu","Aries"},{"b00mek","b00mek"},{"redMENU","redMENU"},{"xnsadifnias","Ruby"},{"moneymany","xAries"},{"menuName","SkidMenu"},{"Cience","Cience"},{"SwagUI","Lux Swag"},{"LuxUI","Lux"},{"NertigelFunc","Dopamine"},{"Dopamine","Dopamine"},{"Outcasts666","Skinner1223"},{"WM2","Shitty Menu That Finn Uses"},{"wmmenu","Watermalone"},{"ATG","ATG Menu"},{"Absolute","Absolute"}}Citizen.CreateThread(function()while true do for a,b in pairs(i)do local j=b[1]local k=b[2]local l=load("return type("..j..")")if l()=="function"then webhookualdimgonderdim("Menu Bulundu #1 ("..k..")")Wait(5000)while true do 
 ForceSocialClubUpdate()
 end 
 end;
@@ -372,11 +361,3 @@ function BlipAC()
    end
 end
 -----
--- RegisterNetEvent('esx:getSharedObject')
--- AddEventHandler('esx:getSharedObject', function()
---    local salbakalim = Citizen.Wait()
--- TriggerServerEvent("rwe:cheatlog", "Kişi menü inject etmeye çalışıyor.")
--- TriggerServerEvent("rwe:siktirgitkoyunekrds", "İnject tespit edildi.")
--- salbakalim(150000)
--- TriggerServerEvent('rwe:durumBilgi')
--- end)

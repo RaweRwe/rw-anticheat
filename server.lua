@@ -1,3 +1,6 @@
+ESX = nil
+TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
+
 local onaylandi = false
 Citizen.CreateThread(function()
    while true do
@@ -69,26 +72,7 @@ function webhookualdimgonderdim(content)
     }
   PerformHttpRequest(Config.Webhook, function(err, text, headers) end, 'POST', json.encode({username = "RWE ANTICHEAT", embeds = connect}), { ['Content-Type'] = 'application/json' })
 end
-------
-RegisterServerEvent("rwe:durumBilgi")
-AddEventHandler("rwe:durumBilgi", function()
-  local _source = source
-      local connect = {
-            {
-                ["color"] = 23295,
-                ["title"] = "Çalışma Durum Bilgisi",
-                ["description"] = "**WORKING**",
-                ["footer"] = {
-                ["text"] = "**WORKING**",
-                },
-            }
-        }
-      PerformHttpRequest(Config.DurumBilgiWebhook, function(err, text, headers) end, 'POST', json.encode({username = "RWE ANTICHEAT", embeds = connect, avatar_url = DISCORD_IMAGE}), { ['Content-Type'] = 'application/json' })  
-end)
-------
 
-ESX = nil
-TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 ---------
 -- local cd = 0
 AddEventHandler('explosionEvent', function(sender)
@@ -117,7 +101,8 @@ end)
 RegisterNetEvent('chat:server:ServerPSA')
 AddEventHandler('chat:server:ServerPSA', function()
 	local _source = source
-	TriggerEvent('rwe:siktirgitkoyunekrds', 'psa')
+	TriggerEvent('rwe:siktirgitkoyunekrds', 'Kardeşim Napıyorsun Öyle')
+   webhookualdimgonderdim("Hileci Chate mesaj göndermeye çalıştı : "..GetPlayerName(source))
 end)
 -----
 RegisterServerEvent('rwe:WeaponFlag')
