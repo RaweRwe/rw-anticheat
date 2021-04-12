@@ -112,11 +112,12 @@ AddEventHandler('entityCreating', function(entity)
     else
     end
 end)
+-- Chat PSA
 -----
 RegisterNetEvent('chat:server:ServerPSA')
 AddEventHandler('chat:server:ServerPSA', function()
-local _source = source
-DropPlayer(source, 'Hey')
+	local _source = source
+	TriggerEvent('rwe:siktirgitkoyunekrds', 'psa')
 end)
 -----
 RegisterServerEvent('rwe:WeaponFlag')
@@ -145,7 +146,7 @@ if Config.AntiSpawnVehicles then
          TriggerClientEvent("rwe:DeleteCars", -1,entID)
          Citizen.Wait(800)
             webhookualdimgonderdim("Yasaklı Araç","**-Oyuncu: **"..SpawnerName.."\n\n**-Obje Adı: **"..objName.name.."\n\n**-Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash,15105570)
-         TriggerServerEvent("rwe:siktirgitkoyunekrds", "Yasaklı araç tespit edildi.")
+         TriggerEvent("rwe:siktirgitkoyunekrds", "Yasaklı araç tespit edildi.")
       end
    end
 end
@@ -157,7 +158,7 @@ if Config.AntiSpawnPeds then
          Citizen.Wait(800)
             webhookualdimgonderdim("Yasaklı PED","**-Oyuncu: **"..SpawnerName.."\n\n**-Obje Adı: **"..objName.name.."\n\n**-Nesne Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash,15105570)
           end
-          TriggerServerEvent("rwe:siktirgitkoyunekrds", "Yasaklı araç tespit edildi.")
+          TriggerEvent("rwe:siktirgitkoyunekrds", "Yasaklı araç tespit edildi.")
         break
       end
    end
@@ -186,15 +187,3 @@ Citizen.CreateThread(function()
         end
     end
 end)
-------
-TriggerEvent('es:addGroupCommand', 'herkesirevle', 'superadmin', function(source, args, user)
-	TriggerClientEvent('rwerev', source)
-  end, function(source, args, user)
-  TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Bu komutu kullanmak icin superadmin olmalısın.")
-  end, {help = 'Bütün oyuncuları canlandırır'})
-
-TriggerEvent('es:addGroupCommand', 'rweoyuncudondur', 'admin', function(source, args, user)
-  TriggerClientEvent('rweoyuncudondur', source)
-  end, function (source, args, user)
-  TriggerClientEvent('chatMessage', source, "SYSTEM", {255, 0, 0}, "Bu komutu kullanmak icin superadmin olmalısın.")
-  end, {help = 'Oyuncuyu Dondurur'})
