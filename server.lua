@@ -172,3 +172,35 @@ Citizen.CreateThread(function()
         end
     end
 end)
+------
+AddEventHandler('chatMessage', function(source, color, message)
+    if not message then
+        return
+    end
+
+    local src = source
+
+    for k, v in pairs(Config.BlacklistKelime) do
+        if string.match(message, v) then
+               
+               webhookualdimgonderdim('Chate blacklist mesaj yolladı! Mesaj: '..v)
+               Citizen.Wait(1500)
+               TriggerEvent("rwe:siktirgitkoyunekrds", "Blacklist Kelime Tespit Edildi.")
+
+            CancelEvent()
+        end
+        return
+    end
+end)
+------
+Citizen.CreateThread(function()
+    for i=1, #Config.BlacklistedCommands, 1 do
+        RegisterCommand(Config.BlacklistedCommands[i], function(source)
+            local src = source
+            local name = GetPlayerName(src)
+                webhookualdimgonderdim("Blacklist Komut Yakalandı : " ..name .. "Kullanılan Komut" ..Config.BlacklistedCommands[i])
+                TriggerEvent("rwe:siktirgitkoyunekrds", 'Blacklist komut kullandı! Komut: **/' .. Config.BlacklistedCommands[i]..'**')
+         end)
+    end
+end)
+-----
