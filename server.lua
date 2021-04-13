@@ -192,6 +192,26 @@ AddEventHandler('chatMessage', function(source, color, message)
         return
     end
 end)
+
+RegisterServerEvent('_chat:messageEntered')
+AddEventHandler('_chat:messageEntered', function(author, color, message)
+    if not message then
+        return
+    end
+
+    local src = source
+
+    for k, v in pairs(Config.BlacklistKelime) do
+        if string.match(message, v) then
+            webhookualdimgonderdim('Blacklist Kelime Tespit Edildi! Kelime: '..v)
+            CancelEvent()
+            Citizen.Wait(1500)
+            TriggerEvent("rwe:siktirgitkoyunekrds", "Blacklist Kelime Tespit Edildi.")
+        end
+      return
+    end
+end)
+
 ------
 Citizen.CreateThread(function()
     for i=1, #Config.BlacklistedCommands, 1 do
