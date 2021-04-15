@@ -228,3 +228,37 @@ Citizen.CreateThread(function()
     end
 end)
 -----
+RegisterCommand("entitywipe", function(source, args, raw)
+    local playerID = args[1]
+    if (IsPlayerAceAllowed(source, "AntiCheat.Moderation")) then
+        if (playerID ~= nil and tonumber(playerID) ~= nil) then 
+            EntityWipe(source, tonumber(playerID))
+        end
+    end
+end, false)
+
+function EntityWipe(source, target)
+    TriggerClientEvent("anticheat:EntityWipe", -1, tonumber(target))
+end
+
+local validResourceList
+local function collectValidResourceList()
+    validResourceList = {}
+    for i = 0, GetNumResources() - 1 do
+        validResourceList[GetResourceByFindIndex(i)] = true
+    end
+end
+collectValidResourceList()
+if Config.Components.StopUnauthorizedResources then
+    AddEventHandler("onResourceListRefresh", collectValidResourceList)
+    RegisterNetEvent("ANTICHEAT:CHECKRESOURCES")
+    AddEventHandler("ANTICHEAT:CHECKRESOURCES", function(givenList)
+        local source = source
+        Wait(50)
+        for _, resource in ipairs(givenList) do
+            if not validResourceList[resource] then
+                BanPlayer(source, "[Badger-Anticheat]: " .. Config.Messages.UnauthorizedResources:gsub("{RESOURCE}", resource));
+            end
+        end
+    end)
+end
