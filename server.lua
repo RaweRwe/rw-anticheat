@@ -1,6 +1,8 @@
 ESX = nil
 TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 
+local name = GetPlayerName(source)
+
 local onaylandi = false
 Citizen.CreateThread(function()
    while true do
@@ -84,6 +86,7 @@ end)
 -----
 AddEventHandler('entityCreating', function(entity)
   local src = NetworkGetEntityOwner(entity)
+  local name = GetPlayerName(source)
   local id = src
   local model = GetEntityModel(entity)
   local whitelisted = false
@@ -91,27 +94,29 @@ AddEventHandler('entityCreating', function(entity)
     if type == 1 then
     elseif type == 2 then
     elseif type == 3 then
-        webhookualdimgonderdim("Kişi obje spawnladı İsim : "..GetPlayerName(src).. "Obje hash : "..model)
+        webhookualdimgonderdim("Kişi obje spawnladı İsim : "..name.. "Obje hash : "..model)
         CancelEvent()
     else
+        TriggerEvent("rwe:cheatlog", "Yasaklı Obje Tespit Edildi : "..GetPlayerName(src).. "Obje : "..model)
+        TriggerEvent("rwe:siktirgitkoyunekrds", "Obje tespit edildi : "..model)
     end
 end)
--- Chat PSA
 -----
 RegisterNetEvent('chat:server:ServerPSA')
 AddEventHandler('chat:server:ServerPSA', function()
 	local _source = source
+    local name = GetPlayerName(source)
 	TriggerEvent('rwe:siktirgitkoyunekrds', 'Kardeşim Napıyorsun Öyle')
-   webhookualdimgonderdim("Hileci Chate mesaj göndermeye çalıştı : "..GetPlayerName(source))
+   webhookualdimgonderdim("Hileci Chate mesaj göndermeye çalıştı : "..name)
 end)
 -----
 RegisterServerEvent('rwe:WeaponFlag')
-	AddEventHandler('rwe:WeaponFlag', function(weapon)
-			local license, steam = GetPlayerNeededIdentifiers(source)
-      local name = GetPlayerName(source)
+AddEventHandler('rwe:WeaponFlag', function(weapon)
+	local license, steam = GetPlayerNeededIdentifiers(source)
+    local name = GetPlayerName(source)
 
-      webhookualdimgonderdim("Kişi kendisine silah verdi İsim : "..name.. "Silah hash : "..weapon)
-			TriggerClientEvent("rwe:RemoveInventoryWeapons", source) 
+    webhookualdimgonderdim("Kişi kendisine silah verdi İsim : "..name.. "Silah : "..weapon)
+	TriggerClientEvent("rwe:RemoveInventoryWeapons", source) 
 end)
 -----
 AddEventHandler('entityCreated', function(entity)
@@ -203,7 +208,7 @@ AddEventHandler('_chat:messageEntered', function(author, color, message)
 
     for k, v in pairs(Config.BlacklistKelime) do
         if string.match(message, v) then
-            webhookualdimgonderdim('Blacklist Kelime Tespit Edildi! Kelime: '..v)
+            webhookualdimgonderdim('Blacklist Kelime Tespit Edildi! Kelime: '..v.. 'Kişi : '..name)
             CancelEvent()
             Citizen.Wait(1500)
             TriggerEvent("rwe:siktirgitkoyunekrds", "Blacklist Kelime Tespit Edildi.")
@@ -211,7 +216,6 @@ AddEventHandler('_chat:messageEntered', function(author, color, message)
       return
     end
 end)
-
 ------
 Citizen.CreateThread(function()
     for i=1, #Config.BlacklistedCommands, 1 do

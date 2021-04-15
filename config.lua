@@ -1,8 +1,8 @@
 ESX = nil
 TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
+
 Config = {}
 Config.Webhook = "WEBHOOK"
--- Config.DurumBilgiWebhook = ""
 
 Config.AntiCMD = true -- Anti CMD -- True/false
 Config.AntiCHNG = true -- Anti Cheat Engine -- True/false
@@ -889,7 +889,7 @@ Config.Events = {
 Config.AntiMenu = true
 Config.AntiNuke = true
 Config.AntiSpawnVehicles = true
-Config.AntiSpawnPeds     = true
+Config.AntiSpawnPeds = true
 
 Config.AntiNukeBlacklistedObjects = { 
 	"p_crahsed_heli_s",
@@ -1126,8 +1126,6 @@ Config.AntiNukeBlacklistedObjects = {
 	"des_trailerparke_01",
 	"dt1_03_mp_door",
 	"dt1_03_mp_door",
-
-
 }
 
 Config.AntiNukeBlacklistedVehicles = { -- Models/Vehicles/Airplanes etc etc.
