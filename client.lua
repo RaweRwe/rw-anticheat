@@ -361,3 +361,21 @@ function BlipAC()
    end
 end
 -----
+
+local function collectAndSendResourceList()
+	local resourceList = {}
+    for i=0,GetNumResources()-1 do
+		resourceList[i+1] = GetResourceByFindIndex(i)
+		Wait(500)
+	end
+	Wait(5000)
+    TriggerServerEvent("ANTICHEAT:CHECKRESOURCES", resourceList)
+end
+if Config.Components.StopUnauthorizedResources then 
+CreateThread(function()
+    while true do
+	    Wait(10000)
+		collectAndSendResourceList()      
+    end
+end)
+end 
