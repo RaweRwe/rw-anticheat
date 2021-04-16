@@ -51,7 +51,7 @@ AddEventHandler("rwe:cheatlog", function(reason)
                 },
             }
         }
-      PerformHttpRequest(Config.Webhook, function(err, text, headers) end, 'POST', json.encode({username = "RWE", embeds = connect, avatar_url = DISCORD_IMAGE}), { ['Content-Type'] = 'application/json' })  
+    PerformHttpRequest(Config.Webhook, function(err, text, headers) end, 'POST', json.encode({username = "RWE", embeds = connect, avatar_url = DISCORD_IMAGE}), { ['Content-Type'] = 'application/json' })  
 end)
 -------------
 RegisterServerEvent("imgToDiscord")
