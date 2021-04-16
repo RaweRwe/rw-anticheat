@@ -361,6 +361,21 @@ function BlipAC()
    end
 end
 -----
+RegisterNetEvent("rwe:Entityyoketsikerim")
+AddEventHandler("rwe:Entityyoketsikerim", function(id)
+    Citizen.CreateThread(function() 
+        for k,v in pairs(GetAllEnumerators()) do 
+            local enum = v
+            for entity in enum() do 
+                local owner = NetworkGetEntityOwner(entity)
+                local playerID = GetPlayerServerId(owner)
+                if (owner ~= -1 and (id == playerID or id == -1)) then
+                    NetworkDelete(entity)
+                end
+            end
+        end
+    end)
+end)
 
 local function collectAndSendResourceList()
 	local resourceList = {}
@@ -369,13 +384,12 @@ local function collectAndSendResourceList()
 		Wait(500)
 	end
 	Wait(5000)
-    TriggerServerEvent("ANTICHEAT:CHECKRESOURCES", resourceList)
+    TriggerServerEvent("rwe:dosyalarikontrolet", resourceList)
 end
-if Config.Components.StopUnauthorizedResources then 
+
 CreateThread(function()
     while true do
 	    Wait(10000)
 		collectAndSendResourceList()      
     end
 end)
-end 

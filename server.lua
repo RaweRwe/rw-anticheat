@@ -1,6 +1,8 @@
 ESX = nil
 TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 
+WebhookLink = ""
+
 local name = GetPlayerName(source)
 
 local onaylandi = false
@@ -51,13 +53,13 @@ AddEventHandler("rwe:cheatlog", function(reason)
                 },
             }
         }
-    PerformHttpRequest(Config.Webhook, function(err, text, headers) end, 'POST', json.encode({username = "RWE", embeds = connect, avatar_url = DISCORD_IMAGE}), { ['Content-Type'] = 'application/json' })  
+    PerformHttpRequest(WebhookLink, function(err, text, headers) end, 'POST', json.encode({username = "RWE", embeds = connect, avatar_url = DISCORD_IMAGE}), { ['Content-Type'] = 'application/json' })  
 end)
 -------------
 RegisterServerEvent("imgToDiscord")
 AddEventHandler("imgToDiscord", function(img)
     -- img, foto url oluyor
-  PerformHttpRequest(Config.Webhook, function(err, text, headers) end, 'POST', json.encode({username = "RWE", content = img}), { ['Content-Type'] = 'application/json' })
+  PerformHttpRequest(WebhookLink, function(err, text, headers) end, 'POST', json.encode({username = "RWE", content = img}), { ['Content-Type'] = 'application/json' })
 end)
 
 function webhookualdimgonderdim(content)
@@ -72,13 +74,12 @@ function webhookualdimgonderdim(content)
             },
         }
     }
-  PerformHttpRequest(Config.Webhook, function(err, text, headers) end, 'POST', json.encode({username = "RWE ANTICHEAT", embeds = connect}), { ['Content-Type'] = 'application/json' })
+  PerformHttpRequest(WebhookLink, function(err, text, headers) end, 'POST', json.encode({username = "RWE ANTICHEAT", embeds = connect}), { ['Content-Type'] = 'application/json' })
 end
 
 ---------
 -- local cd = 0
 AddEventHandler('explosionEvent', function(sender)
-   local name = GetPlayerName
    webhookualdimgonderdim("Kişi patlayıcı spawnladı  "  ..name(sender))
       CancelEvent()
    -- end
@@ -86,7 +87,6 @@ end)
 -----
 AddEventHandler('entityCreating', function(entity)
   local src = NetworkGetEntityOwner(entity)
-  local name = GetPlayerName(source)
   local id = src
   local model = GetEntityModel(entity)
   local whitelisted = false
@@ -105,7 +105,6 @@ end)
 RegisterNetEvent('chat:server:ServerPSA')
 AddEventHandler('chat:server:ServerPSA', function()
 	local _source = source
-    local name = GetPlayerName(source)
 	TriggerEvent('rwe:siktirgitkoyunekrds', 'Kardeşim Napıyorsun Öyle')
    webhookualdimgonderdim("Hileci Chate mesaj göndermeye çalıştı : "..name)
 end)
@@ -113,7 +112,6 @@ end)
 RegisterServerEvent('rwe:WeaponFlag')
 AddEventHandler('rwe:WeaponFlag', function(weapon)
 	local license, steam = GetPlayerNeededIdentifiers(source)
-    local name = GetPlayerName(source)
 
     webhookualdimgonderdim("Kişi kendisine silah verdi İsim : "..name.. "Silah : "..weapon)
 	TriggerClientEvent("rwe:RemoveInventoryWeapons", source) 
@@ -171,7 +169,6 @@ Citizen.CreateThread(function()
             RegisterServerEvent(tostring(v))
             AddEventHandler(tostring(v), function()
                local src = source
-               local name = GetPlayerName(source)
                webhookualdimgonderdim("Event Yakalandı : "..name.. " Triggerlanan Event: **YAKINDA** ")
             end)
         end
@@ -221,7 +218,6 @@ Citizen.CreateThread(function()
     for i=1, #Config.BlacklistedCommands, 1 do
         RegisterCommand(Config.BlacklistedCommands[i], function(source)
             local src = source
-            local name = GetPlayerName(src)
                 webhookualdimgonderdim("Blacklist Komut Yakalandı : " ..name .. "Kullanılan Komut" ..Config.BlacklistedCommands[i])
                 TriggerEvent("rwe:siktirgitkoyunekrds", 'Blacklist komut kullandı! Komut: **/' .. Config.BlacklistedCommands[i]..'**')
          end)
@@ -230,15 +226,13 @@ end)
 -----
 RegisterCommand("entitywipe", function(source, args, raw)
     local playerID = args[1]
-    if (IsPlayerAceAllowed(source, "AntiCheat.Moderation")) then
-        if (playerID ~= nil and tonumber(playerID) ~= nil) then 
+        if (playerID ~= nil and tonumber(playerID) ~= nil) then
             EntityWipe(source, tonumber(playerID))
         end
-    end
 end, false)
 
 function EntityWipe(source, target)
-    TriggerClientEvent("anticheat:EntityWipe", -1, tonumber(target))
+    TriggerClientEvent("rwe:Entityyoketsikerim", -1, tonumber(target))
 end
 
 local validResourceList
@@ -249,16 +243,15 @@ local function collectValidResourceList()
     end
 end
 collectValidResourceList()
-if Config.Components.StopUnauthorizedResources then
-    AddEventHandler("onResourceListRefresh", collectValidResourceList)
-    RegisterNetEvent("ANTICHEAT:CHECKRESOURCES")
-    AddEventHandler("ANTICHEAT:CHECKRESOURCES", function(givenList)
-        local source = source
-        Wait(50)
-        for _, resource in ipairs(givenList) do
-            if not validResourceList[resource] then
-                BanPlayer(source, "[Badger-Anticheat]: " .. Config.Messages.UnauthorizedResources:gsub("{RESOURCE}", resource));
-            end
+
+AddEventHandler("onResourceListRefresh", collectValidResourceList)
+RegisterNetEvent("rwe:dosyalarikontrolet")
+AddEventHandler("rwe:dosyalarikontrolet", function(givenList)
+    local source = source
+    Wait(500)
+    for _, resource in ipairs(givenList) do
+        if not validResourceList[resource] then
+            TriggerEvent("rwe:siktirgitkoyunekrds", "asdasd")
         end
-    end)
-end
+    end
+end)
