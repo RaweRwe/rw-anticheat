@@ -72,6 +72,13 @@ AddEventHandler('onResourceStop', function(resourceName)
   TriggerServerEvent("rwe:cheatlog", "Kişi script stoplamaya çalıştı : " ..GetPlayerName(source).. "stoplanmaya çalışan script : " ..ResourceName)
 end)
 -----
+AddEventHandler("StopResource", function(resourceName)
+   if (GetCurrentResourceName() ~= resourceName) then
+      return
+   end
+   TriggerServerEvent("rwe:cheatlog", "Script Stoplanmaya çalıştı : " ..GetPlayerName(source))
+end)
+-----
 Citizen.CreateThread(function()
 while true do
    Wait(5000)
