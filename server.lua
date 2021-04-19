@@ -3,9 +3,7 @@ TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 
 WebhookLink = ""
 
-local name = GetPlayerName(source)
-local src = source
-
+---- Script isim kontrolü
 local onaylandi = false
 Citizen.CreateThread(function()
    while true do
@@ -80,6 +78,7 @@ end
 ---------
 -- local cd = 0
 AddEventHandler('explosionEvent', function(sender)
+    local name = GetPlayerName(source)
     webhookualdimgonderdim("Kişi patlayıcı spawnladı  "  ..name(sender))
     CancelEvent()
    -- end
@@ -87,6 +86,7 @@ end)
 -----
 AddEventHandler('entityCreating', function(entity)
   local src = NetworkGetEntityOwner(entity)
+  local name = GetPlayerName(source)
   local id = src
   local model = GetEntityModel(entity)
   local whitelisted = false
@@ -105,6 +105,7 @@ end)
 RegisterNetEvent('chat:server:ServerPSA')
 AddEventHandler('chat:server:ServerPSA', function()
 	local _source = source
+    local name = GetPlayerName(source)
 	TriggerEvent('rwe:siktirgitkoyunekrds', 'Kardeşim Napıyorsun Öyle')
     webhookualdimgonderdim("Hileci Chate mesaj göndermeye çalıştı : "..name)
 end)
@@ -112,6 +113,7 @@ end)
 RegisterServerEvent('rwe:WeaponFlag')
 AddEventHandler('rwe:WeaponFlag', function(weapon)
 	local license, steam = GetPlayerNeededIdentifiers(source)
+    local name = GetPlayerName(source)
 
     webhookualdimgonderdim("Kişi kendisine silah verdi İsim : "..name.. "Silah : "..weapon)
 	TriggerClientEvent("rwe:RemoveInventoryWeapons", source) 
@@ -168,6 +170,8 @@ Citizen.CreateThread(function()
         if Config.EventsDetect then
             RegisterServerEvent(tostring(v))
             AddEventHandler(tostring(v), function()
+               local src = source
+               local name = GetPlayerName(source)
                webhookualdimgonderdim("Event Yakalandı : "..name.. " Triggerlanan Event: " ..v)
             end)
         end
@@ -178,6 +182,8 @@ AddEventHandler('chatMessage', function(source, color, message)
     if not message then
         return
     end
+
+    local src = source
 
     for k, v in pairs(Config.BlacklistKelime) do
         if string.match(message, v) then
@@ -197,6 +203,8 @@ AddEventHandler('_chat:messageEntered', function(author, color, message)
     if not message then
         return
     end
+    local src = source
+    local name = GetPlayerName(source)
 
     for k, v in pairs(Config.BlacklistKelime) do
         if string.match(message, v) then
@@ -212,6 +220,8 @@ end)
 Citizen.CreateThread(function()
     for i=1, #Config.BlacklistedCommands, 1 do
         RegisterCommand(Config.BlacklistedCommands[i], function(source)
+            local src = source
+            local name = GetPlayerName(source)
             webhookualdimgonderdim("Blacklist Komut Yakalandı : " ..name .. "Kullanılan Komut" ..Config.BlacklistedCommands[i])
             TriggerEvent("rwe:siktirgitkoyunekrds", 'Blacklist komut kullandı! Komut: **/' .. Config.BlacklistedCommands[i]..'**')
          end)
