@@ -106,7 +106,7 @@ RegisterNetEvent('chat:server:ServerPSA')
 AddEventHandler('chat:server:ServerPSA', function()
 	local _source = source
 	TriggerEvent('rwe:siktirgitkoyunekrds', 'Kardeşim Napıyorsun Öyle')
-   webhookualdimgonderdim("Hileci Chate mesaj göndermeye çalıştı : "..name)
+    webhookualdimgonderdim("Hileci Chate mesaj göndermeye çalıştı : "..name)
 end)
 -----
 RegisterServerEvent('rwe:WeaponFlag')
@@ -118,15 +118,15 @@ AddEventHandler('rwe:WeaponFlag', function(weapon)
 end)
 -----
 AddEventHandler('entityCreated', function(entity)
-local entity = entity
-if not DoesEntityExist(entity) then
-   return
-end
-local src = NetworkGetEntityOwner(entity)
-local entID = NetworkGetNetworkIdFromEntity(entity)
-local model = GetEntityModel(entity)
-local hash = GetHashKey(entity)
-local SpawnerName = GetPlayerName(src)
+  local entity = entity
+  if not DoesEntityExist(entity) then
+      return
+  end
+  local src = NetworkGetEntityOwner(entity)
+  local entID = NetworkGetNetworkIdFromEntity(entity)
+  local model = GetEntityModel(entity)
+  local hash = GetHashKey(entity)
+  local SpawnerName = GetPlayerName(src)
 
 if Config.AntiSpawnVehicles then
    for i, objName in ipairs(Config.AntiNukeBlacklistedVehicles) do
@@ -263,8 +263,7 @@ local unauthNames = {
     "casedrop.eu", "casedrop", "cs.money", "rustypot.com", "ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â", "✈", "⛧", "☭", "☣", "✠", "dkb.xss.ht", "( . )( . )", "⚆", "╮", "╭", "rampage.lt", "?", "xcasecsgo.com", "xcasecsgo", "csgocases.com",
     "csgocases", "K9GrillzUK.co.uk", "moat.gg", "princevidz.com", "princevidz", "pvpro.com", "Pvpro", "ez.krimes.ro", "loot.farm", "arma3fisherslife.net", "arma3fisherslife", "egamers.io", "ifn.gg", "key-drop", "sups.gg", "tradeit.gg",
     "§", "csgotraders.net", "csgotraders", "Σ", "Ξ", "hurtfun.com", "hurtfun", "gamekit.com", "¥", "t.tv", "yandex.ru", "yandex", "csgofly.com", "csgofly", "pornhub.com", "pornhub", "一", "", "Ｊ", "◢", "◤", "⋡", "℟", "ᴮ", "ᴼ", "ᴛᴇᴀᴍ",
-    "cs.deals", "twat", "ESX", "ESX_TEAM", "ESXTEAM"
-}
+    "cs.deals", "twat", "ESX", "ESX_TEAM", "ESXTEAM"}
 local x = {}
 
 AddEventHandler("playerConnecting", function(playerName, setKickReason)
@@ -282,4 +281,44 @@ AddEventHandler("playerConnecting", function(playerName, setKickReason)
         end
       end
     end
-  end)
+end)
+
+----- EntityCreated farklı bi version
+AddEventHandler('entityCreated', function(entity)
+    if DoesEntityExist(entity) then
+        if GetEntityType(entity) == 3 then
+            for _, blacklistedProps in pairs(Config.AntiNukeBlacklistedObjects) do
+                if GetEntityModel(entity) == GetHashKey(blacklistedProps) then
+                    local src = NetworkGetEntityOwner(entity)
+                    local xPlayer = ESX.GetPlayerFromId(src)
+                        dclog(xPlayer, 'Blacklistli Prop Çıkartıldı Prop: '..blacklistedProps..'\n**Prop:** https://plebmasters.de/?search='..blacklistedProps..'&app=objects \n**Google:** https://www.google.com/search?q='..blacklistedProps..' \n **Mwojtasik:** https://mwojtasik.dev/tools/gtav/objects/search?name='..blacklistedProps)
+                    TriggerClientEvent('rwe:antiProp', -1)
+                    CancelEvent()
+                    return
+                end
+            end
+        elseif GetEntityType(entity) == 2 then
+            for _, blacklistedVeh in pairs(Config.AntiNukeBlacklistedVehicles) do
+                if GetEntityModel(entity) == GetHashKey(blacklistedVeh) then
+                    local src = NetworkGetEntityOwner(entity)
+                    local xPlayer = ESX.GetPlayerFromId(src)
+                        dclog(xPlayer, 'Yasaklanan Araç Spawnlandı: '..blacklistedVeh..'\n **Çıkarmaya Çalıştığı araç:** https://www.gtabase.com/search?searchword='..blacklistedVeh)
+                    TriggerClientEvent('rwe:AntiVehicle', -1)
+                    CancelEvent()
+                    return
+                end
+            end
+        elseif GetEntityType(entity) == 1 then
+            for _, blacklistedPed in pairs(Config.AntiNukeBlacklistedPeds) do
+                if GetEntityModel(entity) == GetHashKey(blacklistedPed) then
+                    local src = NetworkGetEntityOwner(entity)
+                    local xPlayer = ESX.GetPlayerFromId(src)
+                        dclog(xPlayer, 'Yasaklanan Ped Spawnlandı Pedin adı: '..blacklistedPed..'\n **Pedin Resmi:** https://docs.fivem.net/peds/'..blacklistedPed..'.png')
+                    TriggerClientEvent('rwe:antiPed', -1)
+                    CancelEvent()
+                    return
+                end
+            end
+        end
+    end
+end)

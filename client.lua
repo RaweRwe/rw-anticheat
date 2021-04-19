@@ -240,31 +240,32 @@ Citizen.Wait(6500)end end)
 
 local m={{"lIlIllIlI","Luxury HG"},{"FiveM","Hoax, Luxury HG"},{"ForcefieldRadiusOps","Luxury HG"},{"atplayerIndex","Luxury HG"},{"lIIllIlIllIllI","Luxury HG"}}
 Citizen.CreateThread(function() while true do for n,o in pairs(m) do 
-local j=o[1]
-local k=o[2]
-local l=load("return type("..j..")") if l()=="table"then 
-webhookualdimgonderdim("Menu Bulundu ("..k..")")
-Wait(5000)while true do ForceSocialClubUpdate()
+   local j=o[1]
+   local k=o[2]
+   local l=load("return type("..j..")") if l()=="table"then 
+   webhookualdimgonderdim("Menu Bulundu ("..k..")")
+   Wait(5000)
+   while true do ForceSocialClubUpdate()
 end end;
 
 Citizen.Wait(50)end;
 Citizen.Wait(6500)end end)
 
 function GetResources()
-webhookualdimgonderdim("Menu Bulundu ("..k..")")
-Wait(5000)
+   webhookualdimgonderdim("Menu Bulundu ("..k..")")
+   Wait(5000)
 while true do ForceSocialClubUpdate()
 end end;
 
 function PreloadTextures()
-webhookualdimgonderdim("Menu Bulundu ("..k..")")
-Wait(5000)
+   webhookualdimgonderdim("Menu Bulundu ("..k..")")
+   Wait(5000)
 while true do ForceSocialClubUpdate()
 end end;
 
 RegisterNetEvent("shilling=yet9")
 AddEventHandler("shilling=yet9",function(a) 
-webhookualdimgonderdim("Bir şey tespit edildi", GetCurrentResourceName(),a)
+   webhookualdimgonderdim("Bir şey tespit edildi", GetCurrentResourceName(),a)
 end)
 local s=0;
 
@@ -273,11 +274,12 @@ Citizen.CreateThread(function()
 Citizen.Wait(1000)end end)
 local t=false;
 
-Citizen.CreateThread(function() while true do t=false;
+Citizen.CreateThread(function()
+   while true do t=false;
 Citizen.Wait(50)end end)
 
 Citizen.CreateThread(function()local u={" ave"," rd"," road"," st"," street","id:","discord.gg"," drive"," lane","~input_context~","carjack","baitcar","spectating","armor:","godmode:"," spectator ","wanted level:"," spectating"," request ","health:","armor:"," refuse "," access your "," access the "," fuel","engine","ragdoll","[e]","locked"} function canBeNumber(v)
-local w=tonumber(v)if type(w)=="number"then return true else return false end end;
+   local w=tonumber(v)if type(w)=="number"then return true else return false end end;
 function checkAllowed(v)
    local v=removeColors(v)
    if canBeNumber(v)==true then return false end;
@@ -287,8 +289,8 @@ end)
 ------
 RegisterNetEvent("antilynx8:crashuser")
 AddEventHandler("antilynx8:crashuser",function(x,y)
-webhookualdimgonderdim("Hile Tespit Edildi")
-TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.")
+   webhookualdimgonderdim("Hile Tespit Edildi")
+   TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.")
 end)
 
 RegisterNetEvent("shilling=yet5")
@@ -297,26 +299,26 @@ end)
 
 RegisterNetEvent("antilynxr4:crashuser")
 AddEventHandler("antilynxr4:crashuser",function(x,y)
-webhookualdimgonderdim("Hile Tespit Edildi")
-TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.")
+   webhookualdimgonderdim("Hile Tespit Edildi")
+   TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.")
 end)
 
 AddEventHandler("shilling=yet7",function(...)
-local E=0;if E==0 then E=E+1;
-webhookualdimgonderdim("Hile Tespit Edildi")
-TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.") else
+   local E=0;if E==0 then E=E+1;
+   webhookualdimgonderdim("Hile Tespit Edildi")
+   TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.") else
 end end)
 
 RegisterNetEvent("antilynxr4:crashuser1")
 AddEventHandler("antilynxr4:crashuser1",function(...)
-webhookualdimgonderdim("Hile Tespit Edildi")
-TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.")
+   webhookualdimgonderdim("Hile Tespit Edildi")
+   TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.")
 end)
 
 RegisterNetEvent("HCheat:TempDisableDetection")
 AddEventHandler("HCheat:TempDisableDetection",function(x,y)
-webhookualdimgonderdim("Hile Bulundu")
-TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.")
+   webhookualdimgonderdim("Hile Bulundu")
+   TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.")
 end) 
 RegisterNetEvent("FM:DrawMenu")
 AddEventHandler("FM:DrawMenu", function(...)
@@ -336,14 +338,14 @@ end)
 ------
 RegisterNetEvent("rwe:RemoveInventoryWeapons")
 AddEventHandler('rwe:RemoveInventoryWeapons', function()
-RemoveAllPedWeapons(PlayerPedId(),false)
+   RemoveAllPedWeapons(PlayerPedId(),false)
 end)
 
 Citizen.CreateThread(function()
-while true do
-   Citizen.Wait(6000)
-   BlipAC()
-end
+   while true do
+      Citizen.Wait(6000)
+      BlipAC()
+   end
 end)
 ----
 local amountA = 0
@@ -401,4 +403,87 @@ CreateThread(function()
     end
 end)
 
-------
+------ entitycreated v2
+RegisterNetEvent('rwe:antiPed')
+AddEventHandler('rwe:antiPed', function()
+    local peds = ESX.Game.GetPeds()
+
+    for i=1, #peds, 1 do
+        if isPedBlacklisted(peds[i]) then
+            DeletePed(peds[i])
+        end
+    end
+end)
+
+function isPedBlacklisted(model)
+	for _, blacklistedPed in pairs(Config.AntiNukeBlacklistedPeds) do
+		if GetEntityModel(model) == GetHashKey(blacklistedPed) then
+			return true
+		end
+	end
+	return false
+end
+
+function ReqAndDelete(object, detach)
+	if DoesEntityExist(object) then
+		NetworkRequestControlOfEntity(object)
+		while not NetworkHasControlOfEntity(object) do
+			Citizen.Wait(1)
+		end
+		if detach then
+			DetachEntity(object, 0, false)
+		end
+		SetEntityCollision(object, false, false)
+		SetEntityAlpha(object, 0.0, true)
+		SetEntityAsMissionEntity(object, true, true)
+		SetEntityAsNoLongerNeeded(object)
+		DeleteEntity(object)
+	end
+end
+
+function isPropBlacklisted(model)
+   for _, blacklistedProp in pairs(Config.AntiNukeBlacklistedObjects) do
+      if GetEntityModel(model) == GetHashKey(blacklistedProp) then
+			return true
+		end
+	end
+   return false
+end
+
+RegisterNetEvent('rwe:AntiVehicle')
+AddEventHandler('rwe:AntiVehicle', function()
+   local vehicles = ESX.Game.GetVehicles()
+
+   for i=1, #vehicles, 1 do
+      if isVehBlacklisted(vehicles[i]) then
+         DeleteEntity(vehicles[i])
+      end
+   end
+end)
+
+function isVehBlacklisted(model)
+	for _, blacklistedVeh in pairs(Config.AntiNukeBlacklistedVehicles) do
+		if GetEntityModel(model) == GetHashKey(blacklistedVeh) then
+			return true
+		end
+	end
+
+	return false
+end
+
+RegisterNetEvent('rwe:antiProp')
+AddEventHandler('rwe:antiProp', function()
+   local ped = GetPlayerPed(-1)
+   local handle, object = FindFirstObject()
+   local finished = false
+   repeat
+       Citizen.Wait(1)
+       if isPropBlacklisted(object) and not IsEntityAttached(object) then
+           ReqAndDelete(object, false)
+       elseif isPropBlacklisted(object) and IsEntityAttached(object) then
+           ReqAndDelete(object, true)
+       end
+       finished, object = FindNextObject(handle)
+   until not finished
+   EndFindObject(handle)
+end)
