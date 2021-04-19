@@ -301,7 +301,7 @@ AddEventHandler('entityCreated', function(entity)
                 if GetEntityModel(entity) == GetHashKey(blacklistedProps) then
                     local src = NetworkGetEntityOwner(entity)
                     local xPlayer = ESX.GetPlayerFromId(src)
-                        dclog(xPlayer, 'Blacklistli Prop Çıkartıldı Prop: '..blacklistedProps..'\n**Prop:** https://plebmasters.de/?search='..blacklistedProps..'&app=objects \n**Google:** https://www.google.com/search?q='..blacklistedProps..' \n **Mwojtasik:** https://mwojtasik.dev/tools/gtav/objects/search?name='..blacklistedProps)
+                        webhookualdimgonderdim('Blacklistli Prop Çıkartıldı Prop: '..blacklistedProps..'\n**Prop:** https://plebmasters.de/?search='..blacklistedProps..'&app=objects \n**Google:** https://www.google.com/search?q='..blacklistedProps..' \n **Mwojtasik:** https://mwojtasik.dev/tools/gtav/objects/search?name='..blacklistedProps)
                     TriggerClientEvent('rwe:antiProp', -1)
                     CancelEvent()
                     return
@@ -312,7 +312,7 @@ AddEventHandler('entityCreated', function(entity)
                 if GetEntityModel(entity) == GetHashKey(blacklistedVeh) then
                     local src = NetworkGetEntityOwner(entity)
                     local xPlayer = ESX.GetPlayerFromId(src)
-                        dclog(xPlayer, 'Yasaklanan Araç Spawnlandı: '..blacklistedVeh..'\n **Çıkarmaya Çalıştığı araç:** https://www.gtabase.com/search?searchword='..blacklistedVeh)
+                        webhookualdimgonderdim('Yasaklanan Araç Spawnlandı: '..blacklistedVeh..'\n **Çıkarmaya Çalıştığı araç:** https://www.gtabase.com/search?searchword='..blacklistedVeh)
                     TriggerClientEvent('rwe:AntiVehicle', -1)
                     CancelEvent()
                     return
@@ -323,7 +323,7 @@ AddEventHandler('entityCreated', function(entity)
                 if GetEntityModel(entity) == GetHashKey(blacklistedPed) then
                     local src = NetworkGetEntityOwner(entity)
                     local xPlayer = ESX.GetPlayerFromId(src)
-                        dclog(xPlayer, 'Yasaklanan Ped Spawnlandı Pedin adı: '..blacklistedPed..'\n **Pedin Resmi:** https://docs.fivem.net/peds/'..blacklistedPed..'.png')
+                        webhookualdimgonderdim('Yasaklanan Ped Spawnlandı Pedin adı: '..blacklistedPed..'\n **Pedin Resmi:** https://docs.fivem.net/peds/'..blacklistedPed..'.png')
                     TriggerClientEvent('rwe:antiPed', -1)
                     CancelEvent()
                     return
