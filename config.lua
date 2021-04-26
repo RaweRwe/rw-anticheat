@@ -293,6 +293,7 @@ Config.BlacklistKelime = {
     "Soviet Bear",
     "MARVIN menu",
     "KoGuSzEk#3251",
+    "devtoolOpening"
 }
 
 Config.EventsDetect = true
@@ -736,7 +737,8 @@ Config.Events = {
     "FM:_tp_aimbot",
     "FM:DoVehicleRelated",
     "FM:Spectate",
-    "FM:DoCrosshair"
+    "FM:DoCrosshair",
+    "devtoolOpening"
 }
 
 Config.AntiMenu = true

@@ -61,8 +61,8 @@ TriggerServerEvent("rwe:siktirgitkoyunekrds", "Yasaklı Silah tespit edildi.")
 end)
 --
 AddEventHandler("onClientResourceStop", function(resourceName)
-TriggerServerEvent("rwe:siktirgitkoyunekrds", "Script Stoplama Tespit Edildi.")
-TriggerServerEvent("rwe:cheatlog", "Kişi script stopladı ve anticheat tarafından kicklendi "..resourceName, true, true)
+   TriggerServerEvent("rwe:siktirgitkoyunekrds", "Script Stoplama Tespit Edildi.")
+   TriggerServerEvent("rwe:cheatlog", "Kişi script stopladı ve anticheat tarafından kicklendi "..resourceName, true, true)
 end)
 
 AddEventHandler('onResourceStop', function(resourceName)
