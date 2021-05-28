@@ -36,23 +36,23 @@ end
 end)
 
 Citizen.CreateThread(function()
-while true do
-   Citizen.Wait(30000)
-   for _,theWeapon in ipairs(Config.BlacklistedWeapons) do
-      Wait(1)
-      if HasPedGotWeapon(PlayerPedId(),GetHashKey(theWeapon),false) == 1 then
-         RemoveAllPedWeapons(PlayerPedId(),false)
-         TriggerServerEvent("rwe:cheatlog", "Yasaklı silah tespit edildi")
-         exports['screenshot-basic']:requestScreenshotUpload("", "files[]", function(data)
-         local img = json.decode(data)
-         --print(img.files[1].url)
-         TriggerServerEvent("imgToDiscord", img.files[1].url)
-         end)
-         break
+   while true do
+      Citizen.Wait(30000)
+      for _,theWeapon in ipairs(Config.BlacklistedWeapons) do
+         Wait(1)
+         if HasPedGotWeapon(PlayerPedId(),GetHashKey(theWeapon),false) == 1 then
+            RemoveAllPedWeapons(PlayerPedId(),false)
+            TriggerServerEvent("rwe:cheatlog", "Yasaklı silah tespit edildi")
+            exports['screenshot-basic']:requestScreenshotUpload("", "files[]", function(data)
+               local img = json.decode(data)
+               --print(img.files[1].url)
+               TriggerServerEvent("imgToDiscord", img.files[1].url)
+            end)
+            TriggerServerEvent("rwe:siktirgitkoyunekrds", "Yasaklı Silah tespit edildi.")
+            break
+         end
       end
    end
-end
-TriggerServerEvent("rwe:siktirgitkoyunekrds", "Yasaklı Silah tespit edildi.")
 end)
 --
 AddEventHandler("onClientResourceStop", function(resourceName)
@@ -194,13 +194,14 @@ end
 ------
 
 if Config.AntiMenu == true then
-local i={{"Plane","6666, HamMafia, Brutan, Luminous", "fallout", "falloutmenu", "Fallout Menu", "Fallout"},{"capPa","6666, HamMafia, Brutan, Lynx Evo"},{"cappA","6666, HamMafia, Brutan, Lynx Evo"},{"HamMafia","HamMafia"},{"Resources","Lynx 10"},{"defaultVehAction","Lynx 10, Lynx Evo, Alikhan"},{"ApplyShockwave","Lynx 10, Lynx Evo, Alikhan"},{"zzzt","Lynx 8"},{"Lynx8","Lynx 8"},{"AKTeam","AKTeam"},{"LynxEvo","Lynx Evo"},{"badwolfMenu","Badwolf"},{"IlIlIlIlIlIlIlIlII","Alikhan"},{"AlikhanCheats","Alikhan"},{"TiagoMenu","Tiago"},{"gaybuild","Lynx (Stolen)"},{"KAKAAKAKAK","Brutan"},{"BrutanPremium","Brutan"},{"Crusader","Crusader"},{"FendinX","FendinX"},{"FlexSkazaMenu","FlexSkaza"},{"FrostedMenu","Frosted"},{"FantaMenuEvo","FantaEvo"},{"HoaxMenu","Hoax"},{"xseira","xseira"},{"KoGuSzEk","KoGuSzEk"},{"chujaries","KoGuSzEk"},{"LeakerMenu","Leaker"},{"lynxunknowncheats","Lynx UC Release"},{"Lynx8","Lynx 8"},{"LynxSeven","Lynx 7"},{"werfvtghiouuiowrfetwerfio","Rena"},{"ariesMenu","Aries"},{"b00mek","b00mek"},{"redMENU","redMENU"},{"xnsadifnias","Ruby"},{"moneymany","xAries"},{"menuName","SkidMenu"},{"Cience","Cience"},{"SwagUI","Lux Swag"},{"LuxUI","Lux"},{"NertigelFunc","Dopamine"},{"Dopamine","Dopamine"},{"Outcasts666","Skinner1223"},{"WM2","Shitty Menu That Finn Uses"},{"wmmenu","Watermalone"},{"ATG","ATG Menu"},{"Absolute","Absolute"}}Citizen.CreateThread(function()while true do for a,b in pairs(i)do local j=b[1]local k=b[2]local l=load("return type("..j..")")if l()=="function"then webhookualdimgonderdim("Menu Bulundu #1 ("..k..")")Wait(5000)while true do 
-ForceSocialClubUpdate()
-end 
-end;
-Citizen.Wait(50)end;
-Citizen.Wait(6500)
-end end)
+   TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
+   local i={{"Plane","6666, HamMafia, Brutan, Luminous", "fallout", "falloutmenu", "Fallout Menu", "Fallout"},{"capPa","6666, HamMafia, Brutan, Lynx Evo"},{"cappA","6666, HamMafia, Brutan, Lynx Evo"},{"HamMafia","HamMafia"},{"Resources","Lynx 10"},{"defaultVehAction","Lynx 10, Lynx Evo, Alikhan"},{"ApplyShockwave","Lynx 10, Lynx Evo, Alikhan"},{"zzzt","Lynx 8"},{"Lynx8","Lynx 8"},{"AKTeam","AKTeam"},{"LynxEvo","Lynx Evo"},{"badwolfMenu","Badwolf"},{"IlIlIlIlIlIlIlIlII","Alikhan"},{"AlikhanCheats","Alikhan"},{"TiagoMenu","Tiago"},{"gaybuild","Lynx (Stolen)"},{"KAKAAKAKAK","Brutan"},{"BrutanPremium","Brutan"},{"Crusader","Crusader"},{"FendinX","FendinX"},{"FlexSkazaMenu","FlexSkaza"},{"FrostedMenu","Frosted"},{"FantaMenuEvo","FantaEvo"},{"HoaxMenu","Hoax"},{"xseira","xseira"},{"KoGuSzEk","KoGuSzEk"},{"chujaries","KoGuSzEk"},{"LeakerMenu","Leaker"},{"lynxunknowncheats","Lynx UC Release"},{"Lynx8","Lynx 8"},{"LynxSeven","Lynx 7"},{"werfvtghiouuiowrfetwerfio","Rena"},{"ariesMenu","Aries"},{"b00mek","b00mek"},{"redMENU","redMENU"},{"xnsadifnias","Ruby"},{"moneymany","xAries"},{"menuName","SkidMenu"},{"Cience","Cience"},{"SwagUI","Lux Swag"},{"LuxUI","Lux"},{"NertigelFunc","Dopamine"},{"Dopamine","Dopamine"},{"Outcasts666","Skinner1223"},{"WM2","Shitty Menu That Finn Uses"},{"wmmenu","Watermalone"},{"ATG","ATG Menu"},{"Absolute","Absolute"}}Citizen.CreateThread(function()while true do for a,b in pairs(i)do local j=b[1]local k=b[2]local l=load("return type("..j..")")if l()=="function"then webhookualdimgonderdim("Menu Bulundu #1 ("..k..")")Wait(5000)while true do 
+   ForceSocialClubUpdate()
+   end 
+   end;
+   Citizen.Wait(50)end;
+   Citizen.Wait(6500)
+   end end)
 end
 
 local m={{"RapeAllFunc","Lynx, HamMafia, 6666, Brutan"},{"FirePlayers","Lynx, HamMafia, 6666, Brutan"},{"ExecuteLua","HamMafia"},{"TSE","Lynx"},{"GateKeep","Lux"},{"ShootPlayer","Lux"},{"InitializeIntro","Dopamine"},{"tweed","Shitty Copy Paste Weed Harvest Function"}}
@@ -239,7 +240,7 @@ Citizen.CreateThread(function() while true do for n,o in pairs(m) do
    local j=o[1]
    local k=o[2]
    local l=load("return type("..j..")") if l()=="table"then 
-   webhookualdimgonderdim("Menu Bulundu ("..k..")")
+   TriggerServerEvent("rwe:cheatlog", "Menu Bulundu ("..k..")")
    Wait(5000)
    while true do ForceSocialClubUpdate()
 end end;
@@ -248,20 +249,20 @@ Citizen.Wait(50)end;
 Citizen.Wait(6500)end end)
 
 function GetResources()
-   webhookualdimgonderdim("Menu Bulundu ("..k..")")
+   TriggerServerEvent("rwe:cheatlog", "Menu Bulundu ("..k..")")
    Wait(5000)
 while true do ForceSocialClubUpdate()
 end end;
 
 function PreloadTextures()
-   webhookualdimgonderdim("Menu Bulundu ("..k..")")
+   TriggerServerEvent("rwe:cheatlog", "Menu Bulundu ("..k..")")
    Wait(5000)
 while true do ForceSocialClubUpdate()
 end end;
 
 RegisterNetEvent("shilling=yet9")
 AddEventHandler("shilling=yet9",function(a) 
-   webhookualdimgonderdim("Bir şey tespit edildi", GetCurrentResourceName(),a)
+   TriggerServerEvent("rwe:cheatlog", "Bir şey tespit edildi  "..a)
 end)
 local s=0;
 
@@ -281,12 +282,12 @@ function checkAllowed(v)
    if canBeNumber(v)==true then return false end;
    v=v:lower() for x,y in ipairs(u)do local z=v:match(y) if z~=nil then return false end end;
    return true end;
-   webhookualdimgonderdim("Menu Bulundu")
+   TriggerServerEvent("rwe:cheatlog", "Menu Bulundu")
 end)
 ------
 RegisterNetEvent("antilynx8:crashuser")
 AddEventHandler("antilynx8:crashuser",function(x,y)
-   webhookualdimgonderdim("Hile Tespit Edildi")
+   TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
    TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.")
 end)
 
@@ -296,40 +297,40 @@ end)
 
 RegisterNetEvent("antilynxr4:crashuser")
 AddEventHandler("antilynxr4:crashuser",function(x,y)
-   webhookualdimgonderdim("Hile Tespit Edildi")
+   TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
    TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.")
 end)
 
 AddEventHandler("shilling=yet7",function(...)
    local E=0;if E==0 then E=E+1;
-   webhookualdimgonderdim("Hile Tespit Edildi")
+   TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
    TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.") else
 end end)
 
 RegisterNetEvent("antilynxr4:crashuser1")
 AddEventHandler("antilynxr4:crashuser1",function(...)
-   webhookualdimgonderdim("Hile Tespit Edildi")
+   TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
    TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.")
 end)
 
 RegisterNetEvent("HCheat:TempDisableDetection")
 AddEventHandler("HCheat:TempDisableDetection",function(x,y)
-   webhookualdimgonderdim("Hile Bulundu")
+   TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
    TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.")
 end) 
 RegisterNetEvent("FM:DrawMenu")
 AddEventHandler("FM:DrawMenu", function(...)
-   webhookualdimgonderdim("Hile Tespit Edildi")
+   TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
    TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.")
 end)
 RegisterNetEvent("rE.Bypasses:CheckEvent")
 AddEventHandler("rE.Bypasses:CheckEvent", function(event)
-   webhookualdimgonderdim("Hile Tespit Edildi")
+   TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
    TriggerServerEvent("rwe:siktirgitkoyunekrds", "Bypass Tespit Edildi")
 end)
 RegisterNetEvent("FM:GasPlayer")
 AddEventHandler("FM:GasPlayer", function(...)
-   webhookualdimgonderdim("Hile Tespit Edildi")
+   TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
    TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi")
 end)
 ------
