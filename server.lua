@@ -28,36 +28,37 @@ end)
 -------
 RegisterServerEvent("rwe:siktirgitkoyunekrds")
 AddEventHandler("rwe:siktirgitkoyunekrds", function(reason)
-   local identifier = GetPlayerIdentifiers(src)[1]
+    local src = source
+    local identifier = GetPlayerIdentifiers(src)[1]
 
-   for k, v in pairs(Config.PlayerWhitelist) do
-      if v == identifier then
-         return
-      end
-   end
-  DropPlayer(source, "[RW-AC] "..reason)		
+    for k, v in pairs(Config.PlayerWhitelist) do
+        if v == identifier then
+            return
+        end
+    end
+    DropPlayer(src, "[RW-AC] "..reason)		
 end)
 -------
 RegisterServerEvent("rwe:cheatlog")
 AddEventHandler("rwe:cheatlog", function(reason)
-  local _source = source
+  local src = source
       local connect = {
             {
                 ["color"] = 23295,
                 ["title"] = reason,
-                ["description"] = "Kullanıcı: "..GetPlayerName(_source).. " "  ..GetPlayerIdentifiers(_source)[1].."  ",
+                ["description"] = "Kullanıcı: "..GetPlayerName(src).. " "  ..GetPlayerIdentifiers(src)[1].."  ",
                 ["footer"] = {
                 ["text"] = "Coded By RAWE",
                 },
             }
         }
-    PerformHttpRequest(WebhookLink, function(err, text, headers) end, 'POST', json.encode({username = "RWE", embeds = connect, avatar_url = DISCORD_IMAGE}), { ['Content-Type'] = 'application/json' })
+    PerformHttpRequest(WebhookLink, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", embeds = connect, avatar_url = "https://pbs.twimg.com/media/Dtra4gZWkAAX0rZ.jpg"}), { ['Content-Type'] = 'application/json' })
 end)
 -------------
 RegisterServerEvent("imgToDiscord")
 AddEventHandler("imgToDiscord", function(img)
     -- img, foto url oluyor
-  PerformHttpRequest(WebhookLink, function(err, text, headers) end, 'POST', json.encode({username = "RWE", content = img}), { ['Content-Type'] = 'application/json' })
+  PerformHttpRequest(WebhookLink, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", content = img}), { ['Content-Type'] = 'application/json' })
 end)
 
 function webhookualdimgonderdim(content)
@@ -72,16 +73,15 @@ function webhookualdimgonderdim(content)
             },
         }
     }
-  PerformHttpRequest(WebhookLink, function(err, text, headers) end, 'POST', json.encode({username = "RWE ANTICHEAT", embeds = connect}), { ['Content-Type'] = 'application/json' })
+  PerformHttpRequest(WebhookLink, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", embeds = connect}), { ['Content-Type'] = 'application/json' })
 end
 
 ---------
 -- local cd = 0
 AddEventHandler('explosionEvent', function(sender)
-    local name = GetPlayerName(source)
-    webhookualdimgonderdim("Kişi patlayıcı spawnladı  "  ..name(sender))
+    local name = GetPlayerName(sender)
+    webhookualdimgonderdim("Kişi patlayıcı spawnladı  "..name)
     CancelEvent()
-   -- end
 end)
 -----
 AddEventHandler('entityCreating', function(entity)
