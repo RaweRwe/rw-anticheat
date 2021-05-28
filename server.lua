@@ -35,7 +35,7 @@ AddEventHandler("rwe:siktirgitkoyunekrds", function(reason)
          return
       end
    end
-	DropPlayer(source, reason)	
+  DropPlayer(source, "[RW-AC] "..reason)		
 end)
 -------
 RegisterServerEvent("rwe:cheatlog")
@@ -136,7 +136,7 @@ if Config.AntiSpawnVehicles then
          TriggerClientEvent("rwe:DeleteCars", -1,entID)
          Citizen.Wait(800)
             webhookualdimgonderdim("Yasaklı Araç","**-Oyuncu: **"..SpawnerName.."\n\n**-Obje Adı: **"..objName.name.."\n\n**-Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash,15105570)
-         TriggerEvent("rwe:siktirgitkoyunekrds", "Yasaklı araç tespit edildi.")
+            TriggerEvent("rwe:siktirgitkoyunekrds", "Yasaklı araç tespit edildi.")
       end
    end
 end
@@ -301,7 +301,7 @@ AddEventHandler('entityCreated', function(entity)
                 if GetEntityModel(entity) == GetHashKey(blacklistedProps) then
                     local src = NetworkGetEntityOwner(entity)
                     local xPlayer = ESX.GetPlayerFromId(src)
-                        webhookualdimgonderdim('Blacklistli Prop Çıkartıldı Prop: '..blacklistedProps..'\n**Prop:** https://plebmasters.de/?search='..blacklistedProps..'&app=objects \n**Google:** https://www.google.com/search?q='..blacklistedProps..' \n **Mwojtasik:** https://mwojtasik.dev/tools/gtav/objects/search?name='..blacklistedProps)
+                    webhookualdimgonderdim('Blacklistli Prop Çıkartıldı Prop: '..blacklistedProps..'\n**Prop:** https://plebmasters.de/?search='..blacklistedProps..'&app=objects \n**Google:** https://www.google.com/search?q='..blacklistedProps..' \n **Mwojtasik:** https://mwojtasik.dev/tools/gtav/objects/search?name='..blacklistedProps)
                     TriggerClientEvent('rwe:antiProp', -1)
                     CancelEvent()
                     return
@@ -312,7 +312,7 @@ AddEventHandler('entityCreated', function(entity)
                 if GetEntityModel(entity) == GetHashKey(blacklistedVeh) then
                     local src = NetworkGetEntityOwner(entity)
                     local xPlayer = ESX.GetPlayerFromId(src)
-                        webhookualdimgonderdim('Yasaklanan Araç Spawnlandı: '..blacklistedVeh..'\n **Çıkarmaya Çalıştığı araç:** https://www.gtabase.com/search?searchword='..blacklistedVeh)
+                    webhookualdimgonderdim('Yasaklanan Araç Spawnlandı: '..blacklistedVeh..'\n **Çıkarmaya Çalıştığı araç:** https://www.gtabase.com/search?searchword='..blacklistedVeh)
                     TriggerClientEvent('rwe:AntiVehicle', -1)
                     CancelEvent()
                     return
@@ -323,7 +323,7 @@ AddEventHandler('entityCreated', function(entity)
                 if GetEntityModel(entity) == GetHashKey(blacklistedPed) then
                     local src = NetworkGetEntityOwner(entity)
                     local xPlayer = ESX.GetPlayerFromId(src)
-                        webhookualdimgonderdim('Yasaklanan Ped Spawnlandı Pedin adı: '..blacklistedPed..'\n **Pedin Resmi:** https://docs.fivem.net/peds/'..blacklistedPed..'.png')
+                    webhookualdimgonderdim('Yasaklanan Ped Spawnlandı Pedin adı: '..blacklistedPed..'\n **Pedin Resmi:** https://docs.fivem.net/peds/'..blacklistedPed..'.png')
                     TriggerClientEvent('rwe:antiPed', -1)
                     CancelEvent()
                     return
