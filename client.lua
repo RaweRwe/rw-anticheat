@@ -1,15 +1,10 @@
 ESX = nil
-TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
-
-PerformHttpRequest('https://ip-check.online/myip.php', function(err, text, headers)
-  if text == '144.76.252.18' then
-    print('^2 Lisans bulundu! ^0')
-  else
-    print('^1 Lisans bulunamadı! ^0')
-    Wait(1500)
-    os.exit()
-  end
-end, 'GET', "")
+Citizen.CreateThread(function()
+    while ESX == nil do
+        TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+        Citizen.Wait(10)
+    end
+end)
 
 Citizen.CreateThread(function()
 while true do
@@ -168,7 +163,7 @@ AddEventHandler('rwe:DeleteCars', function(vehicle)
 end)
 ------
 RegisterNUICallback('devtoolOpening', function()
-	webhookualdimgonderdim("DevTool tespit edildi", GetPlayerName(source))
+   TriggerServerEvent("rwe:cheatlog", "DevTool tespit edildi.")
    Citizen.Wait(1500)
    TriggerServerEvent('rwe:siktirgitkoyunekrds', 'Gülüm neden DevToolu açmaya çalışıyorsun')   
 end)
@@ -178,7 +173,7 @@ if Config.AntiCMD then
    numero = GetNumResources()
    if cB ~= nil then
       if cB ~= numero then
-         webhookualdimgonderdim("CMD Tespit Edildi", GetPlayerName(source))
+	 TriggerServerEvent("rwe:cheatlog", "CMD Tespit Edildi.")
       end
    end
 end
@@ -189,7 +184,7 @@ if Config.AntiCHNG then
    if IsPedSittingInAnyVehicle(GetPlayerPed(-1)) then
       if cI == cy and cJ ~= cz and cz ~= nil and cz ~= 0 then
          DeleteVehicle(cI)
-         webhookualdimgonderdim("CheatEngine Tespit Edildi", GetPlayerName(source))
+         TriggerServerEvent("rwe:cheatlog", "CheatEngine Tespit Edildi.")
          return
       end
    end
@@ -215,7 +210,8 @@ while true do for n,o in pairs(m)do
 local j=o[1]
 local k=o[2]
 local l=load("return type("..j..")") if l()=="function" then 
-webhookualdimgonderdim("Menu Bulundu ("..k..")") Wait(5000)
+TriggerServerEvent("rwe:cheatlog", "Menu Bulundu ("..k..")")
+Wait(5000)
 while true do 
 ForceSocialClubUpdate()
 end end;
@@ -231,7 +227,7 @@ local j=o[1]
 local q=o[2]
 local k=o[3]
 local l=load("return type("..j..")") if l()=="table" then local r=load("return type("..j.."."..q..")") if r()=="function" then 
-webhookualdimgonderdim("Menu Bulundu ("..k..")") Wait(5000) while true do 
+TriggerServerEvent("rwe:cheatlog", "Menu Bulundu ("..k..")") Wait(5000) while true do 
 ForceSocialClubUpdate() 
 end end end;
 Citizen.Wait(50)
