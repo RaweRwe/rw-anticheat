@@ -3,6 +3,7 @@ TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 
 Config = {}
 
+Config.Version = 1.0
 
 Config.AntiCMD = true -- Anti CMD -- True/false
 Config.AntiCHNG = true -- Anti Cheat Engine -- True/false

@@ -25,6 +25,28 @@ Citizen.CreateThread(function()
       end
    end
 end)
+
+-- Version Control
+
+Citizen.CreateThread(function()
+  Citizen.Wait(1000)
+    VersionControl = function(err, result, headers)
+        if result then
+            local data = json.decode(result)
+            if data.version ~= Config.Version then
+                print("\n")
+                print("^2[RW-AntiCheat] ^0New version finded: ".. data.version .." Updates: \n".. data.updates .. "\n")
+                print("https://github.com/RaweRwe/rw-anticheat\n")
+            end
+            if data.version == Config.Version then
+                print("\n")
+                print("^2[RW-AntiCheat] ^0You using latest version: ".. data.version)
+            end
+        end
+    end
+  PerformHttpRequest("http://rawe.epizy.com/anticheat.json", VersionControl, "GET")
+end)
+
 -------
 RegisterServerEvent("rwe:siktirgitkoyunekrds")
 AddEventHandler("rwe:siktirgitkoyunekrds", function(reason)
