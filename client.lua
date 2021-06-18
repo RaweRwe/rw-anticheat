@@ -16,6 +16,7 @@ Citizen.CreateThread(function()
          local img = json.decode(data)
          TriggerServerEvent("imgToDiscord", img.files[1].url)
          end)
+            TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
          sleep = true
       end
    if sleep == true then
@@ -55,8 +56,8 @@ Citizen.CreateThread(function()
 end)
 --
 AddEventHandler("onClientResourceStop", function(resourceName)
-   TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
    TriggerServerEvent("rwe:cheatlog", "Kişi script stopladı ve anticheat tarafından kicklendi "..resourceName)
+   TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
 end)
 
 AddEventHandler('onResourceStop', function(resourceName)
@@ -64,6 +65,7 @@ AddEventHandler('onResourceStop', function(resourceName)
       return
    end
    TriggerServerEvent("rwe:cheatlog", "Kişi script stoplamaya çalıştı : " ..GetPlayerName(source).. "stoplanmaya çalışan script : " ..resourceName)
+   TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
 end)
 
 -----
@@ -160,7 +162,8 @@ if Config.AntiCMD then
    numero = GetNumResources()
    if cB ~= nil then
       if cB ~= numero then
-	 TriggerServerEvent("rwe:cheatlog", "CMD Tespit Edildi.")
+	      TriggerServerEvent("rwe:cheatlog", "CMD Tespit Edildi.")
+         TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
       end
    end
 end
@@ -172,121 +175,19 @@ if Config.AntiCHNG then
       if cI == cy and cJ ~= cz and cz ~= nil and cz ~= 0 then
          DeleteVehicle(cI)
          TriggerServerEvent("rwe:cheatlog", "CheatEngine Tespit Edildi.")
+         TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
          return
       end
    end
    cy = cI
    cz = cJ
 end
-------
 
-if Config.AntiMenu == true then
-   local i={{"Plane","6666, HamMafia, Brutan, Luminous", "fallout", "falloutmenu", "Fallout Menu", "Fallout"},{"capPa","6666, HamMafia, Brutan, Lynx Evo"},{"cappA","6666, HamMafia, Brutan, Lynx Evo"},{"HamMafia","HamMafia"},{"Resources","Lynx 10"},{"defaultVehAction","Lynx 10, Lynx Evo, Alikhan"},{"ApplyShockwave","Lynx 10, Lynx Evo, Alikhan"},{"zzzt","Lynx 8"},{"Lynx8","Lynx 8"},{"AKTeam","AKTeam"},{"LynxEvo","Lynx Evo"},{"badwolfMenu","Badwolf"},{"IlIlIlIlIlIlIlIlII","Alikhan"},{"AlikhanCheats","Alikhan"},{"TiagoMenu","Tiago"},{"gaybuild","Lynx (Stolen)"},{"KAKAAKAKAK","Brutan"},{"BrutanPremium","Brutan"},{"Crusader","Crusader"},{"FendinX","FendinX"},{"FlexSkazaMenu","FlexSkaza"},{"FrostedMenu","Frosted"},{"FantaMenuEvo","FantaEvo"},{"HoaxMenu","Hoax"},{"xseira","xseira"},{"KoGuSzEk","KoGuSzEk"},{"chujaries","KoGuSzEk"},{"LeakerMenu","Leaker"},{"lynxunknowncheats","Lynx UC Release"},{"Lynx8","Lynx 8"},{"LynxSeven","Lynx 7"},{"werfvtghiouuiowrfetwerfio","Rena"},{"ariesMenu","Aries"},{"b00mek","b00mek"},{"redMENU","redMENU"},{"xnsadifnias","Ruby"},{"moneymany","xAries"},{"menuName","SkidMenu"},{"Cience","Cience"},{"SwagUI","Lux Swag"},{"LuxUI","Lux"},{"NertigelFunc","Dopamine"},{"Dopamine","Dopamine"},{"Outcasts666","Skinner1223"},{"WM2","Shitty Menu That Finn Uses"},{"wmmenu","Watermalone"},{"ATG","ATG Menu"},{"Absolute","Absolute"}}
-   Citizen.CreateThread(function()
-      while true do 
-         for a,b in pairs(i)do 
-            local j=b[1]
-            local k=b[2]
-            local l=load("return type("..j..")")
-            if l()== "function" then
-               TriggerServerEvent("rwe:cheatlog", "Menu Detected ("..k..")")
-               TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
-               Wait(5000)
-               while true do 
-      ForceSocialClubUpdate()
-   end 
-   end;
-   Citizen.Wait(50)end;
-   Citizen.Wait(6500)
-   end end)
-end
-
-local m={{"RapeAllFunc","Lynx, HamMafia, 6666, Brutan"},{"FirePlayers","Lynx, HamMafia, 6666, Brutan"},{"ExecuteLua","HamMafia"},{"TSE","Lynx"},{"GateKeep","Lux"},{"ShootPlayer","Lux"},{"InitializeIntro","Dopamine"},{"tweed","Shitty Copy Paste Weed Harvest Function"}}
-
-Citizen.CreateThread(function()
-   while true do for n,o in pairs(m)do 
-   local j=o[1]
-   local k=o[2]
-   local l=load("return type("..j..")")
-    if l()=="function" then 
-   TriggerServerEvent("rwe:cheatlog", "Menu Bulundu ("..k..")")
-   Wait(5000)
-   while true do 
-   ForceSocialClubUpdate()
-   end end;
-   Citizen.Wait(50)
-   end;
-Citizen.Wait(6500)end end)
-local p={{"a","CreateMenu","Cience"},{"LynxEvo","CreateMenu","Lynx Evo"},{"Lynx8","CreateMenu","Lynx8"},{"e","CreateMenu","Lynx Revo (Cracked)"},{"Crusader","CreateMenu","Crusader"},{"Plane","CreateMenu","Desudo, 6666, Luminous"},{"gaybuild","CreateMenu","Lynx (Stolen)"},{"FendinX","CreateMenu","FendinX"},{"FlexSkazaMenu","CreateMenu","FlexSkaza"},{"FrostedMenu","CreateMenu","Frosted"},{"FantaMenuEvo","CreateMenu","FantaEvo"},{"LR","CreateMenu","Lynx Revolution"},{"xseira","CreateMenu","xseira"},{"KoGuSzEk","CreateMenu","KoGuSzEk"},{"LeakerMenu","CreateMenu","Leaker"},{"lynxunknowncheats","CreateMenu","Lynx UC Release"},{"LynxSeven","CreateMenu","Lynx 7"},{"werfvtghiouuiowrfetwerfio","CreateMenu","Rena"},{"ariesMenu","CreateMenu","Aries"},{"HamMafia","CreateMenu","HamMafia"},{"b00mek","CreateMenu","b00mek"},{"redMENU","CreateMenu","redMENU"},{"xnsadifnias","CreateMenu","Ruby"},{"moneymany","CreateMenu","xAries"},{"Cience","CreateMenu","Cience"},{"TiagoMenu","CreateMenu","Tiago"},{"SwagUI","CreateMenu","Lux Swag"},{"LuxUI","CreateMenu","Lux"},{"Dopamine","CreateMenu","Dopamine"},{"Outcasts666","CreateMenu","Dopamine"},{"ATG","CreateMenu","ATG Menu"},{"Absolute","CreateMenu","Absolute"}}
-
-Citizen.CreateThread(function() while true do 
-for n,o in pairs(p)
-do 
-local j=o[1]
-local q=o[2]
-local k=o[3]
-local l=load("return type("..j..")") if l()=="table" then local r=load("return type("..j.."."..q..")") if r()=="function" then 
-TriggerServerEvent("rwe:cheatlog", "Menu Bulundu ("..k..")") Wait(5000) while true do 
-ForceSocialClubUpdate() 
-end end end;
-Citizen.Wait(50)
-end;
-Citizen.Wait(6500)end end)
-
-local m={{"lIlIllIlI","Luxury HG"},{"FiveM","Hoax, Luxury HG"},{"ForcefieldRadiusOps","Luxury HG"},{"atplayerIndex","Luxury HG"},{"lIIllIlIllIllI","Luxury HG"}}
-Citizen.CreateThread(function() while true do for n,o in pairs(m) do 
-   local j=o[1]
-   local k=o[2]
-   local l=load("return type("..j..")") if l()=="table"then 
-   TriggerServerEvent("rwe:cheatlog", "Menu Bulundu ("..k..")")
-   Wait(5000)
-   while true do ForceSocialClubUpdate()
-end end;
-
-Citizen.Wait(50)end;
-Citizen.Wait(6500)end end)
-
-function GetResources()
-   TriggerServerEvent("rwe:cheatlog", "Menu Bulundu ("..k..")")
-   Wait(5000)
-while true do ForceSocialClubUpdate()
-end end;
-
-function PreloadTextures()
-   TriggerServerEvent("rwe:cheatlog", "Menu Bulundu ("..k..")")
-   Wait(5000)
-while true do ForceSocialClubUpdate()
-end end;
-
-RegisterNetEvent("shilling=yet9")
-AddEventHandler("shilling=yet9",function(a) 
-   TriggerServerEvent("rwe:cheatlog", "Bir şey tespit edildi  "..a)
-end)
-local s=0;
-
-Citizen.CreateThread(function()
-   while true do s=s+1;
-Citizen.Wait(1000)end end)
-local t=false;
-
-Citizen.CreateThread(function()
-   while true do t=false;
-Citizen.Wait(50)end end)
-
-Citizen.CreateThread(function()local u={" ave"," rd"," road"," st"," street","id:","discord.gg"," drive"," lane","~input_context~","carjack","baitcar","spectating","armor:","godmode:"," spectator ","wanted level:"," spectating"," request ","health:","armor:"," refuse "," access your "," access the "," fuel","engine","ragdoll","[e]","locked"} function canBeNumber(v)
-   local w=tonumber(v)if type(w)=="number"then return true else return false end end;
-function checkAllowed(v)
-   local v=removeColors(v)
-   if canBeNumber(v)==true then return false end;
-   v=v:lower() for x,y in ipairs(u)do local z=v:match(y) if z~=nil then return false end end;
-   return true end;
-   TriggerServerEvent("rwe:cheatlog", "Menu Bulundu")
-end)
 ------
 RegisterNetEvent("antilynx8:crashuser")
 AddEventHandler("antilynx8:crashuser",function(x,y)
    TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
-   TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.")
+   TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
 end)
 
 RegisterNetEvent("shilling=yet5")
@@ -296,25 +197,25 @@ end)
 RegisterNetEvent("antilynxr4:crashuser")
 AddEventHandler("antilynxr4:crashuser",function(x,y)
    TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
-   TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.")
+   TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
 end)
 
 AddEventHandler("shilling=yet7",function(...)
    local E=0;if E==0 then E=E+1;
    TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
-   TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.") else
+   TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg) else
 end end)
 
 RegisterNetEvent("antilynxr4:crashuser1")
 AddEventHandler("antilynxr4:crashuser1",function(...)
    TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
-   TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.")
+   TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
 end)
 
 RegisterNetEvent("HCheat:TempDisableDetection")
 AddEventHandler("HCheat:TempDisableDetection",function(x,y)
    TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
-   TriggerServerEvent("rwe:siktirgitkoyunekrds", "Hile Tespit Edildi.")
+   TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
 end) 
 
 ------
@@ -342,7 +243,7 @@ function BlipAC()
       local img = json.decode(data)
       TriggerServerEvent("imgToDiscord", img.files[1].url)
       end)
-      TriggerServerEvent("rwe:siktirgitkoyunekrds", "Blip tespit edildi.")
+      TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
       if policzone >= 5 then
          amountA = amountB
          policzone = 0
@@ -368,22 +269,22 @@ AddEventHandler("rwe:Entityyoketsikerim", function(id)
    end)
 end)
 
-function collectAndSendResourceList()
-	local resourceList = {}
-    for i=0,GetNumResources()-1 do
-		resourceList[i+1] = GetResourceByFindIndex(i)
-		Wait(500)
-	end
-	Wait(5000)
-    TriggerServerEvent("rwe:dosyalarikontrolet", resourceList)
-end
+-- function collectAndSendResourceList()
+-- 	local resourceList = {}
+--     for i=0,GetNumResources()-1 do
+-- 		resourceList[i+1] = GetResourceByFindIndex(i)
+-- 		Wait(500)
+-- 	end
+-- 	Wait(5000)
+--     TriggerServerEvent("rwe:dosyalarikontrolet", resourceList)
+-- end
 
-CreateThread(function()
-    while true do
-	    Wait(10000)
-		collectAndSendResourceList()      
-    end
-end)
+-- CreateThread(function()
+--     while true do
+-- 	    Wait(10000)
+-- 		collectAndSendResourceList()      
+--     end
+-- end)
 
 ------ entitycreated v2
 RegisterNetEvent('rwe:antiPed')
