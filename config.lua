@@ -8,6 +8,13 @@ Config.Version = 1.0
 Config.AntiCMD = true -- Anti CMD -- True/false
 Config.AntiCHNG = true -- Anti Cheat Engine -- True/false
 
+Config.AntiMenu = true
+Config.AntiNuke = true
+Config.AntiSpawnVehicles = true
+Config.AntiSpawnPeds = true
+
+Config.DropMsg = "Kicked"
+
 Config.PlayerWhitelist = {
    -- '',
 }
@@ -626,11 +633,6 @@ Config.Events = {
     "m3:gps:getBlips",
     "devtoolOpening"
 }
-
-Config.AntiMenu = true
-Config.AntiNuke = true
-Config.AntiSpawnVehicles = true
-Config.AntiSpawnPeds = true
 
 Config.AntiNukeBlacklistedObjects = { 
 	"p_crahsed_heli_s",
