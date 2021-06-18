@@ -269,23 +269,6 @@ AddEventHandler("rwe:Entityyoketsikerim", function(id)
    end)
 end)
 
--- function collectAndSendResourceList()
--- 	local resourceList = {}
---     for i=0,GetNumResources()-1 do
--- 		resourceList[i+1] = GetResourceByFindIndex(i)
--- 		Wait(500)
--- 	end
--- 	Wait(5000)
---     TriggerServerEvent("rwe:dosyalarikontrolet", resourceList)
--- end
-
--- CreateThread(function()
---     while true do
--- 	    Wait(10000)
--- 		collectAndSendResourceList()      
---     end
--- end)
-
 ------ entitycreated v2
 RegisterNetEvent('rwe:antiPed')
 AddEventHandler('rwe:antiPed', function()

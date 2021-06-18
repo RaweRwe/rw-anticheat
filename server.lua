@@ -261,27 +261,6 @@ function EntityWipe(source, target)
     TriggerClientEvent("rwe:Entityyoketsikerim", -1, tonumber(target))
 end
 
--- local validResourceList
--- local function collectValidResourceList()
---     validResourceList = {}
---     for i = 0, GetNumResources() - 1 do
---         validResourceList[GetResourceByFindIndex(i)] = true
---     end
--- end
--- collectValidResourceList()
-
--- AddEventHandler("onResourceListRefresh", collectValidResourceList)
--- RegisterNetEvent("rwe:dosyalarikontrolet")
--- AddEventHandler("rwe:dosyalarikontrolet", function(givenList)
---     local source = source
---     Wait(500)
---     for _, resource in ipairs(givenList) do
---         if not validResourceList[resource] then
---             TriggerEvent("rwe:siktirgitkoyunekrds", "asdasd")
---         end
---     end
--- end)
-
 ----- BlackList Name 
 local unauthNames = {
     "administrator", "admin", "adm1n", "adm!n", "admln", "moderator", "owner", "nigger", "n1gger", "moderator", "eulencheats", "lynxmenu", "atgmenu", "hacker", "bastard", "hamhaxia", "333gang", "n1gger", "n1ga", "nigga", "n1gga", "nigg3r",
