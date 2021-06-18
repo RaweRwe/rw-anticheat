@@ -1,15 +1,14 @@
 ESX = nil
 TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 
-WebhookLink = ""
+WebhookLink = "" -- discord webhook
 
 ---- Script isim kontrolü
 local onaylandi = false
 Citizen.CreateThread(function()
    while true do
-      local rwe = GetCurrentResourceName()
-        if rwe == 'rwe-anticheat' then
-            print('rwe')
+      local rw = GetCurrentResourceName()
+        if rw == 'rw-anticheat' then
             onaylandi = true
         if onaylandi == true then
             Citizen.Wait(1000)
@@ -103,6 +102,7 @@ end
 AddEventHandler('explosionEvent', function(sender)
     local name = GetPlayerName(sender)
     webhookualdimgonderdim("Kişi patlayıcı spawnladı  "..name)
+    TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
     CancelEvent()
 end)
 -----
@@ -116,11 +116,11 @@ AddEventHandler('entityCreating', function(entity)
     if type == 1 then
     elseif type == 2 then
     elseif type == 3 then
-        webhookualdimgonderdim("Kişi obje spawnladı İsim : "..name.. "Obje hash : "..model)
+        -- webhookualdimgonderdim("Kişi obje spawnladı İsim : "..name.. "Obje hash : "..model)
+        TriggerEvent("rwe:cheatlog", "Yasaklı Obje Tespit Edildi : "..GetPlayerName(src).. "Obje : "..model)
         CancelEvent()
     else
-        TriggerEvent("rwe:cheatlog", "Yasaklı Obje Tespit Edildi : "..GetPlayerName(src).. "Obje : "..model)
-        TriggerEvent("rwe:siktirgitkoyunekrds", "Obje tespit edildi : "..model)
+        TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
     end
 end)
 -----
@@ -139,6 +139,7 @@ AddEventHandler('rwe:WeaponFlag', function(weapon)
 
     webhookualdimgonderdim("Kişi kendisine silah verdi İsim : "..name.. "Silah : "..weapon)
 	TriggerClientEvent("rwe:RemoveInventoryWeapons", source) 
+    TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
 end)
 -----
 AddEventHandler('entityCreated', function(entity)
@@ -158,7 +159,7 @@ if Config.AntiSpawnVehicles then
          TriggerClientEvent("rwe:DeleteCars", -1,entID)
          Citizen.Wait(800)
             webhookualdimgonderdim("Yasaklı Araç","**-Oyuncu: **"..SpawnerName.."\n\n**-Obje Adı: **"..objName.name.."\n\n**-Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash,15105570)
-            TriggerEvent("rwe:siktirgitkoyunekrds", "Yasaklı araç tespit edildi.")
+            TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
       end
    end
 end
@@ -169,8 +170,8 @@ if Config.AntiSpawnPeds then
          TriggerClientEvent("rwe:DeletePeds", -1, entID)
          Citizen.Wait(800)
             webhookualdimgonderdim("Yasaklı PED","**-Oyuncu: **"..SpawnerName.."\n\n**-Obje Adı: **"..objName.name.."\n\n**-Nesne Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash,15105570)
-          end
-          TriggerEvent("rwe:siktirgitkoyunekrds", "Yasaklı araç tespit edildi.")
+            TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+        end
         break
       end
    end
@@ -182,6 +183,7 @@ if Config.AntiNuke then
          TriggerClientEvent("rwe:DeleteEntity", -1, entID)
          Citizen.Wait(800)
             webhookualdimgonderdim("Yasaklı Obje","**-Spawner Name: **"..SpawnerName.."\n\n**-Object Name: **"..objName.name.."\n\n**-Spawn Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash,15105570)
+            TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
         break
       end
    end
@@ -195,6 +197,7 @@ Citizen.CreateThread(function()
                local src = source
                local name = GetPlayerName(source)
                webhookualdimgonderdim("Event Yakalandı : "..name.. " Triggerlanan Event: " ..v)
+               TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
             end)
         end
     end
@@ -212,7 +215,7 @@ AddEventHandler('chatMessage', function(source, color, message)
                
                webhookualdimgonderdim('Chate blacklist mesaj yolladı! Mesaj: '..v)
                Citizen.Wait(1500)
-               TriggerEvent("rwe:siktirgitkoyunekrds", "Blacklist Kelime Tespit Edildi.")
+               TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
 
             CancelEvent()
         end
@@ -233,7 +236,7 @@ AddEventHandler('_chat:messageEntered', function(author, color, message)
             webhookualdimgonderdim('Blacklist Kelime Tespit Edildi! Kelime: '..v.. 'Kişi : '..name)
             CancelEvent()
             Citizen.Wait(1500)
-            TriggerEvent("rwe:siktirgitkoyunekrds", "Blacklist Kelime Tespit Edildi.")
+            TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
         end
       return
     end
@@ -245,7 +248,7 @@ Citizen.CreateThread(function()
             local src = source
             local name = GetPlayerName(source)
             webhookualdimgonderdim("Blacklist Komut Yakalandı : " ..name .. "Kullanılan Komut" ..Config.BlacklistedCommands[i])
-            TriggerEvent("rwe:siktirgitkoyunekrds", 'Blacklist komut kullandı! Komut: **/' .. Config.BlacklistedCommands[i]..'**')
+            TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
          end)
     end
 end)
@@ -277,15 +280,15 @@ local unauthNames = {
     "cs.deals", "twat", "ESX", "ESX_TEAM", "ESXTEAM"}
 local x = {}
 
-AddEventHandler("playerConnecting", function(playerName, setKickReason)
+AddEventHandler("playerConnecting", function(playerName)
     playerName = (string.gsub(string.gsub(string.gsub(playerName,  "-", ""), ",", ""), " ", ""):lower())
     for k, v in pairs(unauthNames) do
       local g, f = playerName:find(string.lower(v))
       if g or f  then
         table.insert (x, v)
         local blresult = table.concat(x, " ")
-          setKickReason('BlackList İsim Tespit Edildi')
           TriggerEvent("rwe:cheatlog", "BlackList İsim Tespit Edildi  Oyuncu: " ..GetPlayerName(source))
+          TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
           CancelEvent()
           for key in pairs (x) do
             x [key] = nil
@@ -304,6 +307,7 @@ AddEventHandler('entityCreated', function(entity)
                     local xPlayer = ESX.GetPlayerFromId(src)
                     webhookualdimgonderdim('Blacklistli Prop Çıkartıldı Prop: '..blacklistedProps..'\n**Prop:** https://plebmasters.de/?search='..blacklistedProps..'&app=objects \n**Google:** https://www.google.com/search?q='..blacklistedProps..' \n **Mwojtasik:** https://mwojtasik.dev/tools/gtav/objects/search?name='..blacklistedProps)
                     TriggerClientEvent('rwe:antiProp', -1)
+                    TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
                     CancelEvent()
                     return
                 end
@@ -315,6 +319,7 @@ AddEventHandler('entityCreated', function(entity)
                     local xPlayer = ESX.GetPlayerFromId(src)
                     webhookualdimgonderdim('Yasaklanan Araç Spawnlandı: '..blacklistedVeh..'\n **Çıkarmaya Çalıştığı araç:** https://www.gtabase.com/search?searchword='..blacklistedVeh)
                     TriggerClientEvent('rwe:AntiVehicle', -1)
+                    TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
                     CancelEvent()
                     return
                 end
@@ -326,6 +331,7 @@ AddEventHandler('entityCreated', function(entity)
                     local xPlayer = ESX.GetPlayerFromId(src)
                     webhookualdimgonderdim('Yasaklanan Ped Spawnlandı Pedin adı: '..blacklistedPed..'\n **Pedin Resmi:** https://docs.fivem.net/peds/'..blacklistedPed..'.png')
                     TriggerClientEvent('rwe:antiPed', -1)
+                    TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
                     CancelEvent()
                     return
                 end
