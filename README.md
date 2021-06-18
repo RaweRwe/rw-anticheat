@@ -2,7 +2,6 @@
 + 100 modmenu fixed 
 + AntiGiveWeapon
 + AntiResourceStop 
-+ client.lua full optimized
 + AntiBlip 
 + AntiInject 
 + AntiMenu
