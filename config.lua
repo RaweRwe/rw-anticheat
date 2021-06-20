@@ -13,11 +13,33 @@ Config.AntiNuke = true
 Config.AntiSpawnVehicles = true
 Config.AntiSpawnPeds = true
 
-Config.DropMsg = "Kicked"
+Config.AntiSpectates = false -- old version is semi work
 
-Config.PlayerWhitelist = {
-   -- '',
-}
+---
+
+Config.Enable = true -- This must be set in true do the Anticheat works as intended.
+Config.AntiExplosionDamage = true -- This prevents players from being killed by Explosions.
+Config.AntiGodMode = true -- Detects most of GodMode Cheats and Logs/Bans them.
+Config.AntiRagdoll = true -- Detects Anti-Ragdoll cheats.
+Config.AntiInvisible = true -- Detects if the player is Invisible.
+Config.AntiRadar = true -- Detects if Radar (Minimap) is enabled. If by default in your server you have enabled minimap, disable this option, otherwise you'll get bans.
+Config.AntiExplosiveBullets = true -- Detects if players have Explosive Weapons.
+Config.AntiSpectate = true -- Detects if player enters in spectator mode
+Config.AntiSpeedHacks = true -- Prevents players from using Speed Mods
+Config.AntiThermalVision = true -- Detects if player is using Thermal Vision.
+Config.AntiNightVision = true -- Detects if player is using Night Vision.
+Config.AntiPedChange = true -- Detects if Player has changed it's ped
+Config.AntiFreeCam = true -- Detects if Player is Using Freecam
+Config.AntiMenyoo = true -- Detects if Player Injects Menyoo
+Config.AntiGiveArmor = true -- Detects Give-Armor Cheats 
+Config.AntiAimAssist = true -- Prevents players from activating Aim-Assist (GTA V)
+Config.SuperJump = true -- Prevents player from using Super-Jump
+Config.AntiResourceStartorStop = true -- Prevents Cheaters from Stopping/Starting new Resource
+Config.AntiInfiniteStamina = true -- Detects if player is using infinite stamina cheats (BETA)
+
+---
+
+Config.DropMsg = "Kicked"
 
 Config.BlacklistedWeapons = { 
     "WEAPON_SNIPERRIFLE", 

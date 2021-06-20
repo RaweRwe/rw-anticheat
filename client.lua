@@ -69,20 +69,22 @@ AddEventHandler('onResourceStop', function(resourceName)
 end)
 
 -----
-Citizen.CreateThread(function()
-   while true do
-      Wait(5000)
-      local ped = NetworkIsInSpectatorMode()
-      if ped == 1 then
-         TriggerServerEvent("rwe:cheatlog", "İzleyici tespit edildi")
-         exports['screenshot-basic']:requestScreenshotUpload("", "files[]", function(data)
-         local img = json.decode(data)
-         TriggerServerEvent("imgToDiscord", img.files[1].url)
-      end)
-   end
-   TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+if Config.AntiSpectates then
+    Citizen.CreateThread(function()
+        while true do
+            Wait(5000)
+            local ped = NetworkIsInSpectatorMode()
+            if ped == 1 then
+                TriggerServerEvent("rwe:cheatlog", "İzleyici tespit edildi")
+                exports['screenshot-basic']:requestScreenshotUpload("", "files[]", function(data)
+                local img = json.decode(data)
+                TriggerServerEvent("imgToDiscord", img.files[1].url)
+            end)
+        end
+        TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+    end
+    end)
 end
-end)
 -----
 RegisterNetEvent("rwe:DeleteEntity")
 AddEventHandler('rwe:DeleteEntity', function(Entity)
@@ -156,14 +158,208 @@ AddEventHandler('rwe:DeleteCars', function(vehicle)
     end
 end)
 
+------ 
+
+if Config.Enable then
+    local _evhandler = AddEventHandler
+    Citizen.CreateThread(function()
+        resources = GetNumResources()
+        local _onresstarting = "onResourceStarting"
+        local _onresstart = "onResourceStart"
+        local _onclresstart = "onClientResourceStart"
+        local _antistop = Config
+        Citizen.Wait(30000)
+        local _originalped = GetEntityModel(PlayerPedId())
+        DisplayRadar(false)
+        _evhandler(_onresstarting, function(res)
+            if res ~= GetCurrentResourceName() then
+                TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "resourcestarted", res) 
+            end
+        end)
+        _evhandler(_onresstart, function(res)
+            if res ~= GetCurrentResourceName() then
+                TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "resourcestarted", res) 
+            end
+        end)
+        _evhandler(_onclresstart, function(res)
+            if res ~= GetCurrentResourceName() then
+                TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "resourcestarted", res) 
+            end
+        end)
+        while true do
+            Citizen.Wait(0)
+            local _ped = PlayerPedId()
+            local _pid = PlayerId()
+            local _Wait = Citizen.Wait
+            SetRunSprintMultiplierForPlayer(_pid, 1.0)
+            SetSwimMultiplierForPlayer(_pid, 1.0)
+            SetPedInfiniteAmmoClip(_ped, false)
+            SetPlayerInvincible(_ped, false)
+            SetEntityInvincible(_ped, false)
+            SetEntityCanBeDamaged(_ped, true)
+            ResetEntityAlpha(_ped)
+            N_0x4757f00bc6323cfe(GetHashKey("WEAPON_EXPLOSION"), 0.0)
+            if Config.AntiExplosionDamage then
+                SetEntityProofs(_ped, false, true, true, false, false, false, false, false)
+            end
+            _Wait(100)
+            if Config.AntiAimAssist then
+                SetPlayerTargetingMode(0)
+            end
+            _Wait(300)
+            if Config.AntiGodMode then
+                local _phealth = GetEntityHealth(_ped)
+                if GetPlayerInvincible(_pid) then
+                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "godmode", "4") 
+                    SetPlayerInvincible(_pid, false)
+                end
+                SetEntityHealth(_ped,  _phealth - 2)
+                _Wait(10)
+                if not IsPlayerDead(_pid) then
+                    if GetEntityHealth(_ped) == _phealth and GetEntityHealth(_ped) ~= 0 then
+                        TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "godmode", "1") --
+                    elseif GetEntityHealth(_ped) == _phealth - 2 then
+                        SetEntityHealth(_ped, GetEntityHealth(_ped) + 2)
+                    end
+                end
+                _Wait(100)
+                if GetEntityHealth(_ped) > 200 then
+                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "godmode", "2") 
+                end
+                _Wait(100)
+                local _val, _bulletproof, _fireproof , _explosionproof , _collisionproof , _meleeproof, _steamproof, _p7, _drownProof = GetEntityProofs(_ped)
+                if _bulletproof == 1 or _collisionproof == 1 or _meleeproof == 1 or _steamproof == 1 or _drownProof == 1 then
+                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "godmode", "3")
+                end
+                _Wait(300)
+            end
+            if Config.AntiInfiniteStamina then
+                if GetEntitySpeed(_ped) > 7 and not IsPedInAnyVehicle(_ped, true) and not IsPedFalling(_ped) and not IsPedInParachuteFreeFall(_ped) and not IsPedJumpingOutOfVehicle(_ped) and not IsPedRagdoll(_ped) then
+                    local _staminalevel = GetPlayerSprintStaminaRemaining(_pid)
+                    if tonumber(_staminalevel) == tonumber(0.0) then
+                        TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "infinitestamina") 
+                    end
+                end
+            end
+            if Config.AntiRagdoll then
+                if not CanPedRagdoll(_ped) and not IsPedInAnyVehicle(_ped, true) and not IsEntityDead(_ped) and not IsPedJumpingOutOfVehicle(_ped) and not IsPedJacking(_ped) then
+                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "antiragdoll") 
+                end
+                _Wait(300)
+            end
+            if Config.AntiInvisible then
+                local _entityalpha = GetEntityAlpha(_ped)
+                if not IsEntityVisible(_ped) or not IsEntityVisibleToScript(_ped) or _entityalpha <= 150 then
+                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "invisible") 
+                end
+                _Wait(300)
+            end
+            if Config.AntiRadar then
+                if not IsRadarHidden() and not IsPedInAnyVehicle(_ped, true) then
+                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "displayradar") 
+                end
+                _Wait(300)
+            end
+            if Config.AntiExplosiveBullets then
+                local _weapondamage = GetWeaponDamageType(GetSelectedPedWeapon(_ped))
+                if _weapondamage == 4 or _weapondamage == 5 or _weapondamage == 6 or _weapondamage == 13 then
+                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "explosiveweapon")
+                end
+                _Wait(300)
+            end
+            if Config.AntiSpectate then
+                if NetworkIsInSpectatorMode() then
+                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "spectatormode")
+                end
+                _Wait(300)
+            end
+            if Config.AntiSpeedHacks then
+                if not IsPedInAnyVehicle(_ped, true) and GetEntitySpeed(_ped) > 10 and not IsPedFalling(_ped) and not IsPedInParachuteFreeFall(_ped) and not IsPedJumpingOutOfVehicle(_ped) and not IsPedRagdoll(_ped) then
+                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "speedhack") 
+                end
+                _Wait(300)
+            end
+            if Config.AntiBlacklistedWeapons then
+                for _,_weapon in ipairs(Config.BlacklistedWeapons) do
+                    if HasPedGotWeapon(_ped, GetHashKey(_weapon), false) then
+                        RemoveAllPedWeapons(_ped, true)
+                        TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "blacklistedweapons") 
+                    end
+                    _Wait(1)
+                end
+                _Wait(300)
+            end
+            if Config.AntiThermalVision then
+                if GetUsingseethrough() then
+                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "thermalvision") 
+                end
+                _Wait(300)
+            end
+            if Config.AntiNightVision then
+                if GetUsingnightvision() then
+                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "nightvision")
+                end
+                _Wait(300)
+            end
+            if Config.DisableVehicleWeapons then 
+                local _nres = GetNumResources()
+                if resources -1 ~= _nres -1 or resources ~= _nres then
+                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "antiresourcestop")
+                end
+                _Wait(300)
+            end
+            if Config.AntiPedChange then
+                if _originalped ~= GetEntityModel(_ped) then
+                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "pedchanged")
+                end
+                _Wait(300)
+            end
+            if Config.AntiFreeCam then
+                local camcoords = (GetEntityCoords(_ped) - GetFinalRenderedCamCoord())
+                if (camcoords.x > 9) or (camcoords.y > 9) or (camcoords.z > 9) or (camcoords.x < -9) or (camcoords.y < -9) or (camcoords.z < -9) then
+                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "freecam") 
+                end
+                _Wait(300)
+            end
+            if Config.AntiMenyoo then
+                if IsPlayerCamControlDisabled() ~= false then
+                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "menyoo") 
+                end
+                _Wait(300)
+            end
+            if Config.AntiGiveArmor then
+                local _armor = GetPedArmour(_ped)
+                if _armor > 100 then
+                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "givearmour") 
+                end
+                _Wait(300)
+            end
+            if Config.AntiAimAssist then
+                local _aimassiststatus = GetLocalPlayerAimState()
+                if _aimassiststatus ~= 3 and not IsPedInAnyVehicle(_ped, true) then
+                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "aimassist", _aimassiststatus) 
+                end
+                _Wait(300)
+            end
+            if Config.SuperJump then
+               _Wait(810)
+                if IsPedJumping(PlayerPedId()) then
+                    TriggerServerEvent('8jWpZudyvjkDXQ2RVXf9', "superjump")
+                end
+            end
+        end
+    end)
+end
+
 ------
+
 if Config.AntiCMD then
    Citizen.Wait(2000)
    numero = GetNumResources()
    if cB ~= nil then
       if cB ~= numero then
-	      TriggerServerEvent("rwe:cheatlog", "CMD Tespit Edildi.")
-         TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+	    TriggerServerEvent("rwe:cheatlog", "CMD Tespit Edildi.")
+        TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
       end
    end
 end
@@ -173,10 +369,10 @@ if Config.AntiCHNG then
    local cJ = GetEntityModel(cI)
    if IsPedSittingInAnyVehicle(GetPlayerPed(-1)) then
       if cI == cy and cJ ~= cz and cz ~= nil and cz ~= 0 then
-         DeleteVehicle(cI)
-         TriggerServerEvent("rwe:cheatlog", "CheatEngine Tespit Edildi.")
-         TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
-         return
+        DeleteVehicle(cI)
+        TriggerServerEvent("rwe:cheatlog", "CheatEngine Tespit Edildi.")
+        TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+        return
       end
    end
    cy = cI
