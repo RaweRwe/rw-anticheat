@@ -23,6 +23,24 @@
 + AntiFreezeScript
 + BlacklistWords
 + AntiMap (Istanbul kur fix)
++ AntiExplosionDamage
++ AntiGodMode
++ AntiRagdoll,
++ AntiInvisible
++ AntiRadar
++ AntiExplosiveBullets
++ AntiSpectate
++ AntiSpeedHacks
++ AntiThermalVision
++ AntiNightVision
++ AntiPedChange
++ AntiFreeCam
++ AntiMenyoo
++ AntiGiveArmor
++ AntiAimAssist
++ SuperJump
++ AntiResourceStartorStop
++ AntiInfiniteStamina
 
 # Open Source AntiCheat
 Not obfuscate. Open source for everyone :)
