@@ -44,3 +44,7 @@
 
 # Open Source AntiCheat
 Not obfuscate. Open source for everyone :)
+
+# CREDIT
+
+https://github.com/visibait/VB-AC
