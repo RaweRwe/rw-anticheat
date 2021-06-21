@@ -42,6 +42,12 @@
 + AntiResourceStartorStop
 + AntiInfiniteStamina
 
+# Add server.cfg
+
+add_ace rwacbypass allow 
+add_ace identifier.steam:hex rwacbypass allow
+
+
 # Open Source AntiCheat
 Not obfuscate. Open source for everyone :)
 
