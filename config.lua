@@ -3,7 +3,7 @@ TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 
 Config = {}
 
-Config.Version = 2.0
+Config.Version = 2.5
 
 Config.AntiCMD = true -- Anti CMD -- True/false
 Config.AntiCHNG = true -- Anti Cheat Engine -- True/false
@@ -17,7 +17,7 @@ Config.AntiSpectates = false -- old version is semi work
 
 ---
 
-Config.Enable = true -- This must be set in true do the Anticheat works as intended.
+Config.BasicEnable = true -- This must be set in true do the Anticheat works as intended.
 Config.AntiExplosionDamage = true -- This prevents players from being killed by Explosions.
 Config.AntiGodMode = true -- Detects most of GodMode Cheats and Logs/Bans them.
 Config.AntiRagdoll = true -- Detects Anti-Ragdoll cheats.
@@ -653,7 +653,9 @@ Config.Events = {
     "m3:gps:dropBlips",
     "m3:gps:updateBlips",
     "m3:gps:getBlips",
-    "devtoolOpening"
+    "devtoolOpening",
+    "CarryPeople:sync",
+    "CarryPeople:stop"
 }
 
 Config.AntiNukeBlacklistedObjects = { 

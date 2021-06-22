@@ -149,94 +149,62 @@ AddEventHandler("8jWpZudyvjkDXQ2RVXf9", function(type)
         elseif (_type == "antiresourcestop") then
             webhookualdimgonderdim("Tried to stop/start a Resource " .._name)
             siktimbelani("Resource Stopped", _src)
-        elseif (_type == "licenseclear") then
-            webhookualdimgonderdim("Tried to Clear His Licenses " .._name)
-            siktimbelani("AntiLicenseClear", _src)
-        elseif (_type == "luainjection") then
-            webhookualdimgonderdim("Tried to Inject a Menu " .._name)
-            siktimbelani("Injection Detected", _src)
-        elseif (_type == "keyboardinjection") then
-            webhookualdimgonderdim("(AntiKeyBoardInjection) " .._name)
-            siktimbelani("Injection Detected", _src)
-        elseif (_type == "cheatengine") then
-            webhookualdimgonderdim("Tried to use CheatEngine to change Vehicle Hash " .._name)
-            siktimbelani("CheatEngine Detected", _src)
         elseif (_type == "pedchanged") then
             webhookualdimgonderdim("Tried to change his PED " .._name)
             siktimbelani("Ped Changed", _src)
         elseif (_type == "freecam") then
             webhookualdimgonderdim("Tried to use Freecam (Fallout or similar) " .._name)
             siktimbelani("FreeCam Detected", _src)
-        elseif (_type == "noclip") then
-            webhookualdimgonderdim("Tried to use NoClip " .._name)
-            siktimbelani("NoClip Detected", _src)
-        elseif (_type == "playerblips") then
-            webhookualdimgonderdim("Tried to put Player Blips " .._name)
-            siktimbelani("Blips Detected", _src)
-        elseif (_type == "damagemodifier") then
-            webhookualdimgonderdim("Tried to change Weapon's Bullet Damage ".._name)
-            siktimbelani("Weapon Damage Modifier Detected", _src)
-        elseif (_type == "clipmodifier") then
-            webhookualdimgonderdim("Tried to modify a Weapon clip ".._name)
-            siktimbelani("Weapon Clip Modifier Detected", _src)
         elseif (_type == "infiniteammo") then
             webhookualdimgonderdim("Tried to put Infinite Ammo")
             siktimbelani("Infinite Ammo Detected", _src)
-        elseif (_type == "stoppedac") then
-            webhookualdimgonderdim("Tried to stop the Anticheat " .._name)
-            siktimbelani("AntiResourceStop", _src)
-        elseif (_type == "stoppedresource") then
-            webhookualdimgonderdim("Tried to stop a resource ".._name)
-            siktimbelani("AntiResourceStop", _src)
         elseif (_type == "resourcestarted") then
             webhookualdimgonderdim("Tried to start a resource ".._name)
             siktimbelani("AntiResourceStart", _src)
-        elseif (_type == "resourceinjection") then
-            webhookualdimgonderdim("Tried to inject a resource ".._name)
-            siktimbelani("AntiResourceStart", _src)
-        elseif (_type == "commandinjection") then
-            webhookualdimgonderdim("Tried to inject a command " .._name)
-            siktimbelani("AntiCommandInjection", _src)
         elseif (_type == "menyoo") then
             webhookualdimgonderdim("Tried to inject Menyoo Menu " .._name)
             siktimbelani("Anti Menyoo", _src)
-        elseif (_type == "antisuicide") then
-            webhookualdimgonderdim("Tried to SUICIDE using a menu " .._name)
-            siktimbelani("Anti Suicide", _src)
         elseif (_type == "givearmour") then
             webhookualdimgonderdim("Tried to Give Armor " .._name)
             siktimbelani("Anti Give Armor", _src)
-        elseif (_type == "weirdresource") then
-            webhookualdimgonderdim("Tried to inject a resource with a lot of letters (Change Resource Name if you get banned while entering the server) Resource: ".._name)
-            siktimbelani("Weird Resource Started", _src)
-        elseif (_type == "receivedpickup") then
-            webhookualdimgonderdim("Pickup received. Args: ".._name)
         elseif (_type == "aimassist") then
             webhookualdimgonderdim("Aim Assist Detected. Mode: ".._name)
-        elseif (_type == "blacklistedtask") then
-            webhookualdimgonderdim("Tried to execute a blacklisted task. Task ID: ".._name)
-            siktimbelani("Blacklisted Task", _src)
-        elseif (_type == "blacklistedanim") then
-            webhookualdimgonderdim("Tried executing a blacklisted anim. This player might not be a cheater ".._name)
-            TriggerClientEvent("ZRQA3nmMqUBOIiKwH4I5:clearpeds" , -1) -- Delete this if you don't want peds to be removed after detecting this anim
         elseif (_type == "infinitestamina") then
             webhookualdimgonderdim("Tried to use Infinite Stamina " .._name)
             siktimbelani("Anti Infinite Stamina", _src)
-        elseif (_type == "shotplayerwithoutbeingonhisscreen") then
-            webhookualdimgonderdim("Hit a Player Without Being in his Screen. Possible Aimbot/TriggerBot/RageBot. Distance Difference: ".._name)
-            siktimbelani("Anti Aimbot/TriggerBot", _src)
-        elseif (_type == "aimbot") then
-            webhookualdimgonderdim("Aimbot detected (BETA). Type:" .._name)
-            siktimbelani("Anti Aimbot", _src)
-        elseif (_type == "onscreenmenudetection") then
-            webhookualdimgonderdim("On Screen Menu Detection (BETA). Blacklisted word detected in Player's screen: ".._name)
-            siktimbelani("Inyection Detected", _src)
         elseif (_type == "superjump") then
             if IsPlayerUsingSuperJump(_src) then
                 webhookualdimgonderdim("Superjump Detected ".._name)
                 siktimbelani("Superjump Detected", _src)
             end
+        elseif (_type == "vehicleweapons") then
+            webhookualdimgonderdim("Vehicle Weapons Detected: ".._name)
+            siktimbelani("Vehicle Weapons Detected", _src)
         end
+    end
+end)
+
+RegisterNetEvent('JzKD3yfGZMSLTqu9L4Qy')
+AddEventHandler('JzKD3yfGZMSLTqu9L4Qy', function(resource, info)
+    local _src = source
+    if resource ~= nil and info ~= nil then
+        webhookualdimgonderdim("Injection detected in resource: "..resource.. " Type: "..info)
+        siktimbelani("Injection detected", _src)
+     end
+end)
+
+RegisterNetEvent('tYdirSYpJtB77dRC3cvX')
+AddEventHandler('tYdirSYpJtB77dRC3cvX', function()
+    local _src = source
+    if IsPlayerAceAllowed(source, "rwacbypass") then
+        local players = {}
+        for _,v in pairs(GetPlayers()) do
+            table.insert(players, {
+                name = GetPlayerName(v),
+                id = v
+            })
+        end
+        TriggerClientEvent('ppskINSwjmAXyHcpLLp', _src, players)
     end
 end)
 

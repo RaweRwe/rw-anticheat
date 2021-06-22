@@ -160,14 +160,13 @@ end)
 
 ------ 
 
-if Config.Enable then
+if Config.BasicEnable then
     local _evhandler = AddEventHandler
     Citizen.CreateThread(function()
         resources = GetNumResources()
         local _onresstarting = "onResourceStarting"
         local _onresstart = "onResourceStart"
         local _onclresstart = "onClientResourceStart"
-        local _antistop = Config
         Citizen.Wait(30000)
         local _originalped = GetEntityModel(PlayerPedId())
         DisplayRadar(false)
@@ -301,12 +300,19 @@ if Config.Enable then
                 end
                 _Wait(300)
             end
-            if Config.DisableVehicleWeapons then 
+            if Config.AntiResourceStartorStop then 
                 local _nres = GetNumResources()
                 if resources -1 ~= _nres -1 or resources ~= _nres then
                     TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "antiresourcestop")
                 end
                 _Wait(300)
+            end
+            if Config.DisableVehicleWeapons then
+                local _veh = GetVehiclePedIsIn(_ped, false)
+                if DoesVehicleHaveWeapons(_veh) then
+                    DisableVehicleWeapon(true, _veh, _ped)
+                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "vehicleweapons")
+                end
             end
             if Config.AntiPedChange then
                 if _originalped ~= GetEntityModel(_ped) then
