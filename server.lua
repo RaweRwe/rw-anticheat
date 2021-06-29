@@ -196,7 +196,7 @@ end)
 RegisterNetEvent('tYdirSYpJtB77dRC3cvX')
 AddEventHandler('tYdirSYpJtB77dRC3cvX', function()
     local _src = source
-    if IsPlayerAceAllowed(source, "rwacbypass") then
+    if IsPlayerAceAllowed(_src, "rwacbypass") then
         local players = {}
         for _,v in pairs(GetPlayers()) do
             table.insert(players, {
@@ -204,7 +204,7 @@ AddEventHandler('tYdirSYpJtB77dRC3cvX', function()
                 id = v
             })
         end
-        TriggerClientEvent('ppskINSwjmAXyHcpLLp', _src, players)
+        siktimbelani("Why u cheating ?", _src)
     end
 end)
 
@@ -414,7 +414,6 @@ AddEventHandler('entityCreated', function(entity)
             for _, blacklistedProps in pairs(Config.AntiNukeBlacklistedObjects) do
                 if GetEntityModel(entity) == GetHashKey(blacklistedProps) then
                     local src = NetworkGetEntityOwner(entity)
-                    local xPlayer = ESX.GetPlayerFromId(src)
                     webhookualdimgonderdim('Blacklistli Prop Çıkartıldı Prop: '..blacklistedProps..'\n**Prop:** https://plebmasters.de/?search='..blacklistedProps..'&app=objects \n**Google:** https://www.google.com/search?q='..blacklistedProps..' \n **Mwojtasik:** https://mwojtasik.dev/tools/gtav/objects/search?name='..blacklistedProps)
                     TriggerClientEvent('rwe:antiProp', -1)
                     TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
@@ -426,7 +425,6 @@ AddEventHandler('entityCreated', function(entity)
             for _, blacklistedVeh in pairs(Config.AntiNukeBlacklistedVehicles) do
                 if GetEntityModel(entity) == GetHashKey(blacklistedVeh) then
                     local src = NetworkGetEntityOwner(entity)
-                    local xPlayer = ESX.GetPlayerFromId(src)
                     webhookualdimgonderdim('Yasaklanan Araç Spawnlandı: '..blacklistedVeh..'\n **Çıkarmaya Çalıştığı araç:** https://www.gtabase.com/search?searchword='..blacklistedVeh)
                     TriggerClientEvent('rwe:AntiVehicle', -1)
                     TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
@@ -438,7 +436,6 @@ AddEventHandler('entityCreated', function(entity)
             for _, blacklistedPed in pairs(Config.AntiNukeBlacklistedPeds) do
                 if GetEntityModel(entity) == GetHashKey(blacklistedPed) then
                     local src = NetworkGetEntityOwner(entity)
-                    local xPlayer = ESX.GetPlayerFromId(src)
                     webhookualdimgonderdim('Yasaklanan Ped Spawnlandı Pedin adı: '..blacklistedPed..'\n **Pedin Resmi:** https://docs.fivem.net/peds/'..blacklistedPed..'.png')
                     TriggerClientEvent('rwe:antiPed', -1)
                     TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)

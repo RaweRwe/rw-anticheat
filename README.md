@@ -44,8 +44,8 @@
 
 # Add in server.cfg
 
-add_ace rwacbypass allow 
-add_ace identifier.steam:hex rwacbypass allow
++ add_ace rwacbypass allow 
++ add_ace identifier.steam:hex rwacbypass allow
 
 
 # Open Source AntiCheat

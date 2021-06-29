@@ -90,7 +90,7 @@ RegisterNetEvent("rwe:DeleteEntity")
 AddEventHandler('rwe:DeleteEntity', function(Entity)
    local object = NetworkGetEntityFromNetworkId(Entity)
       if DoesEntityExist(object) then
-         ESX.Game.DeleteObject(object)
+        DeleteObject(object)
       end   
 end)
 
