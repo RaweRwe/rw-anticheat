@@ -3,7 +3,7 @@ TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 
 Config = {}
 
-Config.Version = 2.5
+Config.Version = 2.6
 
 Config.AntiCMD = true -- Anti CMD -- True/false
 Config.AntiCHNG = true -- Anti Cheat Engine -- True/false
@@ -37,6 +37,8 @@ Config.SuperJump = true -- Prevents player from using Super-Jump
 Config.AntiResourceStartorStop = true -- Prevents Cheaters from Stopping/Starting new Resource
 Config.AntiInfiniteStamina = true -- Detects if player is using infinite stamina cheats (BETA)
 
+Config.AntiResourceDetect = true -- Detect Inject and resource
+Config.AntiVDM = true -- Check vehicle speed
 ---
 
 Config.DropMsg = "Kicked"
@@ -322,7 +324,8 @@ Config.BlacklistKelime = {
     "Soviet Bear",
     "MARVIN menu",
     "KoGuSzEk#3251",
-    "devtoolOpening"
+    "devtoolOpening",
+    "localhost"
 }
 
 Config.EventsDetect = true

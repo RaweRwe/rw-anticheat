@@ -555,3 +555,88 @@ AddEventHandler('rwe:antiProp', function()
    until not finished
    EndFindObject(handle)
 end)
+
+-----
+
+Citizen.CreateThread(function()
+    while true do
+        local src = source
+        Citizen.Wait(0)
+            if Config.AntiResourceDetect then 
+                Citizen.Wait(6000) 
+                numero = Citizen.InvokeNative(0x863F27B)
+                if e~=nil then 
+                if e~=numero then 
+        TriggerServerEvent("rwe:cheatlog", "Inject Detected " ..GetPlayerName(src))
+        TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+end end end end end)
+
+arabadanatladi = load
+amipatladi = type
+
+Citizen.CreateThread(function()
+    local kesulan = load
+        if amipatladi(kesulan) == "function" and arabadanatladi == kesulan then
+            while true do
+                local _src = source
+                local _name = GetPlayerName(_src)
+                Citizen.Wait(3000)
+                if kesulan ~= load then
+                    TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                    TriggerServerEvent("rwe:cheatlog", "Bypass Detected " .._name(_src))
+                end
+                if amipatladi(kesulan("return debug")) ~= "function" then
+                    TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)	
+                    TriggerServerEvent("rwe:cheatlog", "Bypass Detected " .._name(_src))
+                end
+                if arabadanatladi("return debug")() == nil then
+                    TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                    TriggerServerEvent("rwe:cheatlog", "Bypass Detected " .._name(_src))
+                end
+                if amipatladi(load) == "nil" then
+                    TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                    TriggerServerEvent("rwe:cheatlog", "Bypass Detected " .._name(_src))                                   
+                end
+            end
+        else
+            TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+        end
+end)
+
+------
+
+Citizen.CreateThread(function()
+    if Config.AntiVDM then
+        if IsInVehicle and GetPedInVehicleSeat(GetVehiclePedIsIn(Ped, 0), -1) == PlayerPedId() then
+            local Vehicle = GetVehiclePedIsIn(Ped, 0)
+            local _Wait = Citizen.Wait
+            local _src = source
+            local _name = GetPlayerName(_src)
+            if GetPlayerVehicleDamageModifier(PlayerId()) > 1.0 then
+                TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                TriggerServerEvent("rwe:cheatlog", "Vehicle UltraSpeed Detected " .._name(_src))
+                _Wait(100000)
+            end
+            if GetVehicleGravityAmount(Vehicle) > 30.0 then
+                TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                TriggerServerEvent("rwe:cheatlog", "Vehicle UltraSpeed Detected " .._name(_src))
+                _Wait(100000)
+            end
+            if GetVehicleCheatPowerIncrease(Vehicle) > 10.0 then
+                TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                TriggerServerEvent("rwe:cheatlog", "Vehicle UltraSpeed Detected " .._name(_src))
+                _Wait(100000)
+            end
+            if GetVehicleTopSpeedModifier(Vehicle) > 200.0 then
+                TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                TriggerServerEvent("rwe:cheatlog", "Vehicle UltraSpeed Detected " .._name(_src))
+                _Wait(100000)
+            end
+            if GetPlayerVehicleDefenseModifier(Vehicle) > 10.0 then
+                TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                TriggerServerEvent("rwe:cheatlog", "Vehicle UltraSpeed Detected " .._name(_src))
+                _Wait(100000)
+            end
+        end
+    end
+end)
