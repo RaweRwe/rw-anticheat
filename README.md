@@ -41,6 +41,9 @@
 + SuperJump
 + AntiResourceStartorStop
 + AntiInfiniteStamina
++ AntiVDM
++ AntiBypass
++ AntiResourceDetect
 
 # Add in server.cfg
 
