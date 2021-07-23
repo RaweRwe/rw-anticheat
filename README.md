@@ -1,3 +1,7 @@
+# Note
+Lütfen credit vererek paylaşın.
+Please share with credit.
+
 # Features
 + 100 modmenu fixed 
 + AntiGiveWeapon
