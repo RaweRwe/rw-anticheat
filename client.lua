@@ -167,6 +167,7 @@ if Config.BasicEnable then
         local _onresstarting = "onResourceStarting"
         local _onresstart = "onResourceStart"
         local _onclresstart = "onClientResourceStart"
+        local _stopdetect = RW_AC
         Citizen.Wait(30000)
         local _originalped = GetEntityModel(PlayerPedId())
         DisplayRadar(false)
@@ -352,6 +353,9 @@ if Config.BasicEnable then
                 if IsPedJumping(PlayerPedId()) then
                     TriggerServerEvent('8jWpZudyvjkDXQ2RVXf9', "superjump")
                 end
+            end
+            if RW_AC == nil or _evhandler ~= AddEventHandler or _onresstarting ~= "onResourceStarting" or _onresstart ~= "onResourceStart" or _onclresstart ~= "onClientResourceStart" or _stopdetect ~= RW_AC then
+                TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "stoppedac")
             end
         end
     end)

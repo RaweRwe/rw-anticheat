@@ -49,10 +49,10 @@ end)
 -------
 RegisterServerEvent("rwe:siktirgitkoyunekrds")
 AddEventHandler("rwe:siktirgitkoyunekrds", function(reason)
-    local src = source
-    local identifier = GetPlayerIdentifiers(src)[1]
+    local _src = source
+    local identifier = GetPlayerIdentifiers(_src)[1]
 
-    DropPlayer(src, "[RW-AC] "..reason)		
+    DropPlayer(_src, "[RW-AC] "..reason)		
 end)
 
 siktimbelani = function(reason, servertarget) -- kick func
@@ -112,74 +112,77 @@ RegisterServerEvent("8jWpZudyvjkDXQ2RVXf9")
 AddEventHandler("8jWpZudyvjkDXQ2RVXf9", function(type)
     local _type = type or "default"
     local _src = source
-    local _name = GetPlayerName(_src)
+    local isim = GetPlayerName(_src)
     _type = string.lower(_type)
 
     if not IsPlayerAceAllowed(_src, "rwacbypass") then
         if (_type == "invisible") then
-            webhookualdimgonderdim("Tried to be Invisible " .._name)
+            webhookualdimgonderdim("Tried to be Invisible " ..isim)
             siktimbelani("Invisible Player Detected", _src)
         elseif (_type == "godmode") then
-            webhookualdimgonderdim("Tried to use GodMode ".._name)
+            webhookualdimgonderdim("Tried to use GodMode "..isim)
             siktimbelani("GodMode Detected", _src)
         elseif (_type == "antiragdoll") then
-            webhookualdimgonderdim("Tried to activate Anti-Ragdoll " .._name)
+            webhookualdimgonderdim("Tried to activate Anti-Ragdoll " ..isim)
             siktimbelani("AntiRagdoll Detected", _src)
         elseif (_type == "displayradar") then
-            webhookualdimgonderdim("Tried to activate Radar " .._name)
+            webhookualdimgonderdim("Tried to activate Radar " ..isim)
             siktimbelani("Radar Detected", _src)
         elseif (_type == "explosiveweapon") then
-            webhookualdimgonderdim("Tried to change bullet type " .._name)
+            webhookualdimgonderdim("Tried to change bullet type " ..isim)
             siktimbelani("Weapon Explosion Detected", _src)
         elseif (_type == "spectatormode") then
-            webhookualdimgonderdim("Tried to Spectate a Player " .._name)
+            webhookualdimgonderdim("Tried to Spectate a Player " ..isim)
             siktimbelani("Spectate Detected", _src)
         elseif (_type == "speedhack") then
-            webhookualdimgonderdim("Tried to SpeedHack " .._name)
+            webhookualdimgonderdim("Tried to SpeedHack " ..isim)
             siktimbelani("SpeedHack Detected", _src)
         elseif (_type == "blacklistedweapons") then
-            webhookualdimgonderdim("Tried to spawn a Blacklisted Weapon " .._name)
+            webhookualdimgonderdim("Tried to spawn a Blacklisted Weapon " ..isim)
             siktimbelani("Weapon in Blacklist Detected", _src)
         elseif (_type == "thermalvision") then
-            webhookualdimgonderdim("Tried to use Thermal Camera " .._name)
+            webhookualdimgonderdim("Tried to use Thermal Camera " ..isim)
             siktimbelani("Thermal Camera Detected", _src)
         elseif (_type == "nightvision") then
-            webhookualdimgonderdim("Tried to use Night Vision " .._name)
+            webhookualdimgonderdim("Tried to use Night Vision " ..isim)
             siktimbelani("Night Vision Detected", _src)
         elseif (_type == "antiresourcestop") then
-            webhookualdimgonderdim("Tried to stop/start a Resource " .._name)
+            webhookualdimgonderdim("Tried to stop/start a Resource " ..isim)
             siktimbelani("Resource Stopped", _src)
         elseif (_type == "pedchanged") then
-            webhookualdimgonderdim("Tried to change his PED " .._name)
+            webhookualdimgonderdim("Tried to change his PED " ..isim)
             siktimbelani("Ped Changed", _src)
         elseif (_type == "freecam") then
-            webhookualdimgonderdim("Tried to use Freecam (Fallout or similar) " .._name)
+            webhookualdimgonderdim("Tried to use Freecam (Fallout or similar) " ..isim)
             siktimbelani("FreeCam Detected", _src)
         elseif (_type == "infiniteammo") then
             webhookualdimgonderdim("Tried to put Infinite Ammo")
             siktimbelani("Infinite Ammo Detected", _src)
         elseif (_type == "resourcestarted") then
-            webhookualdimgonderdim("Tried to start a resource ".._name)
+            webhookualdimgonderdim("Tried to start a resource "..isim)
             siktimbelani("AntiResourceStart", _src)
         elseif (_type == "menyoo") then
-            webhookualdimgonderdim("Tried to inject Menyoo Menu " .._name)
+            webhookualdimgonderdim("Tried to inject Menyoo Menu " ..isim)
             siktimbelani("Anti Menyoo", _src)
         elseif (_type == "givearmour") then
-            webhookualdimgonderdim("Tried to Give Armor " .._name)
+            webhookualdimgonderdim("Tried to Give Armor " ..isim)
             siktimbelani("Anti Give Armor", _src)
         elseif (_type == "aimassist") then
-            webhookualdimgonderdim("Aim Assist Detected. Mode: ".._name)
+            webhookualdimgonderdim("Aim Assist Detected. Mode: "..isim)
         elseif (_type == "infinitestamina") then
-            webhookualdimgonderdim("Tried to use Infinite Stamina " .._name)
+            webhookualdimgonderdim("Tried to use Infinite Stamina " ..isim)
             siktimbelani("Anti Infinite Stamina", _src)
         elseif (_type == "superjump") then
             if IsPlayerUsingSuperJump(_src) then
-                webhookualdimgonderdim("Superjump Detected ".._name)
+                webhookualdimgonderdim("Superjump Detected "..isim)
                 siktimbelani("Superjump Detected", _src)
             end
         elseif (_type == "vehicleweapons") then
-            webhookualdimgonderdim("Vehicle Weapons Detected: ".._name)
+            webhookualdimgonderdim("Vehicle Weapons Detected: "..isim)
             siktimbelani("Vehicle Weapons Detected", _src)
+        elseif (_type == "stoppedac") then
+            webhookualdimgonderdim("Anti Anticheat Stop: "..isim)
+            siktimbelani("Anti Anticheat Stop", _src)
         end
     end
 end)
