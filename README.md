@@ -2,6 +2,9 @@
 Lütfen credit vererek paylaşın.
 Please share with credit.
 
+# Discord
+My Discord Server : https://discord.gg/BW5KA78SXW
+
 # Features
 + 100 modmenu fixed 
 + AntiGiveWeapon
