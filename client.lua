@@ -6,6 +6,8 @@ Citizen.CreateThread(function()
     end
 end)
 
+local resources
+
 Citizen.CreateThread(function()
    while true do
       local sleep = false
@@ -642,5 +644,419 @@ Citizen.CreateThread(function()
                 _Wait(100000)
             end
         end
+    end
+end)
+
+-- AntiMenu
+
+local funsionesAComprobar = {
+    { "TriggerCustomEvent" },
+    { "GetResources" },
+    { "IsResourceInstalled" },
+    { "ShootPlayer" },
+    { "FirePlayer" },
+    { "MaxOut" },
+    { "Clean2" },
+    { "TSE" },
+    { "TesticleFunction" },
+    { "rape" },
+    { "ShowInfo" },
+    { "checkValidVehicleExtras" },
+    { "vrpdestroy" },
+    { "esxdestroyv2" },
+    { "ch" },
+    { "Oscillate" },
+    { "GetAllPeds" },
+    { "forcetick" },
+    { "ApplyShockwave" },
+    { "GetCoordsInfrontOfEntityWithDistance" },
+    { "TeleporterinoPlayer" },
+    { "GetCamDirFromScreenCenter" },
+    { "DrawText3D2" },
+    { "WorldToScreenRel" },
+    { "DoesVehicleHaveExtras" },
+    { "nukeserver" },
+    { "SpawnWeaponMenu" },
+    { "esxdestroyv3" },
+    { "hweed" },
+    { "tweed" },
+    { "sweed" },
+    { "hcoke" },
+    { "tcoke" },
+    { "scoke" },
+    { "hmeth" },
+    { "tmeth" },
+    { "smeth" },
+    { "hopi" },
+    { "topi" },
+    { "sopi" },
+    { "mataaspalarufe" },
+    { "matanumaispalarufe" },
+    { "matacumparamasini" },
+    { "doshit" },
+    { "daojosdinpatpemata" },
+    { "RequestControlOnce" },
+    { "OscillateEntity" },
+    { "CreateDeer" },
+    { "teleportToNearestVehicle" },
+    { "SpawnObjOnPlayer" },
+    { "rotDirection" },
+    { "GetVehicleProperties" },
+    { "VehicleMaxTunning" },
+    { "FullTunningCar" },
+    { "VehicleBuy" },
+    { "SQLInjection" },
+    { "SQLInjectionInternal" },
+    { "ESXItemExpliot" },
+    { "AtacaCapo" },
+    { "DeleteCanaine" },
+    { "ClonePedFromPlayer" },
+    { "spawnTrollProp" },
+    { "beachFire" },
+    { "gasPump" },
+    { "clonePeds" },
+    { "RapeAllFunc" },
+    { "FirePlayers" },
+    { "ExecuteLua" },
+    { "GateKeep" },
+    { "InitializeIntro" },
+    { "getserverrealip" },
+    { "PreloadTextures" },
+    { "CreateDirectory" },
+    { "Attackers1" },
+    { "rapeVehicles" },
+    { "vehiclesIntoRamps" },
+    { "explodeCars" },
+    { "freezeAll" },
+    { "disableDrivingCars" },
+    { "cloneVehicle" },
+    { "CYAsHir6H9cFQn0z" },
+    { "ApOlItoTeAbDuCeLpiTo" },
+    { "PBoTOGWLGHUKxSoFRVrUu" },
+    { "GetFunction" },
+    { "GetModelHeight" },
+    { "RunDynamicTriggers" },
+    { "DoStatistics" },
+    { "SpectateTick" },
+    { "RunACChecker" },
+    { "TPM" }
+}
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(math.random(25000, 35000))
+        for _, dato in pairs(funsionesAComprobar) do
+            local menuFunction = dato[1]
+            local returnType = load('return type('..menuFunction..')')
+            if returnType() == 'function' then
+                -- Anticheat:ReportCheat(150, 'Menu Detected '..GetCurrentResourceName()..' '..menuFunction, true, true, true)
+                TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                TriggerServerEvent("rwe:cheatlog", "Menu Detected " ..GetCurrentResourceName().. " "..menuFunction)
+            end
+        end
+    end
+end)
+
+local TablasMenu = {
+    {'Crazymodz', 'Crazymodz'},
+    {'xseira', 'xseira'},
+    {'Cience', 'Cience'},
+    {'oTable', 'oTable'},
+    {'KoGuSzEk', 'KoGuSzEk'},
+    {'LynxEvo', 'LynxEvo'},
+    {'nkDesudoMenu', 'nkDesudoMenu'},
+    {'JokerMenu', 'JokerMenu'},
+    {'moneymany', 'moneymany'},
+    {'dreanhsMod', 'dreanhsMod'},
+    {'gaybuild', 'gaybuild'},
+    {'Lynx7', 'Lynx7'},
+    {'LynxSeven', 'LynxSeven'},
+    {'TiagoMenu', 'TiagoMenu'},
+    {'GrubyMenu', 'GrubyMenu'},
+    {'b00mMenu', 'b00mMenu'},
+    {'SkazaMenu', 'SkazaMenu'},
+    {'BlessedMenu', 'BlessedMenu'},
+    {'AboDream', 'AboDream'},
+    {'MaestroMenu', 'MaestroMenu'},
+    {'sixsixsix', 'sixsixsix'},
+    {'GrayMenu', 'GrayMenu'},
+    {'werfvtghiouuiowrfetwerfio', 'werfvtghiouuiowrfetwerfio'},
+    {'YaplonKodEvo', 'YaplonKodEvo'},
+    {'Biznes', 'Biznes'},
+    {'FantaMenuEvo', 'FantaMenuEvo'},
+    {'LoL', 'LoL'},
+    {'BrutanPremium', 'BrutanPremium'},
+    {'UAE', 'UAE'},
+    {'xnsadifnias', 'Ham Mafia'},
+    {'TAJNEMENUMenu', 'TAJNEMENUMenu'},
+    {'Outcasts666', 'Outcasts666'},
+    {'b00mek', 'b00mek'},
+    {'FlexSkazaMenu', 'FlexSkazaMenu'},
+    {'Desudo', 'Desudo'},
+    {'AlphaVeta', 'AlphaVeta'},
+    {'nietoperek', 'nietoperek'},
+    {'bat', 'bat'},
+    {'OneThreeThreeSevenMenu', 'OneThreeThreeSevenMenu'},
+    {'jebacDisaMenu', 'jebacDisaMenu'},
+    {'lynxunknowncheats', 'lynxunknowncheats'},
+    {'Motion', 'Motion'},
+    {'onionmenu', 'onionmenu'},
+    {'onion', 'onion'},
+    {'onionexec', 'onionexec'},
+    {'frostedflakes', 'frostedflakes'},
+    {'AlwaysKaffa', 'AlwaysKaffa'},
+    {'skaza', 'skaza'},
+    {'reasMenu', 'reasMenu'},
+    {'ariesMenu', 'ariesMenu'},
+    {'MarketMenu', 'MarketMenu'},
+    {'LoverMenu', 'LoverMenu'},
+    {'dexMenu', 'dexMenu'},
+    {'nigmenu0001', 'nigmenu0001'},
+    {'rootMenu', 'rootMenu'},
+    {'Genesis', 'Genesis'},
+    {'FendinX', 'FendinX'},
+    {'Tuunnell', 'Tuunnell'},
+    {'Roblox', 'Roblox'},
+    {'d0pamine', 'd0pamine'},
+    {'Swagamine', 'Swagamine'},
+    {'Absolute', 'Absolute'},
+    {'Absolute_function', 'Absolute'},
+    {'Dopameme', 'Dopameme'},
+    {'NertigelFunc', 'Dopamine'},
+    {'KosOmak', 'KosOmak'},
+    {'LuxUI', 'LuxUI'},
+    {'CeleoursPanel', 'CeleoursPanel'},
+    {'HankToBallaPool', 'HankToBallaPool'},
+    {'objs_tospawn', 'SkidMenu'},
+    {'HoaxMenu', 'Hoax'},
+    {'lIlIllIlI', 'Luxury HG'},
+    {'FiveM', 'Hoax, Luxury HG'},
+    {'ForcefieldRadiusOps', 'Luxury HG'},
+    {'atplayerIndex', 'Luxury HG'},
+    {'lIIllIlIllIllI', 'Luxury HG'},
+    {'Plane', '6666, HamMafia, Brutan, Luminous'},
+    {'ApplyShockwave', 'Lynx 10, Lynx Evo, Alikhan'},
+    {'zzzt', 'Lynx 8'},
+    {'badwolfMenu', 'Badwolf'},
+    {'KAKAAKAKAK', 'Brutan'},
+    {'Lynx8', 'Lynx 8'},
+    {'WM2', 'Mod Menu Basura'},
+    {'wmmenu', 'Watermalone'},
+    {'ATG', 'ATG Menu'},
+    {'capPa','6666, HamMafia, Brutan, Lynx Evo'},
+    {'cappA','6666, HamMafia, Brutan, Lynx Evo'},
+    {'HamMafia','HamMafia'},
+    {'Resources','Lynx 10'},
+    {'defaultVehAction','Lynx 10, Lynx Evo, Alikhan'},
+    {'AKTeam','AKTeam'},
+    {'IlIlIlIlIlIlIlIlII','Alikhan'},
+    {'AlikhanCheats','Alikhan'},
+    {'Crusader','Crusader'},
+    {'FrostedMenu','Frosted'},
+    {'chujaries','KoGuSzEk'},
+    {'LeakerMenu','Leaker'},
+    {'redMENU','redMENU'},
+    {'FM','ConfigClass'},
+    {'FM','CopyTable'},
+    {'rE','Bypasses'},
+    {'FM','RemoveEmojis'},
+    {'menuName','SkidMenu'},
+    {'SwagUI','Lux Swag'},
+    {'Dopamine','Dopamine'},
+    {'Rph','RPH'},
+    {'MIOddhwuie','Custom Mod Menu'},
+    {'_natives','DestroyCam'},
+    {'Falcon','Falcon'},
+    {'InSec','InSec'},
+    {'Falloutmenu','Falloutmenu'},
+    {'Fallout','Fallout'}
+}
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(math.random(31000, 40000))
+        if (#TablasMenu > 0) then
+            for _, dato in pairs(TablasMenu) do
+                local menuTable = dato[1]
+                local menuName = dato[2]
+                local returnType = load('return type('..menuTable..')')
+                if returnType() == 'table' then
+                    TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                    TriggerServerEvent("rwe:cheatlog", "Menu Detected " ..GetCurrentResourceName().. " Menu Name: " ..menuName.. " Table: " ..menuTable)
+                elseif returnType() == 'function' then
+                    TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                    TriggerServerEvent("rwe:cheatlog", "Menu Detected " ..GetCurrentResourceName().. " Menu Name: " ..menuName.. " Table: " ..menuTable)
+                end
+            end
+        end
+    end
+end)
+
+---
+
+local a1 = {{"a", "CreateMenu", "Cience"}, {"LynxEvo", "CreateMenu", "Lynx Evo"}, {"Lynx8", "CreateMenu", "Lynx8"},
+            {"e", "CreateMenu", "Lynx Revo (Cracked)"}, {"Crusader", "CreateMenu", "Crusader"},
+            {"Plane", "CreateMenu", "Desudo, 6666, Luminous"}, {"gaybuild", "CreateMenu", "Lynx (Stolen)"},
+            {"FendinX", "CreateMenu", "FendinX"}, {"FlexSkazaMenu", "CreateMenu", "FlexSkaza"},
+            {"FrostedMenu", "CreateMenu", "Frosted"}, {"FantaMenuEvo", "CreateMenu", "FantaEvo"},
+            {"LR", "CreateMenu", "Lynx Revolution"}, {"xseira", "CreateMenu", "xseira"},
+            {"KoGuSzEk", "CreateMenu", "KoGuSzEk"}, {"LeakerMenu", "CreateMenu", "Leaker"},
+            {"lynxunknowncheats", "CreateMenu", "Lynx UC Release"}, {"LynxSeven", "CreateMenu", "Lynx 7"},
+            {"werfvtghiouuiowrfetwerfio", "CreateMenu", "Rena"}, {"ariesMenu", "CreateMenu", "Aries"},
+            {"HamMafia", "CreateMenu", "HamMafia"}, {"b00mek", "CreateMenu", "b00mek"},
+            {"redMENU", "CreateMenu", "redMENU"}, {"xnsadifnias", "CreateMenu", "Ruby"},
+            {"moneymany", "CreateMenu", "xAries"}, {"Cience", "CreateMenu", "Cience"},
+            {"TiagoMenu", "CreateMenu", "Tiago"}, {"SwagUI", "CreateMenu", "Lux Swag"}, {"LuxUI", "CreateMenu", "Lux"},
+            {"Dopamine", "CreateMenu", "Dopamine"}, {"Outcasts666", "CreateMenu", "Dopamine"},
+            {"ATG", "CreateMenu", "ATG Menu"}, {"Absolute", "CreateMenu", "Absolute"}, {"InSec", "CreateMenu", "InSec"}}
+Citizen.CreateThread(function()
+    Wait(5000)
+    while true do
+        for a2, a3 in pairs(a1) do
+            local a4 = a3[1]
+            local a5 = a3[2]
+            local a6 = a3[3]
+            local a7 = load("return type(" .. a4 .. ")")
+            if a7() == "table" then
+                local a8 = load("return type(" .. a4 .. "." .. a5 .. ")")
+                if a8() == "function" then
+                    TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                    TriggerServerEvent("rwe:cheatlog", "Menu Detected " ..a4)
+                    return
+                end
+            end
+            Wait(10)
+        end
+        Wait(10000)
+    end
+end)
+
+local V = {{"Plane", "6666, HamMafia, Brutan, Luminous"}, {"capPa", "6666, HamMafia, Brutan, Lynx Evo"},
+           {"cappA", "6666, HamMafia, Brutan, Lynx Evo"}, {"HamMafia", "HamMafia"}, {"Resources", "Lynx 10"},
+           {"defaultVehAction", "Lynx 10, Lynx Evo, Alikhan"}, {"ApplyShockwave", "Lynx 10, Lynx Evo, Alikhan"},
+           {"zzzt", "Lynx 8"}, {"AKTeam", "AKTeam"}, {"LynxEvo", "Lynx Evo"}, {"badwolfMenu", "Badwolf"},
+           {"IlIlIlIlIlIlIlIlII", "Alikhan"}, {"AlikhanCheats", "Alikhan"}, {"TiagoMenu", "Tiago"},
+           {"gaybuild", "Lynx (Stolen)"}, {"KAKAAKAKAK", "Brutan"}, {"BrutanPremium", "Brutan"},
+           {"Crusader", "Crusader"}, {"FendinX", "FendinX"}, {"FlexSkazaMenu", "FlexSkaza"}, {"FrostedMenu", "Frosted"},
+           {"FantaMenuEvo", "FantaEvo"}, {"HoaxMenu", "Hoax"}, {"xseira", "xseira"}, {"KoGuSzEk", "KoGuSzEk"},
+           {"chujaries", "KoGuSzEk"}, {"LeakerMenu", "Leaker"}, {"lynxunknowncheats", "Lynx UC Release"},
+           {"Lynx8", "Lynx 8"}, {"LynxSeven", "Lynx 7"}, {"werfvtghiouuiowrfetwerfio", "Rena"}, {"ariesMenu", "Aries"},
+           {"b00mek", "b00mek"}, {"redMENU", "redMENU"}, {"xnsadifnias", "Ruby"}, {"moneymany", "xAries"},
+           {"menuName", "SkidMenu"}, {"Cience", "Cience"}, {"SwagUI", "Lux Swag"}, {"LuxUI", "Lux"},
+           {"NertigelFunc", "Dopamine"}, {"Dopamine", "Dopamine"}, {"Outcasts666", "Skinner1223"},
+           {"WM2", "Shitty Menu That Finn Uses"}, {"wmmenu", "Watermalone"}, {"ATG", "ATG Menu"},
+           {"Absolute", "Absolute"}, {"RapeAllFunc", "Lynx, HamMafia, 6666, Brutan"}, {"InitializeIntro", "Dopamine"},
+           {"FirePlayers", "Lynx, HamMafia, 6666, Brutan"}, {"ExecuteLua", "HamMafia"}, {"TSE", "Lynx"},
+           {"GateKeep", "Lux"}, {"ShootPlayer", "Lux"}, 
+           {"tweed", "Shitty Copy Paste Weed Harvest Function"}, {"lIlIllIlI", "Luxury HG"},
+           {"FiveM", "Hoax, Luxury HG"}, {"ForcefieldRadiusOps", "Luxury HG"}, {"atplayerIndex", "Luxury HG"}, {"InitializeIntro", "Dopamine"},
+           {"lIIllIlIllIllI", "Luxury HG"}, {"fuckYouCuntBag", "ATG Menu"}}
+local W = {{"RapeAllFunc", "Lynx, HamMafia, 6666, Brutan"}, {"FirePlayers", "Lynx, HamMafia, 6666, Brutan"},
+           {"ExecuteLua", "HamMafia"}, {"TSE", "Lynx"}, {"GateKeep", "Lux"}, {"ShootPlayer", "Lux"},
+           {"tweed", "Shitty Copy Paste Weed Harvest Function"},
+           {"GetResources", "GetResources Function"}, {"PreloadTextures", "PreloadTextures Function"},
+           {"CreateDirectory", "Onion Executor"}, {"WMGang_Wait", "WaterMalone"}}
+
+Citizen.CreateThread(function()
+    Wait(5000)
+    while true do
+        for X, Y in pairs(V) do
+            local Z = Y[1]
+            local _ = Y[2]
+            local a0 = load("return type(" .. Z .. ")")
+            if a0() == "function" then
+                TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                TriggerServerEvent("rwe:cheatlog", "Menu Detected " ..Z)
+                return
+            end
+            Wait(10)
+        end
+        Wait(5000)
+        for X, Y in pairs(W) do
+            local Z = Y[1]
+            local _ = Y[2]
+            local a0 = load("return type(" .. Z .. ")")
+            if a0() == "function" then
+                TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                TriggerServerEvent("rwe:cheatlog", "Menu Detected " ..Z)
+                return
+            end
+            Wait(10)
+        end
+        Wait(5000)
+    end
+end)
+
+LoadResourceFile_ = LoadResourceFile;
+LoadResourceFile = function(al, am)
+    if al ~= GetCurrentResourceName() then
+        TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+        TriggerServerEvent("rwe:cheatlog", "Load Resource Detected: " ..al)
+    else
+        LoadResourceFile_(al, am)
+    end
+end
+
+Citizen.CreateThread(function()
+    while true do
+            Citizen.Wait(10000)
+            local yatassa = Citizen.Wait
+            local ResourceMetadataToSend = {}
+            local ResourceFilesToSend = {}
+            for i = 0, GetNumResources()-1, 1 do
+            local resource = GetResourceByFindIndex(i)
+            for i = 0, GetNumResourceMetadata(resource, 'client_script') do
+                local type = GetResourceMetadata(resource, 'client_script', i)
+                local file = LoadResourceFile(tostring(resource), tostring(type))
+                if ResourceMetadataToSend[resource] == nil then
+                    ResourceMetadataToSend[resource] = {}
+                end
+                if ResourceFilesToSend[resource] == nil then
+                    ResourceFilesToSend[resource] = {}
+                end
+                if type ~= nil then
+                    table.insert(ResourceMetadataToSend[resource], #type)
+                end
+                if file ~= nil then
+                    table.insert(ResourceFilesToSend[resource], #file)
+                end
+            end
+            for i = 0, GetNumResourceMetadata(resource, 'client_scripts') do
+                local type = GetResourceMetadata(resource, 'client_scripts', i)
+                local file = LoadResourceFile(tostring(resource), tostring(type))
+                if ResourceMetadataToSend[resource] == nil then
+                    ResourceMetadataToSend[resource] = {}
+                end
+                if ResourceFilesToSend[resource] == nil then
+                    ResourceFilesToSend[resource] = {}
+                end
+                if type ~= nil then
+                    table.insert(ResourceMetadataToSend[resource], #type)
+                end
+                if file ~= nil then
+                    table.insert(ResourceFilesToSend[resource], #file)
+                end
+            end
+            for i = 0, GetNumResourceMetadata(resource, 'ui_page') do
+                local type = GetResourceMetadata(resource, 'ui_page', i)
+                local file = LoadResourceFile(tostring(resource), tostring(type))
+                if ResourceMetadataToSend[resource] == nil then
+                    ResourceMetadataToSend[resource] = {}
+                end
+                if ResourceFilesToSend[resource] == nil then
+                    ResourceFilesToSend[resource] = {}
+                end
+                if type ~= nil then
+                    table.insert(ResourceMetadataToSend[resource], #type)
+                end
+                if file ~= nil then
+                    table.insert(ResourceFilesToSend[resource], #file)
+                end
+            end
+        end
+        TriggerServerEvent('PJHxig0KJQFvQsrIhd5h', ResourceMetadataToSend, ResourceFilesToSend)
+        yatassa(2000)
+        ResourceMetadataToSend = {}
+        ResourceFilesToSend = {}
+        yatassa(180000)
     end
 end)

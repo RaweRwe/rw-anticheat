@@ -3,7 +3,9 @@ TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 
 Config = {}
 
-Config.Version = 2.6
+Config.Version = 3.0
+
+Config.DropMsg = "Don't use cheat! Discord: https://discord.gg/BW5KA78SXW"
 
 Config.AntiCMD = true -- Anti CMD -- True/false
 Config.AntiCHNG = true -- Anti Cheat Engine -- True/false
@@ -39,9 +41,15 @@ Config.AntiInfiniteStamina = true -- Detects if player is using infinite stamina
 
 Config.AntiResourceDetect = true -- Detect Inject and resource
 Config.AntiVDM = true -- Check vehicle speed
----
 
-Config.DropMsg = "Kicked"
+Config.EventsDetect = true
+
+Config.WhitelistedResources = { -- If you get banned and the anticheat logs something like this "Resource metadata not valid in resource: or Abnormal resource injection" put here the resources that are causing that errors and everything should be fixed.
+	["discord-screenshot"] = true,
+	["screenshot-basic"] = true,
+	["mumble-voip"] = true,
+}
+---
 
 Config.BlacklistedWeapons = { 
     "WEAPON_SNIPERRIFLE", 
@@ -129,7 +137,7 @@ Config.BlacklistedCommands = {
     "Falloutmenu",
     "redEngine",
     "executor",
-    "//", -- Bazı hileler bununla çalışıyor
+    "//",
     "Rena",
     "HamHaxia", 
     "Ham Mafia", 
@@ -325,10 +333,9 @@ Config.BlacklistKelime = {
     "MARVIN menu",
     "KoGuSzEk#3251",
     "devtoolOpening",
-    "localhost"
+    "localhost",
+    "我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地将你的悲惨的屁股子。我将尽其所能地"
 }
-
-Config.EventsDetect = true
 
 Config.Events = {
     "m3:admin:server:goto",
@@ -553,7 +560,6 @@ Config.Events = {
     "esx_dmvschool:pLRACay", 
     "LegacyFuel:PayFuLRACel",
     "OG_cuffs:cuffCheckNeLRACarest",
-    "esx_policejob:handcuff",
     "cuffSeLRACrver",
     "cuffGLRACranted",
     "police:cuffGLRACranted",
@@ -658,7 +664,20 @@ Config.Events = {
     "m3:gps:getBlips",
     "devtoolOpening",
     "CarryPeople:sync",
-    "CarryPeople:stop"
+    "CarryPeople:stop",
+    "esx_policejob:drag",
+    "esx_policejob:putInVehicle",
+    "esx_policejob:message",
+    "esx_policejob:requestarrest",
+    "esx_policejob:requestrelease",
+    "esx_policejob:givehandcuff",
+    "esx_sheriffjob:handcuff",
+    "esx_sheriffjob:drag",
+    "esx_sheriffjob:putInVehicle",
+    "esx_sheriffjob:OutVehicle",
+    "esx_sheriffjob:message",
+    "esx_sheriffjob:requestarrest",
+    "esx_sheriffjob:givehandcuff"
 }
 
 Config.AntiNukeBlacklistedObjects = { 
