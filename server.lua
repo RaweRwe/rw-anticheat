@@ -423,7 +423,10 @@ RegisterCommand("entitywipe", function(source, args, raw)
 end, false)
 
 function EntityWipe(source, target)
-    TriggerClientEvent("rwe:Entityyoketsikerim", -1, tonumber(target))
+    local _src = source
+    if IsPlayerAceAllowed(_src, "rwacbypass") then
+        TriggerClientEvent("rwe:Entityyoketsikerim", -1, tonumber(target))
+    end
 end
 
 ----- BlackList Name 
@@ -449,13 +452,13 @@ AddEventHandler("playerConnecting", function(playerName)
       if g or f  then
         table.insert (x, v)
         local blresult = table.concat(x, " ")
-          TriggerEvent("rwe:cheatlog", "BlacklistName Detected! Player: " ..GetPlayerName(source))
-          TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
-          CancelEvent()
-          for key in pairs (x) do
-            x [key] = nil
+            TriggerEvent("rwe:cheatlog", "BlacklistName Detected! Player: " ..GetPlayerName(source))
+            TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+            CancelEvent()
+            for key in pairs (x) do
+                x [key] = nil
+            end
         end
-      end
     end
 end)
 
