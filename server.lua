@@ -6,7 +6,7 @@ WebhookLink = "" -- discord webhook
 local ResourceMetadata = {}
 local ResourceFiles = {}
 
----- Script isim kontrolü
+---- Script name check
 local onaylandi = false
 Citizen.CreateThread(function()
    while true do
@@ -46,7 +46,7 @@ Citizen.CreateThread(function()
             end
         end
     end
-  PerformHttpRequest("http://rawe.epizy.com/anticheat.json", VersionControl, "GET")
+  PerformHttpRequest("https://raw.githubusercontent.com/RaweRwe/rw-anticheat-version/main/anticheat.json", VersionControl, "GET")
 end)
 
 -------
