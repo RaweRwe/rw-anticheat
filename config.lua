@@ -3,7 +3,7 @@ TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 
 Config = {}
 
-Config.Version = 3.0
+Config.Version = 3.2
 
 Config.DropMsg = "Don't use cheat! Discord: https://discord.gg/BW5KA78SXW"
 
@@ -304,7 +304,7 @@ Config.BlacklistedVehicles = {
     'adder'
 }
 
-Config.BlacklistKelime = {
+Config.BlacklistWords = {
     'Desudo',
     'Brutan',
     'EulenCheats',

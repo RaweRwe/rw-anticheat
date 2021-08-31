@@ -376,17 +376,17 @@ if Config.AntiCMD then
    end
 end
 if Config.AntiCHNG then
-   Citizen.Wait(2000)
-   local cI = GetVehiclePedIsUsing(GetPlayerPed(-1))
-   local cJ = GetEntityModel(cI)
-   if IsPedSittingInAnyVehicle(GetPlayerPed(-1)) then
-      if cI == cy and cJ ~= cz and cz ~= nil and cz ~= 0 then
-        DeleteVehicle(cI)
-        TriggerServerEvent("rwe:cheatlog", "CheatEngine Tespit Edildi.")
-        TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
-        return
-      end
-   end
+    Citizen.Wait(2000)
+    local cI = GetVehiclePedIsUsing(GetPlayerPed(-1))
+    local cJ = GetEntityModel(cI)
+    if IsPedSittingInAnyVehicle(GetPlayerPed(-1)) then
+        if cI == cy and cJ ~= cz and cz ~= nil and cz ~= 0 then
+            DeleteVehicle(cI)
+            TriggerServerEvent("rwe:cheatlog", "CheatEngine Tespit Edildi.")
+            TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+            return
+        end
+    end
    cy = cI
    cz = cJ
 end
@@ -446,11 +446,7 @@ function BlipAC()
    local roz = amountB - amountA
    if roz >= 40 and amountA > 0 and not whitelisted and amountA > 160 then
       policzone = policzone + 1
-      TriggerServerEvent("rwe:cheatlog", "Kişinin bliplerinin açık olduğu tespit edildi ve anticheat tarafından kicklendi ")
-      exports['screenshot-basic']:requestScreenshotUpload("", "files[]", function(data)
-      local img = json.decode(data)
-      TriggerServerEvent("imgToDiscord", img.files[1].url)
-      end)
+      TriggerServerEvent("rwe:cheatlog", "Kişinin bliplerinin açık olduğu tespit edildi ve anticheat tarafından kicklendi!")
       TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
       if policzone >= 5 then
          amountA = amountB

@@ -292,18 +292,19 @@ end)
 RegisterNetEvent('chat:server:ServerPSA')
 AddEventHandler('chat:server:ServerPSA', function()
 	local _source = source
-    local name = GetPlayerName(source)
+    local name = GetPlayerName(_source)
 	TriggerEvent('rwe:siktirgitkoyunekrds', 'Kardeşim Napıyorsun Öyle')
     webhookualdimgonderdim("Hileci Chate mesaj göndermeye çalıştı : "..name)
 end)
 -----
 RegisterServerEvent('rwe:WeaponFlag')
 AddEventHandler('rwe:WeaponFlag', function(weapon)
-	local license, steam = GetPlayerNeededIdentifiers(source)
-    local name = GetPlayerName(source)
+    local src = source
+	-- local license, steam = GetPlayerNeededIdentifiers(src)
+    local name = GetPlayerName(src)
 
     webhookualdimgonderdim("Kişi kendisine silah verdi İsim : "..name.. "Silah : "..weapon)
-	TriggerClientEvent("rwe:RemoveInventoryWeapons", source) 
+	TriggerClientEvent("rwe:RemoveInventoryWeapons", src) 
     TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
 end)
 -----
@@ -323,7 +324,7 @@ if Config.AntiSpawnVehicles then
       if model == GetHashKey(objName.name) then
          TriggerClientEvent("rwe:DeleteCars", -1,entID)
          Citizen.Wait(800)
-            webhookualdimgonderdim("Yasaklı Araç","**-Oyuncu: **"..SpawnerName.."\n\n**-Obje Adı: **"..objName.name.."\n\n**-Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash,15105570)
+            webhookualdimgonderdim("Blacklist Vehicle Spawned, **-Player: **"..SpawnerName.."\n\n**-Object Name: **"..objName.."\n\n**-Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash)
             TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
       end
    end
@@ -331,10 +332,10 @@ end
 
 if Config.AntiSpawnPeds then
    for i, objName in ipairs(Config.AntiNukeBlacklistedPeds) do
-      if model == GetHashKey(objName.name) then
+      if model == GetHashKey(objName) then
          TriggerClientEvent("rwe:DeletePeds", -1, entID)
          Citizen.Wait(800)
-            webhookualdimgonderdim("Yasaklı PED","**-Oyuncu: **"..SpawnerName.."\n\n**-Obje Adı: **"..objName.name.."\n\n**-Nesne Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash,15105570)
+            webhookualdimgonderdim("BlacklistPed **-Player: **"..SpawnerName.."\n\n**-Object Name: **"..objName.."\n\n**-Nesne Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash)
             TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
         end
         break
@@ -347,7 +348,7 @@ if Config.AntiNuke then
       if model == GetHashKey(objName) then
          TriggerClientEvent("rwe:DeleteEntity", -1, entID)
          Citizen.Wait(800)
-            webhookualdimgonderdim("Yasaklı Obje","**-Spawner Name: **"..SpawnerName.."\n\n**-Object Name: **"..objName.name.."\n\n**-Spawn Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash,15105570)
+            webhookualdimgonderdim("Blacklist Object Spawned, **-Spawner Name: **"..SpawnerName.."\n\n**-Object Name: **"..objName.."\n\n**-Spawn Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash)
             TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
         break
       end
@@ -360,7 +361,7 @@ Citizen.CreateThread(function()
             RegisterServerEvent(tostring(v))
             AddEventHandler(tostring(v), function()
                local src = source
-               local name = GetPlayerName(source)
+               local name = GetPlayerName(src)
                webhookualdimgonderdim("Event Yakalandı : "..name.. " Triggerlanan Event: " ..v)
                TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
             end)
@@ -373,15 +374,11 @@ AddEventHandler('chatMessage', function(source, color, message)
         return
     end
 
-    local src = source
-
-    for k, v in pairs(Config.BlacklistKelime) do
+    for k, v in pairs(Config.BlacklistWords) do
         if string.match(message, v) then
-               
-               webhookualdimgonderdim('Chate blacklist mesaj yolladı! Mesaj: '..v)
-               Citizen.Wait(1500)
-               TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
-
+            webhookualdimgonderdim('BlacklistWords Detected! Words: '..v)
+            Citizen.Wait(1500)
+            TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
             CancelEvent()
         end
         return
@@ -394,11 +391,11 @@ AddEventHandler('_chat:messageEntered', function(author, color, message)
         return
     end
     local src = source
-    local name = GetPlayerName(source)
+    local name = GetPlayerName(src)
 
-    for k, v in pairs(Config.BlacklistKelime) do
+    for k, v in pairs(Config.BlacklistWords) do
         if string.match(message, v) then
-            webhookualdimgonderdim('Blacklist Kelime Tespit Edildi! Kelime: '..v.. 'Kişi : '..name)
+            webhookualdimgonderdim('BlacklistWords Detected! Words: '..v.. 'Name : '..name)
             CancelEvent()
             Citizen.Wait(1500)
             TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
@@ -411,7 +408,7 @@ Citizen.CreateThread(function()
     for i=1, #Config.BlacklistedCommands, 1 do
         RegisterCommand(Config.BlacklistedCommands[i], function(source)
             local src = source
-            local name = GetPlayerName(source)
+            local name = GetPlayerName(src)
             webhookualdimgonderdim("Blacklist Komut Yakalandı : " ..name .. "Kullanılan Komut" ..Config.BlacklistedCommands[i])
             TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
          end)
@@ -452,7 +449,7 @@ AddEventHandler("playerConnecting", function(playerName)
       if g or f  then
         table.insert (x, v)
         local blresult = table.concat(x, " ")
-          TriggerEvent("rwe:cheatlog", "BlackList İsim Tespit Edildi  Oyuncu: " ..GetPlayerName(source))
+          TriggerEvent("rwe:cheatlog", "BlacklistName Detected! Player: " ..GetPlayerName(source))
           TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
           CancelEvent()
           for key in pairs (x) do
@@ -462,14 +459,14 @@ AddEventHandler("playerConnecting", function(playerName)
     end
 end)
 
------ EntityCreated farklı bi version
+----- EntityCreated different version
 AddEventHandler('entityCreated', function(entity)
     if DoesEntityExist(entity) then
         if GetEntityType(entity) == 3 then
             for _, blacklistedProps in pairs(Config.AntiNukeBlacklistedObjects) do
                 if GetEntityModel(entity) == GetHashKey(blacklistedProps) then
                     local src = NetworkGetEntityOwner(entity)
-                    webhookualdimgonderdim('Blacklistli Prop Çıkartıldı Prop: '..blacklistedProps..'\n**Prop:** https://plebmasters.de/?search='..blacklistedProps..'&app=objects \n**Google:** https://www.google.com/search?q='..blacklistedProps..' \n **Mwojtasik:** https://mwojtasik.dev/tools/gtav/objects/search?name='..blacklistedProps)
+                    webhookualdimgonderdim('BlacklistObject Detected! Player: ' ..src.. 'Prop: '..blacklistedProps..'\n**Prop:** https://plebmasters.de/?search='..blacklistedProps..'&app=objects \n **Mwojtasik:** https://mwojtasik.dev/tools/gtav/objects/search?name='..blacklistedProps)
                     TriggerClientEvent('rwe:antiProp', -1)
                     TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
                     CancelEvent()
@@ -480,7 +477,7 @@ AddEventHandler('entityCreated', function(entity)
             for _, blacklistedVeh in pairs(Config.AntiNukeBlacklistedVehicles) do
                 if GetEntityModel(entity) == GetHashKey(blacklistedVeh) then
                     local src = NetworkGetEntityOwner(entity)
-                    webhookualdimgonderdim('Yasaklanan Araç Spawnlandı: '..blacklistedVeh..'\n **Çıkarmaya Çalıştığı araç:** https://www.gtabase.com/search?searchword='..blacklistedVeh)
+                    webhookualdimgonderdim('Spawned Blacklist Vehicle: '..blacklistedVeh..'\n **Vehicle: ** https://www.gtabase.com/search?searchword='..blacklistedVeh)
                     TriggerClientEvent('rwe:AntiVehicle', -1)
                     TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
                     CancelEvent()
