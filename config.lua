@@ -163,7 +163,9 @@ Config.BlacklistedCommands = {
     "яιввση#6666",
     "noyaas#2545",
     "Created by noyaas#2545",
-    "Authentication was successful"
+    "Authentication was successful",
+    "AlienMenu",
+    "Alien Menu"
 }	
 
 Config.BlacklistedVehicles = { 
@@ -301,13 +303,18 @@ Config.BlacklistedVehicles = {
     'rhapsody',
     'biff',
     'dinghy',
-    'adder'
+    'adder',
+    'contender'
 }
 
 Config.BlacklistWords = {
-    'Desudo',
-    'Brutan',
-    'EulenCheats',
+    "Esx_TEAM",
+    "EsxTeam",
+    "AlienMenu",
+    "Alien Menu",
+    "Desudo",
+    "Brutan",
+    "EulenCheats",
     "Lynx 8",
     "www.lynxmenu.com",
     "HamHaxia",
@@ -677,7 +684,52 @@ Config.Events = {
     "esx_sheriffjob:OutVehicle",
     "esx_sheriffjob:message",
     "esx_sheriffjob:requestarrest",
-    "esx_sheriffjob:givehandcuff"
+    "esx_sheriffjob:givehandcuff",
+    "QBCore:Server:AddItem",
+    "CRPEngine:Server:AddItem",
+    "InteractSound_SV:PlayOnAll",
+    "InteractSound_SV:PlayOnOne",
+    "InteractSound_CL:PlayOnOne",
+    "m3:houserobbery:giveItem",
+    "esx_vehicleshop:putStockItems",
+    "kaves_base:removeItem",
+    "chat:server:ServerPSA",
+    "gcPhone:transfer",
+    "houseRobberies:giveMoney",
+    "lester:vendita",
+    "esx_uber:pay",
+    "gcPhone:yellow_postIlan",
+    "esx-qalle-sellvehicles:buyVehicle",
+    "esx_lscustom:refreshOwnedVehicle",
+    "99kr-shops:Cashier",
+    "esx_vangelico_robbery:gioielli",
+    "esx_vangelico_robbery:gioielli1",
+    "esx-ecobottles:retrieveBottle",
+    "esx-ecobottles:sellBottles",
+    "loffe_carthief:questFinished",
+    "loffe_fishing:caught",
+    "loffe_fishing:sell",
+    "esx_loffe_fangelse:Pay",
+    "loffe_robbery:pickUp",
+    "esx_ambulancejob:setDeathStatus",
+    "esx_ambulancejob:getDeathStatus",
+    "esx_ambulancejob:storeNearbyVehicle",
+    "esx_policejob:storeNearbyVehicle",
+    "esx_skin:getPlayerSkin",
+    "esx_property:deleteLastProperty",
+    "esx_property:saveLastProperty",
+    "esx:onPickup",
+    "esx_taxijob:success",
+    "cylex:startSellSarap",
+    "cylex:startTransformSarap",
+    "cylex:startHarvestSarap",
+    "cylex:startSellMelon",
+    "cylex:startTransformMelon",
+    "cylex:startHarvestMelon",
+    "lh-bankrobbery:server:recieveItem",
+    "esx_status:set",
+    "hospital:client:Revive",
+    "playerSpawned"
 }
 
 Config.AntiNukeBlacklistedObjects = { 
@@ -914,7 +966,9 @@ Config.AntiNukeBlacklistedObjects = {
 	"des_trailerparkd_02",
 	"des_trailerparke_01",
 	"dt1_03_mp_door",
-	"dt1_03_mp_door",
+	"lf_house_09_",
+	"csx_seabed_rock3_",
+	"po1_lod_slod4",
 }
 
 Config.AntiNukeBlacklistedVehicles = { -- Models/Vehicles/Airplanes etc etc.
@@ -1030,5 +1084,6 @@ Config.AntiNukeBlacklistedPeds = { -- Peds, animals, etc.
     "s_m_y_autopsy_01",
     "s_m_y_blackops_01",
     "s_m_y_blackops_02",
-    "rcmpaparazzo_2"
+    "rcmpaparazzo_2",
+    "u_m_y_abner"
 }
