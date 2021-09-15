@@ -1,32 +1,10 @@
 ESX = nil
 TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 
-WebhookLink = "" -- discord webhook
+local WebhookLink = "" -- discord webhook
 
 local ResourceMetadata = {}
 local ResourceFiles = {}
-
----- Script name check
-local onaylandi = false
-Citizen.CreateThread(function()
-   while true do
-      local rw = GetCurrentResourceName()
-        if rw == 'rw-anticheat' then
-            onaylandi = true
-        if onaylandi == true then
-            Citizen.Wait(1000)
-            break
-        else
-            print('^3scriptin ismini degistirmeyin.^0')
-            Citizen.Wait(5000)
-            os.exit()
-            Citizen.Wait(2500)
-            os.exit()
-            Citizen.Wait(50000)
-        end
-      end
-   end
-end)
 
 -- Version Control
 
@@ -80,19 +58,15 @@ AddEventHandler("rwe:cheatlog", function(reason)
             {
                 ["color"] = 23295,
                 ["title"] = reason,
-                ["description"] = "Kullanıcı: "..GetPlayerName(src).. " "  ..GetPlayerIdentifiers(src)[1].."  ",
+                ["description"] = "Player: "..GetPlayerName(src).. " "  ..GetPlayerIdentifiers(src)[1].."  ",
                 ["footer"] = {
-                ["text"] = "Coded By RAWE",
+                ["text"] = "github.com/RaweRwe/rw-anticheat",
                 },
             }
         }
-    PerformHttpRequest(WebhookLink, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", embeds = connect, avatar_url = "https://pbs.twimg.com/media/Dtra4gZWkAAX0rZ.jpg"}), { ['Content-Type'] = 'application/json' })
+    PerformHttpRequest(WebhookLink, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", embeds = connect, avatar_url = "https://e7.pngegg.com/pngimages/163/941/png-clipart-computer-icons-x-mark-old-letters-angle-logo.png"}), { ['Content-Type'] = 'application/json' })
 end)
 -------------
-RegisterServerEvent("imgToDiscord")
-AddEventHandler("imgToDiscord", function(img)
-  PerformHttpRequest(WebhookLink, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", content = img}), { ['Content-Type'] = 'application/json' })
-end)
 
 function webhookualdimgonderdim(content)
    local _source = source
@@ -100,9 +74,9 @@ function webhookualdimgonderdim(content)
         {
             ["color"] = "23295",
             ["title"] = "Rawe AntiCheat",
-            ["description"] = "Kullanıcı: "..GetPlayerName(_source).. " "  ..GetPlayerIdentifiers(_source)[1].."", content,
+            ["description"] = "Player: "..GetPlayerName(_source).. " "  ..GetPlayerIdentifiers(_source)[1].."", content,
             ["footer"] = {
-            ["text"] = "Coded By RAWE",
+            ["text"] = "github.com/RaweRwe/rw-anticheat",
             },
         }
     }
@@ -122,9 +96,6 @@ AddEventHandler("8jWpZudyvjkDXQ2RVXf9", function(type)
         if (_type == "invisible") then
             webhookualdimgonderdim("Tried to be Invisible " ..isim)
             siktimbelani("Invisible Player Detected", _src)
-        elseif (_type == "godmode") then
-            webhookualdimgonderdim("Tried to use GodMode "..isim)
-            siktimbelani("GodMode Detected", _src)
         elseif (_type == "antiragdoll") then
             webhookualdimgonderdim("Tried to activate Anti-Ragdoll " ..isim)
             siktimbelani("AntiRagdoll Detected", _src)
@@ -183,9 +154,6 @@ AddEventHandler("8jWpZudyvjkDXQ2RVXf9", function(type)
         elseif (_type == "vehicleweapons") then
             webhookualdimgonderdim("Vehicle Weapons Detected: "..isim)
             siktimbelani("Vehicle Weapons Detected", _src)
-        elseif (_type == "stoppedac") then
-            webhookualdimgonderdim("Anti Anticheat Stop: "..isim)
-            siktimbelani("Anti Anticheat Stop", _src)
         end
     end
 end)
@@ -202,7 +170,7 @@ end)
 RegisterNetEvent('tYdirSYpJtB77dRC3cvX')
 AddEventHandler('tYdirSYpJtB77dRC3cvX', function()
     local _src = source
-    if IsPlayerAceAllowed(_src, "rwacbypass") then
+    if not IsPlayerAceAllowed(_src, "rwacbypass") then
         local players = {}
         for _,v in pairs(GetPlayers()) do
             table.insert(players, {

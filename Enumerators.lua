@@ -38,9 +38,9 @@ function EnumeratePeds()
   return EnumerateEntities(FindFirstPed, FindNextPed, EndFindPed)
 end
 
-function EnumerateVehicles()
-  return EnumerateEntities(FindFirstVehicle, FindNextVehicle, EndFindVehicle)
-end
+-- function EnumerateVehicles()
+--   return EnumerateEntities(FindFirstVehicle, FindNextVehicle, EndFindVehicle)
+-- end
 
 function EnumeratePickups()
   return EnumerateEntities(FindFirstPickup, FindNextPickup, EndFindPickup)

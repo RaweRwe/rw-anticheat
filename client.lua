@@ -10,14 +10,11 @@ local resources
 
 Citizen.CreateThread(function()
    while true do
-      local sleep = false
-      if IsControlJustReleased(0, 121, 166, 169, 178, 207, 208, 214, 137, 171) then
-         Citizen.Wait(60000)
-         TriggerServerEvent("rwe:cheatlog", "Kişi insert tuşuna bastı, olası hile durumunda birinci şüpheli.")
-         exports['screenshot-basic']:requestScreenshotUpload("", "files[]", function(data)
-         local img = json.decode(data)
-         TriggerServerEvent("imgToDiscord", img.files[1].url)
-         end)
+        local sleep = false
+        if IsControlJustReleased(0, 121, 166, 169, 178, 207, 208, 214, 137, 171) then
+            Citizen.Wait(60000)
+            TriggerServerEvent("rwe:cheatlog", "Kişi insert tuşuna bastı, olası hile durumunda birinci şüpheli.")
+        end
             TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
          sleep = true
       end
@@ -26,30 +23,24 @@ Citizen.CreateThread(function()
    else
       Citizen.Wait(1)
    end
-end
 end)
 
-Citizen.CreateThread(function()
-   while true do
-      Citizen.Wait(60000)
-      N_0x4757f00bc6323cfe(-1553120962, 0.0) --undocumented damage modifier. 1st argument is hash, 2nd is modified (0.0-1.0)
-      Wait(0)
-   end
-end)
+-- Citizen.CreateThread(function()
+--    while true do
+--       Citizen.Wait(60000)
+--       SetWeaponDamageModifierThisFrame(-1553120962, 0.0) --undocumented damage modifier. 1st argument is hash, 2nd is modified (0.0-1.0)
+--       Wait(0)
+--    end
+-- end)
 
 Citizen.CreateThread(function()
    while true do
       Citizen.Wait(30000)
-      for _,theWeapon in ipairs(Config.BlacklistedWeapons) do
-         Wait(1)
+      for _, theWeapon in ipairs(Config.BlacklistedWeapons) do
+            Wait(1)
          if HasPedGotWeapon(PlayerPedId(),GetHashKey(theWeapon),false) == 1 then
             RemoveAllPedWeapons(PlayerPedId(),false)
             TriggerServerEvent("rwe:cheatlog", Config.DropMsg)
-            exports['screenshot-basic']:requestScreenshotUpload("", "files[]", function(data)
-               local img = json.decode(data)
-               --print(img.files[1].url)
-               TriggerServerEvent("imgToDiscord", img.files[1].url)
-            end)
             TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
             break
          end
@@ -70,23 +61,6 @@ AddEventHandler('onResourceStop', function(resourceName)
    TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
 end)
 
------
-if Config.AntiSpectates then
-    Citizen.CreateThread(function()
-        while true do
-            Wait(5000)
-            local ped = NetworkIsInSpectatorMode()
-            if ped == 1 then
-                TriggerServerEvent("rwe:cheatlog", "İzleyici tespit edildi")
-                exports['screenshot-basic']:requestScreenshotUpload("", "files[]", function(data)
-                local img = json.decode(data)
-                TriggerServerEvent("imgToDiscord", img.files[1].url)
-            end)
-        end
-        TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
-    end
-    end)
-end
 -----
 RegisterNetEvent("rwe:DeleteEntity")
 AddEventHandler('rwe:DeleteEntity', function(Entity)
@@ -228,11 +202,6 @@ if Config.BasicEnable then
                 if GetEntityHealth(_ped) > 200 then
                     TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "godmode", "2") 
                 end
-                _Wait(100)
-                local _val, _bulletproof, _fireproof , _explosionproof , _collisionproof , _meleeproof, _steamproof, _p7, _drownProof = GetEntityProofs(_ped)
-                if _bulletproof == 1 or _collisionproof == 1 or _meleeproof == 1 or _steamproof == 1 or _drownProof == 1 then
-                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "godmode", "3")
-                end
                 _Wait(300)
             end
             if Config.AntiInfiniteStamina then
@@ -356,25 +325,12 @@ if Config.BasicEnable then
                     TriggerServerEvent('8jWpZudyvjkDXQ2RVXf9', "superjump")
                 end
             end
-            if RW_AC == nil or _evhandler ~= AddEventHandler or _onresstarting ~= "onResourceStarting" or _onresstart ~= "onResourceStart" or _onclresstart ~= "onClientResourceStart" or _stopdetect ~= RW_AC then
-                TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "stoppedac")
-            end
         end
     end)
 end
 
 ------
 
-if Config.AntiCMD then
-   Citizen.Wait(2000)
-   numero = GetNumResources()
-   if cB ~= nil then
-      if cB ~= numero then
-	    TriggerServerEvent("rwe:cheatlog", "CMD Tespit Edildi.")
-        TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
-      end
-   end
-end
 if Config.AntiCHNG then
     Citizen.Wait(2000)
     local cI = GetVehiclePedIsUsing(GetPlayerPed(-1))
@@ -560,19 +516,6 @@ end)
 
 -----
 
-Citizen.CreateThread(function()
-    while true do
-        local src = source
-        Citizen.Wait(0)
-            if Config.AntiResourceDetect then 
-                Citizen.Wait(6000) 
-                numero = Citizen.InvokeNative(0x863F27B)
-                if e~=nil then 
-                if e~=numero then 
-        TriggerServerEvent("rwe:cheatlog", "Inject Detected " ..GetPlayerName(src))
-        TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
-end end end end end)
-
 arabadanatladi = load
 amipatladi = type
 
@@ -745,7 +688,6 @@ Citizen.CreateThread(function()
             local menuFunction = dato[1]
             local returnType = load('return type('..menuFunction..')')
             if returnType() == 'function' then
-                -- Anticheat:ReportCheat(150, 'Menu Detected '..GetCurrentResourceName()..' '..menuFunction, true, true, true)
                 TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
                 TriggerServerEvent("rwe:cheatlog", "Menu Detected " ..GetCurrentResourceName().. " "..menuFunction)
             end

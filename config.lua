@@ -7,15 +7,11 @@ Config.Version = 3.2
 
 Config.DropMsg = "Don't use cheat! Discord: https://discord.gg/BW5KA78SXW"
 
-Config.AntiCMD = true -- Anti CMD -- True/false
 Config.AntiCHNG = true -- Anti Cheat Engine -- True/false
 
-Config.AntiMenu = true
 Config.AntiNuke = true
 Config.AntiSpawnVehicles = true
 Config.AntiSpawnPeds = true
-
-Config.AntiSpectates = false -- old version is semi work
 
 ---
 
@@ -39,7 +35,6 @@ Config.SuperJump = true -- Prevents player from using Super-Jump
 Config.AntiResourceStartorStop = true -- Prevents Cheaters from Stopping/Starting new Resource
 Config.AntiInfiniteStamina = true -- Detects if player is using infinite stamina cheats (BETA)
 
-Config.AntiResourceDetect = true -- Detect Inject and resource
 Config.AntiVDM = true -- Check vehicle speed
 
 Config.EventsDetect = true
