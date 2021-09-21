@@ -275,53 +275,57 @@ AddEventHandler('rwe:WeaponFlag', function(weapon)
 	TriggerClientEvent("rwe:RemoveInventoryWeapons", src) 
     TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
 end)
------
+
+-----Entities Detection
 AddEventHandler('entityCreated', function(entity)
-  local entity = entity
-  if not DoesEntityExist(entity) then
-      return
-  end
-  local src = NetworkGetEntityOwner(entity)
-  local entID = NetworkGetNetworkIdFromEntity(entity)
-  local model = GetEntityModel(entity)
-  local hash = GetHashKey(entity)
-  local SpawnerName = GetPlayerName(src)
+    local entity = entity
+    if not DoesEntityExist(entity) then
+        return
+    end
+    
+    local src = NetworkGetEntityOwner(entity)
+    local entID = NetworkGetNetworkIdFromEntity(entity)
+    local model = GetEntityModel(entity)
+    local hash = GetHashKey(entity)
+    local SpawnerName = GetPlayerName(src)
 
-if Config.AntiSpawnVehicles then
-   for i, objName in ipairs(Config.AntiNukeBlacklistedVehicles) do
-      if model == GetHashKey(objName.name) then
-         TriggerClientEvent("rwe:DeleteCars", -1,entID)
-         Citizen.Wait(800)
-            webhookualdimgonderdim("Blacklist Vehicle Spawned, **-Player: **"..SpawnerName.."\n\n**-Object Name: **"..objName.."\n\n**-Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash)
-            TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
-      end
-   end
-end
-
-if Config.AntiSpawnPeds then
-   for i, objName in ipairs(Config.AntiNukeBlacklistedPeds) do
-      if model == GetHashKey(objName) then
-         TriggerClientEvent("rwe:DeletePeds", -1, entID)
-         Citizen.Wait(800)
-            webhookualdimgonderdim("BlacklistPed **-Player: **"..SpawnerName.."\n\n**-Object Name: **"..objName.."\n\n**-Nesne Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash)
-            TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+    if Config.AntiSpawnVehicles then
+        for i, objName in ipairs(Config.AntiNukeBlacklistedVehicles) do
+            if model == objName then
+                TriggerClientEvent("rwe:DeleteCars", -1,entID)
+                Citizen.Wait(800)
+                    webhookualdimgonderdim("Blacklist Vehicle Spawned, **-Player: **"..SpawnerName.."\n\n**-Object Name: **"..objName.."\n\n**-Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash)
+                    TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+            end
         end
-        break
-      end
-   end
+    end
+
+    if Config.AntiSpawnPeds then
+        for i, objName in ipairs(Config.AntiNukeBlacklistedPeds) do
+            if model == objName then
+                TriggerClientEvent("rwe:DeletePeds", -1, entID)
+                Citizen.Wait(800)
+                webhookualdimgonderdim("BlacklistPed **-Player: **"..SpawnerName.."\n\n**-Object Name: **"..objName.."\n\n**-Nesne Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash)
+                TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+            end
+            break
+        end
+    end
+
+   if Config.AntiNuke then
+        for i, objName in ipairs(Config.AntiNukeBlacklistedObjects) do
+            if model == objName then
+                TriggerClientEvent("rwe:DeleteEntity", -1, entID)
+                Citizen.Wait(800)
+                webhookualdimgonderdim("Blacklist Object Spawned, **-Spawner Name: **"..SpawnerName.."\n\n**-Object Name: **"..objName.."\n\n**-Spawn Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash)
+                TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                break
+            end
+        end
+    end
 end)
 
-if Config.AntiNuke then
-   for i, objName in ipairs(Config.AntiNukeBlacklistedObjects) do
-      if model == GetHashKey(objName) then
-         TriggerClientEvent("rwe:DeleteEntity", -1, entID)
-         Citizen.Wait(800)
-            webhookualdimgonderdim("Blacklist Object Spawned, **-Spawner Name: **"..SpawnerName.."\n\n**-Object Name: **"..objName.."\n\n**-Spawn Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash)
-            TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
-        break
-      end
-   end
-end
+
 ------
 Citizen.CreateThread(function()
     for k, v in pairs(Config.Events) do
@@ -430,13 +434,13 @@ AddEventHandler("playerConnecting", function(playerName)
     end
 end)
 
------ EntityCreated different version
+----- EntityCreated different version with display
 AddEventHandler('entityCreated', function(entity)
     if DoesEntityExist(entity) then
-        if GetEntityType(entity) == 3 then
+        local model = GetEntityModel(entity)
+        if model == 3 then
             for _, blacklistedProps in pairs(Config.AntiNukeBlacklistedObjects) do
-                if GetEntityModel(entity) == GetHashKey(blacklistedProps) then
-                    local src = NetworkGetEntityOwner(entity)
+                if model == blacklistedProps then
                     webhookualdimgonderdim('BlacklistObject Detected! Player: ' ..src.. 'Prop: '..blacklistedProps..'\n**Prop:** https://plebmasters.de/?search='..blacklistedProps..'&app=objects \n **Mwojtasik:** https://mwojtasik.dev/tools/gtav/objects/search?name='..blacklistedProps)
                     TriggerClientEvent('rwe:antiProp', -1)
                     TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
@@ -444,10 +448,9 @@ AddEventHandler('entityCreated', function(entity)
                     return
                 end
             end
-        elseif GetEntityType(entity) == 2 then
+        elseif model == 2 then
             for _, blacklistedVeh in pairs(Config.AntiNukeBlacklistedVehicles) do
-                if GetEntityModel(entity) == GetHashKey(blacklistedVeh) then
-                    local src = NetworkGetEntityOwner(entity)
+                if model == blacklistedVeh then
                     webhookualdimgonderdim('Spawned Blacklist Vehicle: '..blacklistedVeh..'\n **Vehicle: ** https://www.gtabase.com/search?searchword='..blacklistedVeh)
                     TriggerClientEvent('rwe:AntiVehicle', -1)
                     TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
@@ -455,10 +458,9 @@ AddEventHandler('entityCreated', function(entity)
                     return
                 end
             end
-        elseif GetEntityType(entity) == 1 then
+        elseif model == 1 then
             for _, blacklistedPed in pairs(Config.AntiNukeBlacklistedPeds) do
-                if GetEntityModel(entity) == GetHashKey(blacklistedPed) then
-                    local src = NetworkGetEntityOwner(entity)
+                if model == blacklistedPed then
                     webhookualdimgonderdim('Yasaklanan Ped Spawnlandı Pedin adı: '..blacklistedPed..'\n **Pedin Resmi:** https://docs.fivem.net/peds/'..blacklistedPed..'.png')
                     TriggerClientEvent('rwe:antiPed', -1)
                     TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)

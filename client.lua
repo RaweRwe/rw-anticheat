@@ -38,7 +38,7 @@ Citizen.CreateThread(function()
       Citizen.Wait(30000)
       for _, theWeapon in ipairs(Config.BlacklistedWeapons) do
             Wait(1)
-         if HasPedGotWeapon(PlayerPedId(),GetHashKey(theWeapon),false) == 1 then
+         if HasPedGotWeapon(PlayerPedId(),theWeapon,false) == 1 then
             RemoveAllPedWeapons(PlayerPedId(),false)
             TriggerServerEvent("rwe:cheatlog", Config.DropMsg)
             TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
@@ -252,7 +252,7 @@ if Config.BasicEnable then
             end
             if Config.AntiBlacklistedWeapons then
                 for _,_weapon in ipairs(Config.BlacklistedWeapons) do
-                    if HasPedGotWeapon(_ped, GetHashKey(_weapon), false) then
+                    if HasPedGotWeapon(_ped, _weapon, false) then
                         RemoveAllPedWeapons(_ped, true)
                         TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "blacklistedweapons") 
                     end
@@ -333,9 +333,9 @@ end
 
 if Config.AntiCHNG then
     Citizen.Wait(2000)
-    local cI = GetVehiclePedIsUsing(GetPlayerPed(-1))
+    local cI = GetVehiclePedIsUsing(PlayerPedId())
     local cJ = GetEntityModel(cI)
-    if IsPedSittingInAnyVehicle(GetPlayerPed(-1)) then
+    if IsPedSittingInAnyVehicle(PlayerPedId()) then
         if cI == cy and cJ ~= cz and cz ~= nil and cz ~= 0 then
             DeleteVehicle(cI)
             TriggerServerEvent("rwe:cheatlog", "CheatEngine Tespit Edildi.")
@@ -469,7 +469,7 @@ end
 
 function isPropBlacklisted(model)
    for _, blacklistedProp in pairs(Config.AntiNukeBlacklistedObjects) do
-      if GetEntityModel(model) == GetHashKey(blacklistedProp) then
+      if GetEntityModel(model) == blacklistedProp then
 			return true
 		end
 	end
@@ -489,7 +489,7 @@ end)
 
 function isVehBlacklisted(model)
 	for _, blacklistedVeh in pairs(Config.AntiNukeBlacklistedVehicles) do
-		if GetEntityModel(model) == GetHashKey(blacklistedVeh) then
+		if GetEntityModel(model) == blacklistedVeh then
 			return true
 		end
 	end
@@ -499,7 +499,7 @@ end
 
 RegisterNetEvent('rwe:antiProp')
 AddEventHandler('rwe:antiProp', function()
-   local ped = GetPlayerPed(-1)
+   local ped = PlayerPedId()
    local handle, object = FindFirstObject()
    local finished = false
    repeat
