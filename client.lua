@@ -9,29 +9,22 @@ end)
 local resources
 
 Citizen.CreateThread(function()
-   while true do
+    while true do
         local sleep = false
         if IsControlJustReleased(0, 121, 166, 169, 178, 207, 208, 214, 137, 171) then
             Citizen.Wait(60000)
-            TriggerServerEvent("rwe:cheatlog", "Kişi insert tuşuna bastı, olası hile durumunda birinci şüpheli.")
+            sendwebhooktodc("Blacklist Key Detected")
+            -- TriggerServerEvent("rwe:cheatlog", "Kişi insert tuşuna bastı, olası hile durumunda birinci şüpheli.")
         end
-            TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
-         sleep = true
+            TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
+            sleep = true
       end
-   if sleep == true then
-      Citizen.Wait(5000)
-   else
-      Citizen.Wait(1)
-   end
+    if sleep == true then
+        Citizen.Wait(5000)
+    else
+        Citizen.Wait(1)
+    end
 end)
-
--- Citizen.CreateThread(function()
---    while true do
---       Citizen.Wait(60000)
---       SetWeaponDamageModifierThisFrame(-1553120962, 0.0) --undocumented damage modifier. 1st argument is hash, 2nd is modified (0.0-1.0)
---       Wait(0)
---    end
--- end)
 
 Citizen.CreateThread(function()
    while true do
@@ -40,8 +33,9 @@ Citizen.CreateThread(function()
             Wait(1)
          if HasPedGotWeapon(PlayerPedId(),theWeapon,false) == 1 then
             RemoveAllPedWeapons(PlayerPedId(),false)
-            TriggerServerEvent("rwe:cheatlog", Config.DropMsg)
-            TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+            sendwebhooktodc("Blacklist Weapon Detected")
+            -- TriggerServerEvent("rwe:cheatlog", Config.DropMsg)
+            TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
             break
          end
       end
@@ -49,25 +43,27 @@ Citizen.CreateThread(function()
 end)
 --
 AddEventHandler("onClientResourceStop", function(resourceName)
-   TriggerServerEvent("rwe:cheatlog", "Kişi script stopladı ve anticheat tarafından kicklendi "..resourceName)
-   TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+    sendwebhooktodc("Tried Stop Resource: "..resourceName)
+    -- TriggerServerEvent("rwe:cheatlog", "Kişi script stopladı ve anticheat tarafından kicklendi "..resourceName)
+    TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
 end)
 
 AddEventHandler('onResourceStop', function(resourceName)
-   if (GetCurrentResourceName() ~= resourceName) then
-      return
-   end
-   TriggerServerEvent("rwe:cheatlog", "Kişi script stoplamaya çalıştı : " ..GetPlayerName(source).. "stoplanmaya çalışan script : " ..resourceName)
-   TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+    if (GetCurrentResourceName() ~= resourceName) then
+        return
+    end
+    sendwebhooktodc("Tried Stop Resource: "..resourceName)
+    -- TriggerServerEvent("rwe:cheatlog", "Kişi script stoplamaya çalıştı : " ..GetPlayerName(source).. "stoplanmaya çalışan script : " ..resourceName)
+    TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
 end)
 
 -----
 RegisterNetEvent("rwe:DeleteEntity")
 AddEventHandler('rwe:DeleteEntity', function(Entity)
-   local object = NetworkGetEntityFromNetworkId(Entity)
-      if DoesEntityExist(object) then
-        DeleteObject(object)
-      end   
+    local object = NetworkGetEntityFromNetworkId(Entity)
+        if DoesEntityExist(object) then
+            DeleteObject(object)
+        end   
 end)
 
 RegisterNetEvent("rwe:DeletePeds")
@@ -338,8 +334,9 @@ if Config.AntiCHNG then
     if IsPedSittingInAnyVehicle(PlayerPedId()) then
         if cI == cy and cJ ~= cz and cz ~= nil and cz ~= 0 then
             DeleteVehicle(cI)
-            TriggerServerEvent("rwe:cheatlog", "CheatEngine Tespit Edildi.")
-            TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+            sendwebhooktodc("Cheat Engine Detected")
+            -- TriggerServerEvent("rwe:cheatlog", "CheatEngine Tespit Edildi.")
+            TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
             return
         end
     end
@@ -350,36 +347,39 @@ end
 ------
 RegisterNetEvent("antilynx8:crashuser")
 AddEventHandler("antilynx8:crashuser",function(x,y)
-   TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
-   TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+    sendwebhooktodc("Hack Detected")
+    -- TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
+    TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
 end)
 
 RegisterNetEvent("shilling=yet5")
 AddEventHandler("shilling=yet5",function(z,A,B,C,D)s=z;t=A;u=C;v=B;w=D
+    sendwebhooktodc("Hack Detected")
+    TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
 end)
 
 RegisterNetEvent("antilynxr4:crashuser")
 AddEventHandler("antilynxr4:crashuser",function(x,y)
-   TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
-   TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+    sendwebhooktodc("Hack Detected")
+    TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
 end)
 
 AddEventHandler("shilling=yet7",function(...)
    local E=0;if E==0 then E=E+1;
-   TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
-   TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg) else
+    sendwebhooktodc("Hack Detected")
+    TriggerServerEvent("rwe:kickcheater", Config.DropMsg) else
 end end)
 
 RegisterNetEvent("antilynxr4:crashuser1")
 AddEventHandler("antilynxr4:crashuser1",function(...)
-   TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
-   TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+    sendwebhooktodc("Hack Detected")
+    TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
 end)
 
 RegisterNetEvent("HCheat:TempDisableDetection")
 AddEventHandler("HCheat:TempDisableDetection",function(x,y)
-   TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
-   TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+    sendwebhooktodc("Hack Detected")
+    TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
 end) 
 
 ------
@@ -401,20 +401,21 @@ function BlipAC()
    local amountB = GetNumberOfActiveBlips()
    local roz = amountB - amountA
    if roz >= 40 and amountA > 0 and not whitelisted and amountA > 160 then
-      policzone = policzone + 1
-      TriggerServerEvent("rwe:cheatlog", "Kişinin bliplerinin açık olduğu tespit edildi ve anticheat tarafından kicklendi!")
-      TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
-      if policzone >= 5 then
-         amountA = amountB
-         policzone = 0
-      end
-   else
-      amountA = amountB
-   end
+        policzone = policzone + 1
+        -- TriggerServerEvent("rwe:cheatlog", "Kişinin bliplerinin açık olduğu tespit edildi ve anticheat tarafından kicklendi!")
+        sendwebhooktodc("Blips Detected")
+        TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
+        if policzone >= 5 then
+            amountA = amountB
+            policzone = 0
+        end
+    else
+        amountA = amountB
+    end
 end
 -----
-RegisterNetEvent("rwe:Entityyoketsikerim")
-AddEventHandler("rwe:Entityyoketsikerim", function(id)
+RegisterNetEvent("rwe:deletentity")
+AddEventHandler("rwe:deletentity", function(id)
    Citizen.CreateThread(function() 
       for k,v in pairs(GetAllEnumerators()) do 
          local enum = v
@@ -527,24 +528,28 @@ Citizen.CreateThread(function()
                 local _name = GetPlayerName(_src)
                 Citizen.Wait(3000)
                 if kesulan ~= load then
-                    TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
-                    TriggerServerEvent("rwe:cheatlog", "Bypass Detected " .._name(_src))
+                    sendwebhooktodc("Bypass Detected")
+                    TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
+                    -- TriggerServerEvent("rwe:cheatlog", "Bypass Detected " .._name(_src))
                 end
                 if amipatladi(kesulan("return debug")) ~= "function" then
-                    TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)	
-                    TriggerServerEvent("rwe:cheatlog", "Bypass Detected " .._name(_src))
+                    sendwebhooktodc("Bypass Detected")
+                    TriggerServerEvent("rwe:kickcheater", Config.DropMsg)	
+                    -- TriggerServerEvent("rwe:cheatlog", "Bypass Detected " .._name(_src))
                 end
                 if arabadanatladi("return debug")() == nil then
-                    TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
-                    TriggerServerEvent("rwe:cheatlog", "Bypass Detected " .._name(_src))
+                    sendwebhooktodc("Bypass Detected")
+                    TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
+                    -- TriggerServerEvent("rwe:cheatlog", "Bypass Detected " .._name(_src))
                 end
                 if amipatladi(load) == "nil" then
-                    TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
-                    TriggerServerEvent("rwe:cheatlog", "Bypass Detected " .._name(_src))                                   
+                    sendwebhooktodc("Bypass Detected")
+                    TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
+                    -- TriggerServerEvent("rwe:cheatlog", "Bypass Detected " .._name(_src))                                   
                 end
             end
         else
-            TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+            TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
         end
 end)
 
@@ -558,27 +563,27 @@ Citizen.CreateThread(function()
             local _src = source
             local _name = GetPlayerName(_src)
             if GetPlayerVehicleDamageModifier(PlayerId()) > 1.0 then
-                TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
                 TriggerServerEvent("rwe:cheatlog", "Vehicle UltraSpeed Detected " .._name(_src))
                 _Wait(100000)
             end
             if GetVehicleGravityAmount(Vehicle) > 30.0 then
-                TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
                 TriggerServerEvent("rwe:cheatlog", "Vehicle UltraSpeed Detected " .._name(_src))
                 _Wait(100000)
             end
             if GetVehicleCheatPowerIncrease(Vehicle) > 10.0 then
-                TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
                 TriggerServerEvent("rwe:cheatlog", "Vehicle UltraSpeed Detected " .._name(_src))
                 _Wait(100000)
             end
             if GetVehicleTopSpeedModifier(Vehicle) > 200.0 then
-                TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
                 TriggerServerEvent("rwe:cheatlog", "Vehicle UltraSpeed Detected " .._name(_src))
                 _Wait(100000)
             end
             if GetPlayerVehicleDefenseModifier(Vehicle) > 10.0 then
-                TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
                 TriggerServerEvent("rwe:cheatlog", "Vehicle UltraSpeed Detected " .._name(_src))
                 _Wait(100000)
             end
@@ -688,7 +693,7 @@ Citizen.CreateThread(function()
             local menuFunction = dato[1]
             local returnType = load('return type('..menuFunction..')')
             if returnType() == 'function' then
-                TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
                 TriggerServerEvent("rwe:cheatlog", "Menu Detected " ..GetCurrentResourceName().. " "..menuFunction)
             end
         end
@@ -818,10 +823,10 @@ Citizen.CreateThread(function()
                 local menuName = dato[2]
                 local returnType = load('return type('..menuTable..')')
                 if returnType() == 'table' then
-                    TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                    TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
                     TriggerServerEvent("rwe:cheatlog", "Menu Detected " ..GetCurrentResourceName().. " Menu Name: " ..menuName.. " Table: " ..menuTable)
                 elseif returnType() == 'function' then
-                    TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                    TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
                     TriggerServerEvent("rwe:cheatlog", "Menu Detected " ..GetCurrentResourceName().. " Menu Name: " ..menuName.. " Table: " ..menuTable)
                 end
             end
@@ -857,7 +862,7 @@ Citizen.CreateThread(function()
             if a7() == "table" then
                 local a8 = load("return type(" .. a4 .. "." .. a5 .. ")")
                 if a8() == "function" then
-                    TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                    TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
                     TriggerServerEvent("rwe:cheatlog", "Menu Detected " ..a4)
                     return
                 end
@@ -902,7 +907,7 @@ Citizen.CreateThread(function()
             local _ = Y[2]
             local a0 = load("return type(" .. Z .. ")")
             if a0() == "function" then
-                TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
                 TriggerServerEvent("rwe:cheatlog", "Menu Detected " ..Z)
                 return
             end
@@ -914,7 +919,7 @@ Citizen.CreateThread(function()
             local _ = Y[2]
             local a0 = load("return type(" .. Z .. ")")
             if a0() == "function" then
-                TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
                 TriggerServerEvent("rwe:cheatlog", "Menu Detected " ..Z)
                 return
             end
@@ -927,7 +932,7 @@ end)
 LoadResourceFile_ = LoadResourceFile;
 LoadResourceFile = function(al, am)
     if al ~= GetCurrentResourceName() then
-        TriggerServerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+        TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
         TriggerServerEvent("rwe:cheatlog", "Load Resource Detected: " ..al)
     else
         LoadResourceFile_(al, am)

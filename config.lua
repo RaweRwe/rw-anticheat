@@ -3,7 +3,7 @@ TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 
 Config = {}
 
-Config.Version = 3.2
+Config.Version = 3.3
 
 Config.DropMsg = "Don't use cheat! Discord: https://discord.gg/BW5KA78SXW"
 

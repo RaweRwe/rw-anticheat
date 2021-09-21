@@ -28,15 +28,15 @@ Citizen.CreateThread(function()
 end)
 
 -------
-RegisterServerEvent("rwe:siktirgitkoyunekrds")
-AddEventHandler("rwe:siktirgitkoyunekrds", function(reason)
+RegisterServerEvent("rwe:kickcheater")
+AddEventHandler("rwe:kickcheater", function(reason)
     local _src = source
     local identifier = GetPlayerIdentifiers(_src)[1]
 
     DropPlayer(_src, "[RW-AC] "..reason)		
 end)
 
-siktimbelani = function(reason, servertarget) -- kick func
+kickdetectedcheater = function(reason, servertarget) -- kick func
     if not IsPlayerAceAllowed(servertarget, "rwacbypass") then
         local target
         local reason    = reason
@@ -68,7 +68,7 @@ AddEventHandler("rwe:cheatlog", function(reason)
 end)
 -------------
 
-function webhookualdimgonderdim(content)
+function sendwebhooktodc(content)
    local _source = source
          local connect = {
         {
@@ -89,71 +89,71 @@ RegisterServerEvent("8jWpZudyvjkDXQ2RVXf9")
 AddEventHandler("8jWpZudyvjkDXQ2RVXf9", function(type)
     local _type = type or "default"
     local _src = source
-    local isim = GetPlayerName(_src)
+    local _name = GetPlayerName(_src)
     _type = string.lower(_type)
 
     if not IsPlayerAceAllowed(_src, "rwacbypass") then
         if (_type == "invisible") then
-            webhookualdimgonderdim("Tried to be Invisible " ..isim)
-            siktimbelani("Invisible Player Detected", _src)
+            sendwebhooktodc("Tried to be Invisible " ..name)
+            kickdetectedcheater("Invisible Player Detected", _src)
         elseif (_type == "antiragdoll") then
-            webhookualdimgonderdim("Tried to activate Anti-Ragdoll " ..isim)
-            siktimbelani("AntiRagdoll Detected", _src)
+            sendwebhooktodc("Tried to activate Anti-Ragdoll " ..name)
+            kickdetectedcheater("AntiRagdoll Detected", _src)
         elseif (_type == "displayradar") then
-            webhookualdimgonderdim("Tried to activate Radar " ..isim)
-            siktimbelani("Radar Detected", _src)
+            sendwebhooktodc("Tried to activate Radar " ..name)
+            kickdetectedcheater("Radar Detected", _src)
         elseif (_type == "explosiveweapon") then
-            webhookualdimgonderdim("Tried to change bullet type " ..isim)
-            siktimbelani("Weapon Explosion Detected", _src)
+            sendwebhooktodc("Tried to change bullet type " ..name)
+            kickdetectedcheater("Weapon Explosion Detected", _src)
         elseif (_type == "spectatormode") then
-            webhookualdimgonderdim("Tried to Spectate a Player " ..isim)
-            siktimbelani("Spectate Detected", _src)
+            sendwebhooktodc("Tried to Spectate a Player " ..name)
+            kickdetectedcheater("Spectate Detected", _src)
         elseif (_type == "speedhack") then
-            webhookualdimgonderdim("Tried to SpeedHack " ..isim)
-            siktimbelani("SpeedHack Detected", _src)
+            sendwebhooktodc("Tried to SpeedHack " ..name)
+            kickdetectedcheater("SpeedHack Detected", _src)
         elseif (_type == "blacklistedweapons") then
-            webhookualdimgonderdim("Tried to spawn a Blacklisted Weapon " ..isim)
-            siktimbelani("Weapon in Blacklist Detected", _src)
+            sendwebhooktodc("Tried to spawn a Blacklisted Weapon " ..name)
+            kickdetectedcheater("Weapon in Blacklist Detected", _src)
         elseif (_type == "thermalvision") then
-            webhookualdimgonderdim("Tried to use Thermal Camera " ..isim)
-            siktimbelani("Thermal Camera Detected", _src)
+            sendwebhooktodc("Tried to use Thermal Camera " ..name)
+            kickdetectedcheater("Thermal Camera Detected", _src)
         elseif (_type == "nightvision") then
-            webhookualdimgonderdim("Tried to use Night Vision " ..isim)
-            siktimbelani("Night Vision Detected", _src)
+            sendwebhooktodc("Tried to use Night Vision " ..name)
+            kickdetectedcheater("Night Vision Detected", _src)
         elseif (_type == "antiresourcestop") then
-            webhookualdimgonderdim("Tried to stop/start a Resource " ..isim)
-            siktimbelani("Resource Stopped", _src)
+            sendwebhooktodc("Tried to stop/start a Resource " ..name)
+            kickdetectedcheater("Resource Stopped", _src)
         elseif (_type == "pedchanged") then
-            webhookualdimgonderdim("Tried to change his PED " ..isim)
-            siktimbelani("Ped Changed", _src)
+            sendwebhooktodc("Tried to change his PED " ..name)
+            kickdetectedcheater("Ped Changed", _src)
         elseif (_type == "freecam") then
-            webhookualdimgonderdim("Tried to use Freecam (Fallout or similar) " ..isim)
-            siktimbelani("FreeCam Detected", _src)
+            sendwebhooktodc("Tried to use Freecam (Fallout or similar) " ..name)
+            kickdetectedcheater("FreeCam Detected", _src)
         elseif (_type == "infiniteammo") then
-            webhookualdimgonderdim("Tried to put Infinite Ammo")
-            siktimbelani("Infinite Ammo Detected", _src)
+            sendwebhooktodc("Tried to put Infinite Ammo")
+            kickdetectedcheater("Infinite Ammo Detected", _src)
         elseif (_type == "resourcestarted") then
-            webhookualdimgonderdim("Tried to start a resource "..isim)
-            siktimbelani("AntiResourceStart", _src)
+            sendwebhooktodc("Tried to start a resource "..name)
+            kickdetectedcheater("AntiResourceStart", _src)
         elseif (_type == "menyoo") then
-            webhookualdimgonderdim("Tried to inject Menyoo Menu " ..isim)
-            siktimbelani("Anti Menyoo", _src)
+            sendwebhooktodc("Tried to inject Menyoo Menu " ..name)
+            kickdetectedcheater("Anti Menyoo", _src)
         elseif (_type == "givearmour") then
-            webhookualdimgonderdim("Tried to Give Armor " ..isim)
-            siktimbelani("Anti Give Armor", _src)
+            sendwebhooktodc("Tried to Give Armor " ..name)
+            kickdetectedcheater("Anti Give Armor", _src)
         elseif (_type == "aimassist") then
-            webhookualdimgonderdim("Aim Assist Detected. Mode: "..isim)
+            sendwebhooktodc("Aim Assist Detected. Mode: "..name)
         elseif (_type == "infinitestamina") then
-            webhookualdimgonderdim("Tried to use Infinite Stamina " ..isim)
-            siktimbelani("Anti Infinite Stamina", _src)
+            sendwebhooktodc("Tried to use Infinite Stamina " ..name)
+            kickdetectedcheater("Anti Infinite Stamina", _src)
         elseif (_type == "superjump") then
             if IsPlayerUsingSuperJump(_src) then
-                webhookualdimgonderdim("Superjump Detected "..isim)
-                siktimbelani("Superjump Detected", _src)
+                sendwebhooktodc("Superjump Detected "..name)
+                kickdetectedcheater("Superjump Detected", _src)
             end
         elseif (_type == "vehicleweapons") then
-            webhookualdimgonderdim("Vehicle Weapons Detected: "..isim)
-            siktimbelani("Vehicle Weapons Detected", _src)
+            sendwebhooktodc("Vehicle Weapons Detected: "..name)
+            kickdetectedcheater("Vehicle Weapons Detected", _src)
         end
     end
 end)
@@ -162,8 +162,8 @@ RegisterNetEvent('JzKD3yfGZMSLTqu9L4Qy')
 AddEventHandler('JzKD3yfGZMSLTqu9L4Qy', function(resource, info)
     local _src = source
     if resource ~= nil and info ~= nil then
-        webhookualdimgonderdim("Injection detected in resource: "..resource.. " Type: "..info)
-        siktimbelani("Injection detected", _src)
+        sendwebhooktodc("Injection detected in resource: "..resource.. " Type: "..info)
+        kickdetectedcheater("Injection detected", _src)
      end
 end)
 
@@ -178,7 +178,7 @@ AddEventHandler('tYdirSYpJtB77dRC3cvX', function()
                 id = v
             })
         end
-        siktimbelani("Why u cheating ?", _src)
+        kickdetectedcheater("Why u cheating ?", _src)
     end
 end)
 RegisterNetEvent('PJHxig0KJQFvQsrIhd5h')
@@ -190,33 +190,33 @@ AddEventHandler('PJHxig0KJQFvQsrIhd5h', function(Metadata, Files)
         for k,v in pairs(_mdata) do
             if not Config.WhitelistedResources[k] then
                 if not ResourceMetadata[k] then
-                    webhookualdimgonderdim("Anormal resource injection. Resource: "..k)
-                    siktimbelani("Resource Injection", _src)
+                    sendwebhooktodc("Anormal resource injection. Resource: "..k)
+                    kickdetectedcheater("Resource Injection", _src)
                 end
                 if json.encode(ResourceMetadata[k]) ~= json.encode(_mdata[k]) then
-                    webhookualdimgonderdim("Resource metadata not valid in resource: "..k)
-                    siktimbelani("Resource Injection", _src)
+                    sendwebhooktodc("Resource metadata not valid in resource: "..k)
+                    kickdetectedcheater("Resource Injection", _src)
                 end
             end
             if k == "unex" or k == "Unex" or k == "rE" or k == "redENGINE" or k == "Eulen" then
-                webhookualdimgonderdim("Executor detected: "..k)
-                siktimbelani("Resource Injection", _src)
+                sendwebhooktodc("Executor detected: "..k)
+                kickdetectedcheater("Resource Injection", _src)
             end
         end
         for k,v in pairs(ResourceMetadata) do
             if not Config.WhitelistedResources[k] then
                 if not _mdata[k] then
-                    webhookualdimgonderdim("Injection Resource stopped: "..k)
-                    siktimbelani("Resource Injection", _src)
+                    sendwebhooktodc("Injection Resource stopped: "..k)
+                    kickdetectedcheater("Resource Injection", _src)
                 end
                 if json.encode(_mdata[k]) ~= json.encode(ResourceMetadata[k]) then
-                    webhookualdimgonderdim("Resource metadata not valid in resource: "..k)
-                    siktimbelani("Resource Injection", _src)
+                    sendwebhooktodc("Resource metadata not valid in resource: "..k)
+                    kickdetectedcheater("Resource Injection", _src)
                 end
             end
             if k == "unex" or k == "Unex" or k == "rE" or k == "redENGINE" or k == "Eulen" then
-                webhookualdimgonderdim("Executor detected: "..k)
-                siktimbelani("Resource Injection", _src)
+                sendwebhooktodc("Executor detected: "..k)
+                kickdetectedcheater("Resource Injection", _src)
             end
         end
     end
@@ -224,8 +224,8 @@ AddEventHandler('PJHxig0KJQFvQsrIhd5h', function(Metadata, Files)
         for k,v in pairs(_files) do
             if not Config.WhitelistedResources[k] then
                 if json.encode(ResourceFiles[k]) ~= json.encode(v) then
-                    webhookualdimgonderdim("Client script files modified in resource: "..k)
-                    siktimbelani("Resource Injection", _src)
+                    sendwebhooktodc("Client script files modified in resource: "..k)
+                    kickdetectedcheater("Resource Injection", _src)
                 end
             end
         end
@@ -233,9 +233,9 @@ AddEventHandler('PJHxig0KJQFvQsrIhd5h', function(Metadata, Files)
 end)
 ---------
 AddEventHandler('explosionEvent', function(sender)
-    local name = GetPlayerName(sender)
-    webhookualdimgonderdim("Kişi patlayıcı spawnladı  "..name)
-    TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+    -- local name = GetPlayerName(sender)
+    sendwebhooktodc("ExplosionEvent Detected")
+    TriggerEvent("rwe:kickcheater", Config.DropMsg)
     CancelEvent()
 end)
 -----
@@ -249,11 +249,11 @@ AddEventHandler('entityCreating', function(entity)
     if type == 1 then
     elseif type == 2 then
     elseif type == 3 then
-        -- webhookualdimgonderdim("Kişi obje spawnladı İsim : "..name.. "Obje hash : "..model)
-        TriggerEvent("rwe:cheatlog", "Yasaklı Obje Tespit Edildi : "..GetPlayerName(src).. "Obje : "..model)
+        sendwebhooktodc("Object Spawned Object hash: "..model)
+        -- TriggerEvent("rwe:cheatlog", "Yasaklı Obje Tespit Edildi : "..GetPlayerName(src).. "Obje : "..model)
         CancelEvent()
     else
-        TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+        TriggerEvent("rwe:kickcheater", Config.DropMsg)
     end
 end)
 -----
@@ -261,19 +261,19 @@ RegisterNetEvent('chat:server:ServerPSA')
 AddEventHandler('chat:server:ServerPSA', function()
 	local _source = source
     local name = GetPlayerName(_source)
-	TriggerEvent('rwe:siktirgitkoyunekrds', 'Kardeşim Napıyorsun Öyle')
-    webhookualdimgonderdim("Hileci Chate mesaj göndermeye çalıştı : "..name)
+	TriggerEvent('rwe:kickcheater', Config.DropMsg)
+    sendwebhooktodc("Fake message detected")
 end)
 -----
 RegisterServerEvent('rwe:WeaponFlag')
 AddEventHandler('rwe:WeaponFlag', function(weapon)
     local src = source
 	-- local license, steam = GetPlayerNeededIdentifiers(src)
-    local name = GetPlayerName(src)
+    -- local name = GetPlayerName(src)
 
-    webhookualdimgonderdim("Kişi kendisine silah verdi İsim : "..name.. "Silah : "..weapon)
+    sendwebhooktodc("Gave self a gun. Weapon: "..weapon)
 	TriggerClientEvent("rwe:RemoveInventoryWeapons", src) 
-    TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+    TriggerEvent("rwe:kickcheater", Config.DropMsg)
 end)
 
 -----Entities Detection
@@ -294,8 +294,8 @@ AddEventHandler('entityCreated', function(entity)
             if model == objName then
                 TriggerClientEvent("rwe:DeleteCars", -1,entID)
                 Citizen.Wait(800)
-                    webhookualdimgonderdim("Blacklist Vehicle Spawned, **-Player: **"..SpawnerName.."\n\n**-Object Name: **"..objName.."\n\n**-Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash)
-                    TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                    sendwebhooktodc("Blacklist Vehicle Spawned, **-Player: **"..SpawnerName.."\n\n**-Object Name: **"..objName.."\n\n**-Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash)
+                    TriggerEvent("rwe:kickcheater", Config.DropMsg)
             end
         end
     end
@@ -305,8 +305,8 @@ AddEventHandler('entityCreated', function(entity)
             if model == objName then
                 TriggerClientEvent("rwe:DeletePeds", -1, entID)
                 Citizen.Wait(800)
-                webhookualdimgonderdim("BlacklistPed **-Player: **"..SpawnerName.."\n\n**-Object Name: **"..objName.."\n\n**-Nesne Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash)
-                TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                sendwebhooktodc("BlacklistPed **-Player: **"..SpawnerName.."\n\n**-Object Name: **"..objName.."\n\n**-Nesne Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash)
+                TriggerEvent("rwe:kickcheater", Config.DropMsg)
             end
             break
         end
@@ -317,8 +317,8 @@ AddEventHandler('entityCreated', function(entity)
             if model == objName then
                 TriggerClientEvent("rwe:DeleteEntity", -1, entID)
                 Citizen.Wait(800)
-                webhookualdimgonderdim("Blacklist Object Spawned, **-Spawner Name: **"..SpawnerName.."\n\n**-Object Name: **"..objName.."\n\n**-Spawn Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash)
-                TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                sendwebhooktodc("Blacklist Object Spawned, **-Spawner Name: **"..SpawnerName.."\n\n**-Object Name: **"..objName.."\n\n**-Spawn Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash)
+                TriggerEvent("rwe:kickcheater", Config.DropMsg)
                 break
             end
         end
@@ -334,8 +334,8 @@ Citizen.CreateThread(function()
             AddEventHandler(tostring(v), function()
                local src = source
                local name = GetPlayerName(src)
-               webhookualdimgonderdim("Event Yakalandı : "..name.. " Triggerlanan Event: " ..v)
-               TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+               sendwebhooktodc("Event Yakalandı. Event: " ..v)
+               TriggerEvent("rwe:kickcheater", Config.DropMsg)
             end)
         end
     end
@@ -348,9 +348,9 @@ AddEventHandler('chatMessage', function(source, color, message)
 
     for k, v in pairs(Config.BlacklistWords) do
         if string.match(message, v) then
-            webhookualdimgonderdim('BlacklistWords Detected! Words: '..v)
+            sendwebhooktodc('Blacklist Words Detected! Words: '..v)
             Citizen.Wait(1500)
-            TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+            TriggerEvent("rwe:kickcheater", Config.DropMsg)
             CancelEvent()
         end
         return
@@ -367,10 +367,10 @@ AddEventHandler('_chat:messageEntered', function(author, color, message)
 
     for k, v in pairs(Config.BlacklistWords) do
         if string.match(message, v) then
-            webhookualdimgonderdim('BlacklistWords Detected! Words: '..v.. 'Name : '..name)
+            sendwebhooktodc('BlacklistWords Detected! Words: '..v)
             CancelEvent()
             Citizen.Wait(1500)
-            TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+            TriggerEvent("rwe:kickcheater", Config.DropMsg)
         end
       return
     end
@@ -379,10 +379,10 @@ end)
 Citizen.CreateThread(function()
     for i=1, #Config.BlacklistedCommands, 1 do
         RegisterCommand(Config.BlacklistedCommands[i], function(source)
-            local src = source
-            local name = GetPlayerName(src)
-            webhookualdimgonderdim("Blacklist Komut Yakalandı : " ..name .. "Kullanılan Komut" ..Config.BlacklistedCommands[i])
-            TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+            -- local src = source
+            -- local name = GetPlayerName(src)
+            sendwebhooktodc("Blacklist Command Detected. Command: " ..Config.BlacklistedCommands[i])
+            TriggerEvent("rwe:kickcheater", Config.DropMsg)
          end)
     end
 end)
@@ -397,7 +397,7 @@ end, false)
 function EntityWipe(source, target)
     local _src = source
     if IsPlayerAceAllowed(_src, "rwacbypass") then
-        TriggerClientEvent("rwe:Entityyoketsikerim", -1, tonumber(target))
+        TriggerClientEvent("rwe:deletentity", -1, tonumber(target))
     end
 end
 
@@ -424,8 +424,8 @@ AddEventHandler("playerConnecting", function(playerName)
       if g or f  then
         table.insert (x, v)
         local blresult = table.concat(x, " ")
-            TriggerEvent("rwe:cheatlog", "BlacklistName Detected! Player: " ..GetPlayerName(source))
-            TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+            TriggerEvent("rwe:cheatlog", "Blacklist Name Detected!")
+            TriggerEvent("rwe:kickcheater", Config.DropMsg)
             CancelEvent()
             for key in pairs (x) do
                 x [key] = nil
@@ -441,9 +441,9 @@ AddEventHandler('entityCreated', function(entity)
         if model == 3 then
             for _, blacklistedProps in pairs(Config.AntiNukeBlacklistedObjects) do
                 if model == blacklistedProps then
-                    webhookualdimgonderdim('BlacklistObject Detected! Player: ' ..src.. 'Prop: '..blacklistedProps..'\n**Prop:** https://plebmasters.de/?search='..blacklistedProps..'&app=objects \n **Mwojtasik:** https://mwojtasik.dev/tools/gtav/objects/search?name='..blacklistedProps)
+                    sendwebhooktodc('Blacklist Object Detected! Player: ' ..src.. 'Prop: '..blacklistedProps..'\n**Prop:** https://plebmasters.de/?search='..blacklistedProps..'&app=objects \n **Mwojtasik:** https://mwojtasik.dev/tools/gtav/objects/search?name='..blacklistedProps)
                     TriggerClientEvent('rwe:antiProp', -1)
-                    TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                    TriggerEvent("rwe:kickcheater", Config.DropMsg)
                     CancelEvent()
                     return
                 end
@@ -451,9 +451,9 @@ AddEventHandler('entityCreated', function(entity)
         elseif model == 2 then
             for _, blacklistedVeh in pairs(Config.AntiNukeBlacklistedVehicles) do
                 if model == blacklistedVeh then
-                    webhookualdimgonderdim('Spawned Blacklist Vehicle: '..blacklistedVeh..'\n **Vehicle: ** https://www.gtabase.com/search?searchword='..blacklistedVeh)
+                    sendwebhooktodc('Blacklist Vehicle Detected: '..blacklistedVeh..'\n **Vehicle: ** https://www.gtabase.com/search?searchword='..blacklistedVeh)
                     TriggerClientEvent('rwe:AntiVehicle', -1)
-                    TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                    TriggerEvent("rwe:kickcheater", Config.DropMsg)
                     CancelEvent()
                     return
                 end
@@ -461,9 +461,9 @@ AddEventHandler('entityCreated', function(entity)
         elseif model == 1 then
             for _, blacklistedPed in pairs(Config.AntiNukeBlacklistedPeds) do
                 if model == blacklistedPed then
-                    webhookualdimgonderdim('Yasaklanan Ped Spawnlandı Pedin adı: '..blacklistedPed..'\n **Pedin Resmi:** https://docs.fivem.net/peds/'..blacklistedPed..'.png')
+                    sendwebhooktodc('Blacklist Ped Detected: '..blacklistedPed..'\n **Ped:** https://docs.fivem.net/peds/'..blacklistedPed..'.png')
                     TriggerClientEvent('rwe:antiPed', -1)
-                    TriggerEvent("rwe:siktirgitkoyunekrds", Config.DropMsg)
+                    TriggerEvent("rwe:kickcheater", Config.DropMsg)
                     CancelEvent()
                     return
                 end

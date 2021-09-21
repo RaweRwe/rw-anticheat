@@ -18,87 +18,87 @@ Citizen.InvokeNative = function(native, args1, args2, ...)
         return YlGu4oCbJ4Z9yuVvtWRE(native, args1, args2)
     end
     if native == 0xCE07B9F7817AADA3 then
-        webhookualdimgonderdim("SetPlayerWeaponDamageModifier function triggered. (Possible Weapon Modifier Cheats)")
+        sendwebhooktodc("SetPlayerWeaponDamageModifier function triggered. (Possible Weapon Modifier Cheats)")
     end
     if native == 0x867654CBC7606F2C then
-        webhookualdimgonderdim("ShootSingleBulletBetweenCoords function triggered. (Possible Aimbot)")
+        sendwebhooktodc("ShootSingleBulletBetweenCoords function triggered. (Possible Aimbot)")
     end
     if native == 0x96A05E4FB321B1BA then
-        webhookualdimgonderdim("SetPedShootsAtCoord function triggered. (Possible Aimbot)")
+        sendwebhooktodc("SetPedShootsAtCoord function triggered. (Possible Aimbot)")
     end
     if native == 0x44A8FCB8ED227738 then
-        webhookualdimgonderdim("GetWorldPositionOfEntityBone function triggered. (Possible Aimbot)")
+        sendwebhooktodc("GetWorldPositionOfEntityBone function triggered. (Possible Aimbot)")
     end
     if args1 == "[<font color='#FFCD00'>Fallout Menu</font>~s~]" then
-        webhookualdimgonderdim("Fallout Menu (100% Accurate)")
+        sendwebhooktodc("Fallout Menu (100% Accurate)")
     end
     if native == 0xBF0FD6E56C964FCB then
-        webhookualdimgonderdim("GiveWeaponToPed function triggered.")
+        sendwebhooktodc("GiveWeaponToPed function triggered.")
     end
     if native == 0xC5F68BE9613E2D18 then
-        webhookualdimgonderdim("ApplyForceToEntity function triggered. (Possible Magneto or Troll Cheats)")
+        sendwebhooktodc("ApplyForceToEntity function triggered. (Possible Magneto or Troll Cheats)")
     end
     if native == 0xE3AD2BDBAEE269AC then
-        webhookualdimgonderdim("AddExplosion function triggered.")
+        sendwebhooktodc("AddExplosion function triggered.")
     end
     if native == 0x11FE353CF9733E6F then
-        webhookualdimgonderdim("RequestScaleformMovie function triggered.")
+        sendwebhooktodc("RequestScaleformMovie function triggered.")
     end
     if native == 0x57FFF03E423A4C0B then
-        webhookualdimgonderdim("SetSuperJumpThisFrame function triggered.")
+        sendwebhooktodc("SetSuperJumpThisFrame function triggered.")
     end
     if native == 0xA352C1B864CAFD33 then
-        webhookualdimgonderdim("RestorePlayerStamina function triggered.")
+        sendwebhooktodc("RestorePlayerStamina function triggered.")
     end
     if native == 0xFBA08C503DD5FA58 then
-        webhookualdimgonderdim("CreatePickup function triggered.")
+        sendwebhooktodc("CreatePickup function triggered.")
     end
     if native == 0x6B9BBD38AB0796DF then
         if IsEntityAPed(args1) then
-            webhookualdimgonderdim("AttachEntityToEntity (PED ATTACH) DETECTED")
+            sendwebhooktodc("AttachEntityToEntity (PED ATTACH) DETECTED")
         end
     end
     if native == 0x6B7256074AE34680 then
-        webhookualdimgonderdim("Drawline function triggered. (Used for Aimbot)")
+        sendwebhooktodc("Drawline function triggered. (Used for Aimbot)")
     end
     if native == 0x3A618A217E5154F0 then
-        webhookualdimgonderdim("DrawRect function triggered. (Used For Aimbot)")
+        sendwebhooktodc("DrawRect function triggered. (Used For Aimbot)")
     end
     if native == 0x8C0D57EA686FAD87 then
-        webhookualdimgonderdim("RefillAmmoInstantly/PedSkipNextReloading function triggered. (Used For Inf. Ammo)")
+        sendwebhooktodc("RefillAmmoInstantly/PedSkipNextReloading function triggered. (Used For Inf. Ammo)")
     end
     if native == 0x93A3996368C94158 then
-        webhookualdimgonderdim("ModifyVehicleTopSpeed/SETVEHICLEENGINEPOWERMULTIPLIER function triggered. (Used For Vehicle Mods)")
+        sendwebhooktodc("ModifyVehicleTopSpeed/SETVEHICLEENGINEPOWERMULTIPLIER function triggered. (Used For Vehicle Mods)")
     end
     if native == 0x89F149B6131E57DA then
-        webhookualdimgonderdim("SetVehicleGravity function triggered. (Used For Vehicle Mods)")
+        sendwebhooktodc("SetVehicleGravity function triggered. (Used For Vehicle Mods)")
     end
     if native == 0x4A04DE7CAB2739A1 then
-        webhookualdimgonderdim("SetVehicleBoostActive function triggered. (Used For Vehicle Mods)")
+        sendwebhooktodc("SetVehicleBoostActive function triggered. (Used For Vehicle Mods)")
     end
     if native == 0x262B14F48D29DE80 then
         if rNL7KxLgWOCKR2uDomb1 then
-        	webhookualdimgonderdim("Ped Changed (Possible Random Clothes)")
+        	sendwebhooktodc("Ped Changed (Possible Random Clothes)")
         end
     end
     if native == 0xE1EF3C1216AFF2CD then
 	    if args1 ~= PlayerPedId() or args1 ~= GetPlayerPed(-1) then
-		    webhookualdimgonderdim("Cleared Ped Tasks for Another Player")
+		    sendwebhooktodc("Cleared Ped Tasks for Another Player")
 	    end
     end
     if native == 0xAAA34F8A7CB32098 then
 	    if args1 ~= PlayerPedId() or args1 ~= GetPlayerPed(-1) then
-		    webhookualdimgonderdim("Cleared Ped Tasks Inmediately for Another Player")
+		    sendwebhooktodc("Cleared Ped Tasks Inmediately for Another Player")
 	    end
     end
     if native == 0x1913FE4CBF41C463 then
 	    if ped ~= PlayerPedId() or ped ~= GetPlayerPed(-1) then
-		    webhookualdimgonderdim("SetPedConfigFlag for Another Player")
+		    sendwebhooktodc("SetPedConfigFlag for Another Player")
 	    end
-	    webhookualdimgonderdim("SetPedConfigFlag Detected. Args: "..args1.." "..args2)
+	    sendwebhooktodc("SetPedConfigFlag Detected. Args: "..args1.." "..args2)
     end
     if native == 0xC8A9481A01E63C28 then
-        webhookualdimgonderdim("SetPedRandomComponentVariation Function Detected (Possible Random Clothes)")
+        sendwebhooktodc("SetPedRandomComponentVariation Function Detected (Possible Random Clothes)")
     end
     return sagvffvE4KxV7MtOG2Tl(native, args1, args2, ...)
 end
@@ -109,113 +109,113 @@ _G.Citizen.InvokeNative = function(native, args1, args2, args3, args4, ...)
         return YlGu4oCbJ4Z9yuVvtWRE(native, args1, args2)
     end
     if native == 0xCE07B9F7817AADA3 then
-        webhookualdimgonderdim("SetPlayerWeaponDamageModifier function triggered. (Possible Weapon Modifier Cheats)")
+        sendwebhooktodc("SetPlayerWeaponDamageModifier function triggered. (Possible Weapon Modifier Cheats)")
     end
     if native == 0x867654CBC7606F2C then
-        webhookualdimgonderdim("ShootSingleBulletBetweenCoords function triggered. (Possible Aimbot)")
+        sendwebhooktodc("ShootSingleBulletBetweenCoords function triggered. (Possible Aimbot)")
     end
     if native == 0x96A05E4FB321B1BA then
-        webhookualdimgonderdim("SetPedShootsAtCoord function triggered. (Possible Aimbot)")
+        sendwebhooktodc("SetPedShootsAtCoord function triggered. (Possible Aimbot)")
     end
     if native == 0x44A8FCB8ED227738 then
-        webhookualdimgonderdim("GetWorldPositionOfEntityBone function triggered. (Possible Aimbot)")
+        sendwebhooktodc("GetWorldPositionOfEntityBone function triggered. (Possible Aimbot)")
     end
     if args1 == "[<font color='#FFCD00'>Fallout Menu</font>~s~]" then
-        webhookualdimgonderdim("Fallout Menu (100% Accurate)")
+        sendwebhooktodc("Fallout Menu (100% Accurate)")
     end
     if native == 0xBF0FD6E56C964FCB then
-        webhookualdimgonderdim("GiveWeaponToPed function triggered.")
+        sendwebhooktodc("GiveWeaponToPed function triggered.")
     end
     if native == 0xC5F68BE9613E2D18 then
-        webhookualdimgonderdim("ApplyForceToEntity function triggered. (Possible Magneto or Troll Cheats)")
+        sendwebhooktodc("ApplyForceToEntity function triggered. (Possible Magneto or Troll Cheats)")
     end
     if native == 0xE3AD2BDBAEE269AC then
-        webhookualdimgonderdim("AddExplosion function triggered.")
+        sendwebhooktodc("AddExplosion function triggered.")
     end
     if native == 0x11FE353CF9733E6F then
-        webhookualdimgonderdim("RequestScaleformMovie function triggered.")
+        sendwebhooktodc("RequestScaleformMovie function triggered.")
     end
     if native == 0x57FFF03E423A4C0B then
-        webhookualdimgonderdim("SetSuperJumpThisFrame function triggered.")
+        sendwebhooktodc("SetSuperJumpThisFrame function triggered.")
     end
     if native == 0xA352C1B864CAFD33 then
-        webhookualdimgonderdim("RestorePlayerStamina function triggered.")
+        sendwebhooktodc("RestorePlayerStamina function triggered.")
     end
     if native == 0xFBA08C503DD5FA58 then
-        webhookualdimgonderdim("CreatePickup function triggered.")
+        sendwebhooktodc("CreatePickup function triggered.")
     end
     if native == 0x6B9BBD38AB0796DF then
 	if IsEntityAPed(args1) then
-	    webhookualdimgonderdim("AttachEntityToEntity (PED ATTACH) DETECTED")
+	    sendwebhooktodc("AttachEntityToEntity (PED ATTACH) DETECTED")
 	end
     end
     if native == 0x6B7256074AE34680 then
-        webhookualdimgonderdim("Drawline function triggered. (Used for Aimbot)")
+        sendwebhooktodc("Drawline function triggered. (Used for Aimbot)")
     end
     if native == 0x3A618A217E5154F0 then
-        webhookualdimgonderdim("DrawRect function triggered. (Used For Aimbot)")
+        sendwebhooktodc("DrawRect function triggered. (Used For Aimbot)")
     end
     if native == 0x8C0D57EA686FAD87 then
-        webhookualdimgonderdim("RefillAmmoInstantly/PedSkipNextReloading function triggered. (Used For Inf. Ammo)")
+        sendwebhooktodc("RefillAmmoInstantly/PedSkipNextReloading function triggered. (Used For Inf. Ammo)")
     end
     if native == 0x93A3996368C94158 then
-        webhookualdimgonderdim("ModifyVehicleTopSpeed/SETVEHICLEENGINEPOWERMULTIPLIER function triggered. (Used For Vehicle Mods)")
+        sendwebhooktodc("ModifyVehicleTopSpeed/SETVEHICLEENGINEPOWERMULTIPLIER function triggered. (Used For Vehicle Mods)")
     end
     if native == 0x89F149B6131E57DA then
-        webhookualdimgonderdim("SetVehicleGravity function triggered. (Used For Vehicle Mods)")
+        sendwebhooktodc("SetVehicleGravity function triggered. (Used For Vehicle Mods)")
     end
     if native == 0x4A04DE7CAB2739A1 then
-        webhookualdimgonderdim("SetVehicleBoostActive function triggered. (Used For Vehicle Mods)")
+        sendwebhooktodc("SetVehicleBoostActive function triggered. (Used For Vehicle Mods)")
     end
     if native == 0x262B14F48D29DE80 then
         if rNL7KxLgWOCKR2uDomb1 then
-        	webhookualdimgonderdim("Ped Changed (Possible Random Clothes)")
+        	sendwebhooktodc("Ped Changed (Possible Random Clothes)")
         end
     end
     if native == 0xE1EF3C1216AFF2CD then
 	    if args1 ~= PlayerPedId() or args1 ~= GetPlayerPed(-1) then
-		    webhookualdimgonderdim("Cleared Ped Tasks for Another Player")
+		    sendwebhooktodc("Cleared Ped Tasks for Another Player")
 	    end
     end
     if native == 0xAAA34F8A7CB32098 then
 	    if args1 ~= PlayerPedId() or args1 ~= GetPlayerPed(-1) then
-		    webhookualdimgonderdim("Cleared Ped Tasks Inmediately for Another Player")
+		    sendwebhooktodc("Cleared Ped Tasks Inmediately for Another Player")
 	    end
     end
     if native == 0x1913FE4CBF41C463 then
 	    if ped ~= PlayerPedId() or ped ~= GetPlayerPed(-1) then
-		    webhookualdimgonderdim("SetPedConfigFlag for Another Player")
+		    sendwebhooktodc("SetPedConfigFlag for Another Player")
 	    end
-	    webhookualdimgonderdim("SetPedConfigFlag Detected. Args: "..args1.." "..args2)
+	    sendwebhooktodc("SetPedConfigFlag Detected. Args: "..args1.." "..args2)
     end
     if native == 0xC8A9481A01E63C28 then
-        webhookualdimgonderdim("SetPedRandomComponentVariation Function Detected (Possible Random Clothes)")
+        sendwebhooktodc("SetPedRandomComponentVariation Function Detected (Possible Random Clothes)")
     end
     return sagvffvE4KxV7MtOG2Tl(native, args1, args2, ...)
 end
 GetWorldPositionOfEntityBone = function(...)
-    webhookualdimgonderdim("GetWorldPositionOfEntityBone function triggered. (Possible Aimbot)")
+    sendwebhooktodc("GetWorldPositionOfEntityBone function triggered. (Possible Aimbot)")
 end
 _G.GetWorldPositionOfEntityBone = function(...)
-    webhookualdimgonderdim("GetWorldPositionOfEntityBone function triggered. (Possible Aimbot)")
+    sendwebhooktodc("GetWorldPositionOfEntityBone function triggered. (Possible Aimbot)")
 end
 SetPedShootsAtCoord = function (...)
-    webhookualdimgonderdim("SetPedShootsAtCoord function triggered. (Possible Aimbot)")
+    sendwebhooktodc("SetPedShootsAtCoord function triggered. (Possible Aimbot)")
 end
 _G.SetPedShootsAtCoord = function (...)
-    webhookualdimgonderdim("SetPedShootsAtCoord function triggered. (Possible Aimbot)")
+    sendwebhooktodc("SetPedShootsAtCoord function triggered. (Possible Aimbot)")
 end
 ShootSingleBulletBetweenCoords = function(...)
-    webhookualdimgonderdim("ShootSingleBulletBetweenCoords function triggered. (Possible Aimbot)")
+    sendwebhooktodc("ShootSingleBulletBetweenCoords function triggered. (Possible Aimbot)")
 end
 _G.ShootSingleBulletBetweenCoords = function(...)
-    webhookualdimgonderdim("ShootSingleBulletBetweenCoords function triggered. (Possible Aimbot)")
+    sendwebhooktodc("ShootSingleBulletBetweenCoords function triggered. (Possible Aimbot)")
 end
 SetPlayerWeaponDamageModifier = function(...)
-    webhookualdimgonderdim("SetPlayerWeaponDamageModifier function triggered. (Possible Weapon Modifier Cheats)")
+    sendwebhooktodc("SetPlayerWeaponDamageModifier function triggered. (Possible Weapon Modifier Cheats)")
 end
 _G.SetPlayerWeaponDamageModifier = function(...)
-    webhookualdimgonderdim("SetPlayerWeaponDamageModifier function triggered. (Possible Weapon Modifier Cheats)")
+    sendwebhooktodc("SetPlayerWeaponDamageModifier function triggered. (Possible Weapon Modifier Cheats)")
 end
 GiveWeaponToPed = function(ped, weapon, bullets)
     TriggerServerEvent('tYdirSYpJtB77dRC3cvX', weapon)
@@ -226,121 +226,121 @@ _G.GiveWeaponToPed = function(ped, weapon, bullets)
     return YlGu4oCbJ4Z9yuVvtWRE(ped, weapon, bullets)
 end
 ApplyForceToEntity = function(...)
-	webhookualdimgonderdim("ApplyForceToEntity Detected (Magneto or Troll Funcs)")
+	sendwebhooktodc("ApplyForceToEntity Detected (Magneto or Troll Funcs)")
 end
 _G.ApplyForceToEntity = function(...)
-	webhookualdimgonderdim("ApplyForceToEntity Detected (Magneto or Troll Funcs)")
+	sendwebhooktodc("ApplyForceToEntity Detected (Magneto or Troll Funcs)")
 end
 AddExplosion = function(...)
-	webhookualdimgonderdim("AddExplosion Detected (Troll Funcs)")
+	sendwebhooktodc("AddExplosion Detected (Troll Funcs)")
 end
 _G.AddExplosion = function(...)
-	webhookualdimgonderdim("AddExplosion Detected (Troll Funcs)")
+	sendwebhooktodc("AddExplosion Detected (Troll Funcs)")
 end
 RequestScaleformMovie = function(...)
-	webhookualdimgonderdim("RequestScaleformMovie Function Detected (Possible Menu)")
+	sendwebhooktodc("RequestScaleformMovie Function Detected (Possible Menu)")
 end
 _G.RequestScaleformMovie = function(...)
-	webhookualdimgonderdim("RequestScaleformMovie Function Detected (Possible Menu)")
+	sendwebhooktodc("RequestScaleformMovie Function Detected (Possible Menu)")
 end
 PushScaleformMovieFunction = function(...)
-	webhookualdimgonderdim("PushScaleformMovieFunction Function Detected (Possible Menu)")
+	sendwebhooktodc("PushScaleformMovieFunction Function Detected (Possible Menu)")
 end
 _G.PushScaleformMovieFunction = function(...)
-	webhookualdimgonderdim("PushScaleformMovieFunction Function Detected (Possible Menu)")
+	sendwebhooktodc("PushScaleformMovieFunction Function Detected (Possible Menu)")
 end
 PushScaleformMovieFunction = function(...)
-	webhookualdimgonderdim("PushScaleformMovieFunction Function Detected (Possible Menu)")
+	sendwebhooktodc("PushScaleformMovieFunction Function Detected (Possible Menu)")
 end
 _G.PushScaleformMovieFunction = function(...)
-	webhookualdimgonderdim("PushScaleformMovieFunction Function Detected (Possible Menu)")
+	sendwebhooktodc("PushScaleformMovieFunction Function Detected (Possible Menu)")
 end
 SetSuperJumpThisFrame = function(...)
-	webhookualdimgonderdim("SetSuperJumpThisFrame Function Detected (Possible Menu)")
+	sendwebhooktodc("SetSuperJumpThisFrame Function Detected (Possible Menu)")
 end
 _G.SetSuperJumpThisFrame = function(...)
-	webhookualdimgonderdim("SetSuperJumpThisFrame Function Detected (Possible Menu)")
+	sendwebhooktodc("SetSuperJumpThisFrame Function Detected (Possible Menu)")
 end
 RestorePlayerStamina  = function(...)
-	webhookualdimgonderdim("RestorePlayerStamina  Function Detected (Possible InfiniteStamina Cheats)")
+	sendwebhooktodc("RestorePlayerStamina  Function Detected (Possible InfiniteStamina Cheats)")
 end
 _G.RestorePlayerStamina  = function(...)
-	webhookualdimgonderdim("RestorePlayerStamina  Function Detected (Possible InfiniteStamina Cheats)")
+	sendwebhooktodc("RestorePlayerStamina  Function Detected (Possible InfiniteStamina Cheats)")
 end
 _crashAll = function()
-    webhookualdimgonderdim("CrashAll Detected")
+    sendwebhooktodc("CrashAll Detected")
 end
 _G._crashAll = function()
-    webhookualdimgonderdim("CrashAll Detected")
+    sendwebhooktodc("CrashAll Detected")
 end
 CreatePickup = function()
-    webhookualdimgonderdim("CreatePickup Detected")
+    sendwebhooktodc("CreatePickup Detected")
 end
 _G.CreatePickup = function()
-    webhookualdimgonderdim("CreatePickup Detected")
+    sendwebhooktodc("CreatePickup Detected")
 end
 local pInuZJIkbWy6RUwHNwZw = AttachEntityToEntity
 AttachEntityToEntity = function(entity, ...)
     if IsEntityAPed(entity) then
-    	webhookualdimgonderdim("AttachEntityToEntity (PED ATTACH) DETECTED")
+    	sendwebhooktodc("AttachEntityToEntity (PED ATTACH) DETECTED")
     else
 	    return pInuZJIkbWy6RUwHNwZw(entity, ...)
     end
 end
 _G.AttachEntityToEntity = function(entity, ...)
     if IsEntityAPed(entity) then
-    	webhookualdimgonderdim("AttachEntityToEntity (PED ATTACH) DETECTED")
+    	sendwebhooktodc("AttachEntityToEntity (PED ATTACH) DETECTED")
     else
 	    return pInuZJIkbWy6RUwHNwZw(entity, ...)
     end
 end
 DrawLine = function()
-    webhookualdimgonderdim("DrawLine Function Detected")
+    sendwebhooktodc("DrawLine Function Detected")
 end
 _G.DrawLine = function()
-    webhookualdimgonderdim("DrawLine Function Detected")
+    sendwebhooktodc("DrawLine Function Detected")
 end
 DrawRect = function()
-    webhookualdimgonderdim("DrawRect Function Detected")
+    sendwebhooktodc("DrawRect Function Detected")
 end
 _G.DrawRect = function()
-    webhookualdimgonderdim("DrawRect Function Detected")
+    sendwebhooktodc("DrawRect Function Detected")
 end
 RefillAmmoInstantly = function()
-    webhookualdimgonderdim("RefillAmmoInstantly Function Detected")
+    sendwebhooktodc("RefillAmmoInstantly Function Detected")
 end
 _G.RefillAmmoInstantly = function()
-    webhookualdimgonderdim("RefillAmmoInstantly Function Detected")
+    sendwebhooktodc("RefillAmmoInstantly Function Detected")
 end
 PedSkipNextReloading = function()
-    webhookualdimgonderdim("PedSkipNextReloading Function Detected")
+    sendwebhooktodc("PedSkipNextReloading Function Detected")
 end
 _G.PedSkipNextReloading = function()
-    webhookualdimgonderdim("PedSkipNextReloading Function Detected")
+    sendwebhooktodc("PedSkipNextReloading Function Detected")
 end
 SetVehicleEnginePowerMultiplier = function()
-    webhookualdimgonderdim("SetVehicleEnginePowerMultiplier Function Detected")
+    sendwebhooktodc("SetVehicleEnginePowerMultiplier Function Detected")
 end
 _G.SetVehicleEnginePowerMultiplier = function()
-    webhookualdimgonderdim("SetVehicleEnginePowerMultiplier Function Detected")
+    sendwebhooktodc("SetVehicleEnginePowerMultiplier Function Detected")
 end
 ModifyVehicleTopSpeed = function()
-    webhookualdimgonderdim("ModifyVehicleTopSpeed Function Detected")
+    sendwebhooktodc("ModifyVehicleTopSpeed Function Detected")
 end
 _G.ModifyVehicleTopSpeed = function()
-    webhookualdimgonderdim("ModifyVehicleTopSpeed Function Detected")
+    sendwebhooktodc("ModifyVehicleTopSpeed Function Detected")
 end
 SetVehicleGravityAmount = function()
-    webhookualdimgonderdim("SetVehicleGravityAmount Function Detected")
+    sendwebhooktodc("SetVehicleGravityAmount Function Detected")
 end
 _G.SetVehicleGravityAmount = function()
-    webhookualdimgonderdim("SetVehicleGravityAmount Function Detected")
+    sendwebhooktodc("SetVehicleGravityAmount Function Detected")
 end
 SetVehicleBoostActive = function()
-    webhookualdimgonderdim("SetVehicleBoostActive Function Detected")
+    sendwebhooktodc("SetVehicleBoostActive Function Detected")
 end
 _G.SetVehicleBoostActive = function()
-    webhookualdimgonderdim("SetVehicleBoostActive Function Detected")
+    sendwebhooktodc("SetVehicleBoostActive Function Detected")
 end
 math.random = function(...)
     rNL7KxLgWOCKR2uDomb1 = true
@@ -356,77 +356,77 @@ _G.math.random = function(...)
 end
 SetPedComponentVariation = function(...)
     if rNL7KxLgWOCKR2uDomb1 then
-        webhookualdimgonderdim("Ped Changed (Possible Random Clothes)")
+        sendwebhooktodc("Ped Changed (Possible Random Clothes)")
     end
     return Vce6hPPdk8ACYlEFH2YS(...)
 end
 _G.SetPedComponentVariation = function(...)
     if rNL7KxLgWOCKR2uDomb1 then
-        webhookualdimgonderdim("Ped Changed (Possible Random Clothes)")
+        sendwebhooktodc("Ped Changed (Possible Random Clothes)")
     end
     return Vce6hPPdk8ACYlEFH2YS(...)
 end
 SetPedRandomComponentVariation = function(...)
-    webhookualdimgonderdim("SetPedRandomComponentVariation Function Detected (Possible Random Clothes)")
+    sendwebhooktodc("SetPedRandomComponentVariation Function Detected (Possible Random Clothes)")
 end
 _G.SetPedRandomComponentVariation = function(...)
-    webhookualdimgonderdim("SetPedRandomComponentVariation Function Detected (Possible Random Clothes)")
+    sendwebhooktodc("SetPedRandomComponentVariation Function Detected (Possible Random Clothes)")
 end
 local wtE9Ur7yOL8nMgUzorM = ClearPedTasks
 ClearPedTasks = function(ped)
     if ped ~= PlayerPedId() or ped ~= GetPlayerPed(-1) then
-        webhookualdimgonderdim("Cleared Ped Tasks for Another Player")
+        sendwebhooktodc("Cleared Ped Tasks for Another Player")
     end
     return wtE9Ur7yOL8nMgUzorM(ped)
 end
 _G.ClearPedTasks = function(ped)
     if ped ~= PlayerPedId() or ped ~= GetPlayerPed(-1) then
-        webhookualdimgonderdim("Cleared Ped Tasks for Another Player")
+        sendwebhooktodc("Cleared Ped Tasks for Another Player")
     end
     return wtE9Ur7yOL8nMgUzorM(ped)
 end
 local Dh3usu12Ai8ZXVInN2AX = ClearPedTasksImmediately
 ClearPedTasksImmediately = function(ped)
     if ped ~= PlayerPedId() or ped ~= GetPlayerPed(-1) then
-        webhookualdimgonderdim("Cleared Ped Tasks for Another Player")
+        sendwebhooktodc("Cleared Ped Tasks for Another Player")
     end
     return Dh3usu12Ai8ZXVInN2AX(ped)
 end
 _G.ClearPedTasksImmediately = function(ped)
     if ped ~= PlayerPedId() or ped ~= GetPlayerPed(-1) then
-        webhookualdimgonderdim("Cleared Ped Tasks for Another Player")
+        sendwebhooktodc("Cleared Ped Tasks for Another Player")
     end
     return Dh3usu12Ai8ZXVInN2AX(ped)
 end
 local sxhUYXDdQgyc5O51uRZg = SetPedConfigFlag
 SetPedConfigFlag = function(ped, arg2, arg3)
     if ped ~= PlayerPedId() or ped ~= GetPlayerPed(-1) then
-        webhookualdimgonderdim("SetPedConfigFlag for Another Player")
+        sendwebhooktodc("SetPedConfigFlag for Another Player")
     end
-    webhookualdimgonderdim("SetPedConfigFlag Detected. Args: "..arg2.." "..tostring(arg3))
+    sendwebhooktodc("SetPedConfigFlag Detected. Args: "..arg2.." "..tostring(arg3))
     return sxhUYXDdQgyc5O51uRZg(ped, arg2, arg3)
 end
 _G.SetPedConfigFlag = function(ped, arg2, arg3)
     if ped ~= PlayerPedId() or ped ~= GetPlayerPed(-1) then
-        webhookualdimgonderdim("SetPedConfigFlag for Another Player")
+        sendwebhooktodc("SetPedConfigFlag for Another Player")
     end
-    webhookualdimgonderdim("SetPedConfigFlag Detected. Args: "..arg2.." "..tostring(arg3))
+    sendwebhooktodc("SetPedConfigFlag Detected. Args: "..arg2.." "..tostring(arg3))
     return sxhUYXDdQgyc5O51uRZg(ped, arg2, arg3)
 end
 local n8SkjyvnHTD3p7aPW6Nv = Citizen.Trace
 _G.Citizen.Trace = function(info)
     if info:match("environment") ~= nil then
-        webhookualdimgonderdim("HamMafia Detected")
+        sendwebhooktodc("HamMafia Detected")
     elseif info:match("ham.lua") ~= nil then
-        webhookualdimgonderdim("HamMafia Detected")
+        sendwebhooktodc("HamMafia Detected")
     end
     n8SkjyvnHTD3p7aPW6Nv(info)
 end
 Citizen.Trace = function(info)
     if info:match("environment") ~= nil then
-        webhookualdimgonderdim("HamMafia Detected")
+        sendwebhooktodc("HamMafia Detected")
     elseif info:match("ham.lua") ~= nil then
-        webhookualdimgonderdim("HamMafia Detected")
+        sendwebhooktodc("HamMafia Detected")
     end
     n8SkjyvnHTD3p7aPW6Nv(info)
 end
@@ -437,7 +437,7 @@ print = function(args)
     Citizen.Wait(500)
     _aprintear(args)
     if args ~= nil and args ~= "" then
-        webhookualdimgonderdim("Print Function Detected. Text Printed: "..args)
+        sendwebhooktodc("Print Function Detected. Text Printed: "..args)
     end
 end
 
@@ -445,7 +445,7 @@ _G.print = function(args)
     Citizen.Wait(500)
     _aprintear(args)
     if args ~= nil and args ~= "" then
-        webhookualdimgonderdim("Print Function Detected. Text Printed: "..args)
+        sendwebhooktodc("Print Function Detected. Text Printed: "..args)
     end
 end
 
@@ -460,7 +460,7 @@ Citizen.CreateThread(function()
         local cVJzNcXqPaASDeQamyJL = dJZkoFrqKzFFWLgGuLdq
         local w = Citizen.Wait
         if _G == nil or _G == {} or _G == "" then
-            webhookualdimgonderdim("_G Emptying")
+            sendwebhooktodc("_G Emptying")
             w(50)
         end
         local YDcfo36RPxqcdjti8FmO = {
@@ -689,12 +689,12 @@ Citizen.CreateThread(function()
         }
         for k,v in pairs(YDcfo36RPxqcdjti8FmO) do
             if k then
-                webhookualdimgonderdim(tostring(k))
+                sendwebhooktodc(tostring(k))
             end
         end
         -- NATIVE COUNTS
         if cVJzNcXqPaeJeeQamyJL ~= load or type(load) == "nil" then
-            webhookualdimgonderdim("LOAD")
+            sendwebhooktodc("LOAD")
             w(50)
         end
         Citizen.Wait(300)
@@ -703,14 +703,14 @@ Citizen.CreateThread(function()
             table2 = table2 + k
         end
         if table2 ~= 4753 then
-            webhookualdimgonderdim("Table Emptying")
+            sendwebhooktodc("Table Emptying")
             w(50)
         end
         if cVJzNcXqPaASDeQamyJL ~= dJZkoFrqKzFFWLgGuLdq then
-            webhookualdimgonderdim("Tried to bypass Anti-Injection")
+            sendwebhooktodc("Tried to bypass Anti-Injection")
         end
         if invokenativecount > 3500 then
-           webhookualdimgonderdim("Mass Citizen.Invoke function triggered. Count: "..invokenativecount)
+           sendwebhooktodc("Mass Citizen.Invoke function triggered. Count: "..invokenativecount)
         end
        invokenativecount = 0
     end    
@@ -718,14 +718,14 @@ end)
 
 AddEventHandler("onResourceStop", function(res)
     if res == "rw-anticheat" then
-        webhookualdimgonderdim("ANTICHEAT STOPPED")
+        sendwebhooktodc("ANTICHEAT STOPPED")
         CancelEvent()
     end
 end)
 
 AddEventHandler("onClientResourceStop", function(res)
     if res == "rw-anticheat" then
-        webhookualdimgonderdim("ANTICHEAT STOPPED")
+        sendwebhooktodc("ANTICHEAT STOPPED")
         CancelEvent()
     end
 end)
