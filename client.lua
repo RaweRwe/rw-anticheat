@@ -444,7 +444,7 @@ end)
 
 function isPedBlacklisted(model)
 	for _, blacklistedPed in pairs(Config.AntiNukeBlacklistedPeds) do
-		if GetEntityModel(model) == GetHashKey(blacklistedPed) then
+		if GetEntityModel(model) == blacklistedPed then
 			return true
 		end
 	end

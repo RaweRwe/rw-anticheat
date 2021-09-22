@@ -1,8 +1,6 @@
 ESX = nil
 TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 
-local WebhookLink = "" -- discord webhook
-
 local ResourceMetadata = {}
 local ResourceFiles = {}
 
@@ -64,7 +62,7 @@ AddEventHandler("rwe:cheatlog", function(reason)
                 },
             }
         }
-    PerformHttpRequest(WebhookLink, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", embeds = connect, avatar_url = "https://e7.pngegg.com/pngimages/163/941/png-clipart-computer-icons-x-mark-old-letters-angle-logo.png"}), { ['Content-Type'] = 'application/json' })
+    PerformHttpRequest(Config.WebhookDiscord, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", embeds = connect, avatar_url = "https://e7.pngegg.com/pngimages/163/941/png-clipart-computer-icons-x-mark-old-letters-angle-logo.png"}), { ['Content-Type'] = 'application/json' })
 end)
 -------------
 
@@ -80,7 +78,7 @@ function sendwebhooktodc(content)
             },
         }
     }
-  PerformHttpRequest(WebhookLink, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", embeds = connect}), { ['Content-Type'] = 'application/json' })
+  PerformHttpRequest(Config.WebhookDiscord, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", embeds = connect}), { ['Content-Type'] = 'application/json' })
 end
 
 -----
@@ -231,13 +229,24 @@ AddEventHandler('PJHxig0KJQFvQsrIhd5h', function(Metadata, Files)
         end
     end
 end)
----------
-AddEventHandler('explosionEvent', function(sender)
-    -- local name = GetPlayerName(sender)
-    sendwebhooktodc("ExplosionEvent Detected")
-    TriggerEvent("rwe:kickcheater", Config.DropMsg)
-    CancelEvent()
+
+------------------------------------
+-------- Explosion Event    --------
+------------------------------------
+AddEventHandler('explosionEvent', function(sender, ev)
+    local name = GetPlayerName(sender)
+
+    -- We need to make sure it is original from explosion sender.
+    if ev.damageScale ~= 0.0 and ev.ownerNetId == 0 then 
+        sendwebhooktodc("ExplosionEvent Detected".." Sender: "..name.." Explosion Type: "..ev.explosionType)
+        TriggerEvent("rwe:kickcheater", Config.DropMsg)
+        CancelEvent()
+    end
 end)
+
+
+-----
+--Maybe need rework from entity created to entitycreating for performance of server side.
 -----
 AddEventHandler('entityCreating', function(entity)
   local src = NetworkGetEntityOwner(entity)
@@ -256,27 +265,34 @@ AddEventHandler('entityCreating', function(entity)
         TriggerEvent("rwe:kickcheater", Config.DropMsg)
     end
 end)
------
+
+------------------------------------
+-------- Fake Message Chat  --------
+------------------------------------
 RegisterNetEvent('chat:server:ServerPSA')
 AddEventHandler('chat:server:ServerPSA', function()
 	local _source = source
     local name = GetPlayerName(_source)
 	TriggerEvent('rwe:kickcheater', Config.DropMsg)
-    sendwebhooktodc("Fake message detected")
+    sendwebhooktodc("Fake message detected".." Player: "..name)
 end)
------
+
+------------------------------------
+-------- Anti Weapon Flag   --------
+------------------------------------
 RegisterServerEvent('rwe:WeaponFlag')
 AddEventHandler('rwe:WeaponFlag', function(weapon)
     local src = source
-	-- local license, steam = GetPlayerNeededIdentifiers(src)
-    -- local name = GetPlayerName(src)
+    local name = GetPlayerName(src)
 
-    sendwebhooktodc("Gave self a gun. Weapon: "..weapon)
+    sendwebhooktodc("Gave self a gun. Weapon: "..weapon.." Player: "..name)
 	TriggerClientEvent("rwe:RemoveInventoryWeapons", src) 
     TriggerEvent("rwe:kickcheater", Config.DropMsg)
 end)
 
------Entities Detection
+------------------------------------
+-------- Entities Created   --------
+------------------------------------
 AddEventHandler('entityCreated', function(entity)
     local entity = entity
     if not DoesEntityExist(entity) then
@@ -325,22 +341,24 @@ AddEventHandler('entityCreated', function(entity)
     end
 end)
 
-
-------
-Citizen.CreateThread(function()
+------------------------------------
+-------- Blacklisted Events --------
+------------------------------------
+if Config.EventsDetect then
     for k, v in pairs(Config.Events) do
-        if Config.EventsDetect then
-            RegisterServerEvent(tostring(v))
-            AddEventHandler(tostring(v), function()
-               local src = source
-               local name = GetPlayerName(src)
-               sendwebhooktodc("Event Yakalandı. Event: " ..v)
-               TriggerEvent("rwe:kickcheater", Config.DropMsg)
-            end)
-        end
+        RegisterServerEvent(v)
+        AddEventHandler(v, function()
+            CancelEvent()
+            sendwebhooktodc("Blacklisted Event Caught. Event: " ..v.." Player: "..GetPlayerName(source))
+            TriggerEvent("rwe:kickcheater", Config.DropMsg)
+        end)
     end
-end)
-------
+end
+
+
+------------------------------------
+-------- Blacklisted Word ----------
+------------------------------------
 AddEventHandler('chatMessage', function(source, color, message)
     if not message then
         return
@@ -367,7 +385,7 @@ AddEventHandler('_chat:messageEntered', function(author, color, message)
 
     for k, v in pairs(Config.BlacklistWords) do
         if string.match(message, v) then
-            sendwebhooktodc('BlacklistWords Detected! Words: '..v)
+            sendwebhooktodc('BlacklistWords Detected! Words: '..v.." Player: "..name)
             CancelEvent()
             Citizen.Wait(1500)
             TriggerEvent("rwe:kickcheater", Config.DropMsg)
@@ -375,18 +393,24 @@ AddEventHandler('_chat:messageEntered', function(author, color, message)
       return
     end
 end)
-------
+
+------------------------------------
+-------- Blacklisted Command -------
+------------------------------------
 Citizen.CreateThread(function()
     for i=1, #Config.BlacklistedCommands, 1 do
         RegisterCommand(Config.BlacklistedCommands[i], function(source)
-            -- local src = source
-            -- local name = GetPlayerName(src)
-            sendwebhooktodc("Blacklist Command Detected. Command: " ..Config.BlacklistedCommands[i])
+            local name = GetPlayerName(source)
+            sendwebhooktodc("Blacklist Command Detected. Command: " ..Config.BlacklistedCommands[i].." Player: "..name)
             TriggerEvent("rwe:kickcheater", Config.DropMsg)
          end)
     end
 end)
------
+
+
+------------------------------------
+--------    Admin Command    -------
+------------------------------------
 RegisterCommand("entitywipe", function(source, args, raw)
     local playerID = args[1]
         if (playerID ~= nil and tonumber(playerID) ~= nil) then
@@ -401,25 +425,14 @@ function EntityWipe(source, target)
     end
 end
 
------ BlackList Name 
-local unauthNames = {
-    "administrator", "admin", "adm1n", "adm!n", "admln", "moderator", "owner", "nigger", "n1gger", "moderator", "eulencheats", "lynxmenu", "atgmenu", "hacker", "bastard", "hamhaxia", "333gang", "n1gger", "n1ga", "nigga", "n1gga", "nigg3r",
-    "nig3r", "shagged", "4dm1n", "4dmin", "m0d3r4t0r", "n199er", "n1993r", "rustchance.com", "rustchance", "hellcase.com", "hellcase", "youtube.com", "youtu.be", "youtube", "twitch.tv", "twitch", "anticheat.gg", "anticheat", "fucking", "ψ", 
-    "@", "&", "{", "}", ";", "ϟ", "♕", "Æ", "Œ", "‰", "™", "š", "œ", "Ÿ", "µ", "ß",
-    "±", "¦", "»", "«", "¼", "½", "¾", "¬", "¿", "Ñ", "®", "©", "²", "·", "•", "°", "þ", "ベ", "ル", "ろ", "ぬ", "ふ", "う", "え", "お", "や", "ゆ", "よ", "わ", "ほ", "へ", "た", "て", "い", "す", "か", "ん", "な", "に", "ら", "ぜ", "む",
-    "ち", "と", "し", "は", "き", "く", "ま", "の", "り", "れ", "け", "む", "つ", "さ", "そ", "ひ", "こ", "み", "も", "ね", "る", "め", "ロ", "ヌ", "フ", "ア", "ウ", "エ", "オ", "ヤ", "ユ", "ヨ", "ワ", "ホ", "ヘ", "タ", "テ", "イ", "ス", "カ", "ン",
-    "ナ", "ニ", "ラ", "セ", "ム", "チ", "ト", "シ", "ハ", "キ", "ク", "マ", "ノ", "リ", "レ", "ケ", "ム", "ツ", "サ", "ソ", "ヒ", "コ", "ミ", "モ", "ネ", "ル", "メ", "✪", "Ä", "ƒ", "Ã", "¢", "?", "†", "€", "웃", "и", "】", "【", "j4p.pl", "ֆ", "ȶ",
-    "你", "好", "爱", "幸", "福", "猫", "狗", "微", "笑", "中", "安", "東", "尼", "杰", "诶", "西", "开", "陈", "瑞", "华", "馬", "塞", "洛", "ダ", "仇", "觉", "感", "衣", "德", "曼", "L͙", "a͙", "l͙", "ľ̶̚͝", "Ḩ̷̤͚̤͑͂̎̎͆", "a̸̢͉̠͎͒͌͐̑̇", "♚", "я", "Ʒ", "Ӂ̴", "Ƹ̴", "≋",
-    "chocohax", "civilgamers.com", "civilgamers", "csgoempire.com", "csgoempire", "g4skins.com", "g4skins", "gameodds.gg", "duckfuck.com", "crysishosting.com", "crysishosting", "key-drop.com", "key-drop.pl", "skinhub.com", "skinhub", "`", "¤", "¡",
-    "casedrop.eu", "casedrop", "cs.money", "rustypot.com", "ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â", "✈", "⛧", "☭", "☣", "✠", "dkb.xss.ht", "( . )( . )", "⚆", "╮", "╭", "rampage.lt", "?", "xcasecsgo.com", "xcasecsgo", "csgocases.com",
-    "csgocases", "K9GrillzUK.co.uk", "moat.gg", "princevidz.com", "princevidz", "pvpro.com", "Pvpro", "ez.krimes.ro", "loot.farm", "arma3fisherslife.net", "arma3fisherslife", "egamers.io", "ifn.gg", "key-drop", "sups.gg", "tradeit.gg",
-    "§", "csgotraders.net", "csgotraders", "Σ", "Ξ", "hurtfun.com", "hurtfun", "gamekit.com", "¥", "t.tv", "yandex.ru", "yandex", "csgofly.com", "csgofly", "pornhub.com", "pornhub", "一", "", "Ｊ", "◢", "◤", "⋡", "℟", "ᴮ", "ᴼ", "ᴛᴇᴀᴍ",
-    "cs.deals", "twat", "ESX", "ESX_TEAM", "ESXTEAM"}
+------------------------------------
+--------    BlackList Name    ------
+------------------------------------
 local x = {}
 
 AddEventHandler("playerConnecting", function(playerName)
     playerName = (string.gsub(string.gsub(string.gsub(playerName,  "-", ""), ",", ""), " ", ""):lower())
-    for k, v in pairs(unauthNames) do
+    for k, v in pairs(Config.unauthNames) do
       local g, f = playerName:find(string.lower(v))
       if g or f  then
         table.insert (x, v)
