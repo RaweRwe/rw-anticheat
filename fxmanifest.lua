@@ -7,8 +7,7 @@ version '3.3'
 client_scripts {
     'config.lua',
     'client.lua',
-    'Enumerators.lua',
-    'injections.lua'
+    'Enumerators.lua'
 }
 
 server_scripts {

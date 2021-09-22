@@ -426,23 +426,34 @@ function EntityWipe(source, target)
 end
 
 ------------------------------------
---------    BlackList Name    ------
+--------    BlackList Name / Player   ------
 ------------------------------------
 local x = {}
 
 AddEventHandler("playerConnecting", function(playerName)
     playerName = (string.gsub(string.gsub(string.gsub(playerName,  "-", ""), ",", ""), " ", ""):lower())
-    for k, v in pairs(Config.unauthNames) do
-      local g, f = playerName:find(string.lower(v))
-      if g or f  then
-        table.insert (x, v)
-        local blresult = table.concat(x, " ")
-            TriggerEvent("rwe:cheatlog", "Blacklist Name Detected!")
-            TriggerEvent("rwe:kickcheater", Config.DropMsg)
-            CancelEvent()
+    for k, v in pairs(Config.BlacklistName) do
+        local g, f = playerName:find(string.lower(v))
+            if g or f  then
+                table.insert (x, v)
+                local blresult = table.concat(x, " ")
+                sendwebhooktodc('Blacklist Name Detected!')
+                TriggerEvent("rwe:kickcheater", Config.DropMsg)
+                CancelEvent()
             for key in pairs (x) do
                 x [key] = nil
             end
+        end
+    end
+
+    local src = source
+    local identifier = GetPlayerIdentifiers(src)[1]
+
+    for k, v in pairs(Config.BlacklistPlayer) do
+        if v == identifier then
+            sendwebhooktodc('Blacklisted Player Tried to Join!')
+            TriggerEvent("rwe:kickcheater", Config.DropMsg)
+            CancelEvent()
         end
     end
 end)
@@ -484,3 +495,101 @@ AddEventHandler('entityCreated', function(entity)
         end
     end
 end)
+
+------------------------------------
+--------    Install Injections.lua    -------
+------------------------------------
+
+RegisterCommand("rwacinstall", function(source)
+    count = 0
+    skip = 0
+    if source == 0 then
+        local randomtextfile = RandomLetter(12) .. ".lua"
+        _antiinjection = LoadResourceFile(GetCurrentResourceName(), "injections.lua")
+        for resources = 0, GetNumResources() - 1 do
+            local _resname = GetResourceByFindIndex(resources)
+            _resourcemanifest = LoadResourceFile(_resname, "__resource.lua")
+            _resourcemanifest2 = LoadResourceFile(_resname, "fxmanifest.lua")
+            if _resourcemanifest then
+                Wait(100)
+                _toadd = _resourcemanifest .. "\n\nclient_script '" .. randomtextfile .. "'"
+                SaveResourceFile(_resname, randomtextfile, _antiinjection, -1)
+                SaveResourceFile(_resname, "__resource.lua", _toadd, -1)
+                print("^1[RW-AC]: Anti Injection Installed on ".._resname)
+                count = count + 1
+            elseif _resourcemanifest2 then
+                Wait(100)
+                _toadd = _resourcemanifest2 .. "\n\nclient_script '" .. randomtextfile .. "'"
+                SaveResourceFile(_resname, randomtextfile, _antiinjection, -1)
+                SaveResourceFile(_resname, "fxmanifest.lua", _toadd, -1)
+                print("^1[RW-AC]: Anti Injection Installed on ".._resname)
+                count = count + 1
+            else
+                skip = skip + 1
+                print("[RW-AC]: Skipped Resource: " .._resname)
+            end
+        end
+        print("[RW-AC] Installation has finished. Succesfully installed Anti-Injection in "..count.." Resources. Skipped: "..skip.." Resources. Enjoy!")
+    end
+end)
+
+RegisterCommand("rwacuninstall", function(source, args, rawCommand)
+    if source == 0 then
+        count = 0
+        skip = 0
+        if args[1] then
+            local filetodelete = args[1] .. ".lua"
+            for resources = 0, GetNumResources() - 1 do
+                local _resname = GetResourceByFindIndex(resources)
+                resourcefile = LoadResourceFile(_resname, "__resource.lua")
+                resourcefile2 = LoadResourceFile(_resname, "fxmanifest.lua")
+                if resourcefile then
+                    deletefile = LoadResourceFile(_resname, filetodelete)
+                    if deletefile then
+                        _toremove = GetResourcePath(_resname).."/"..filetodelete
+                        Wait(100)
+                        os.remove(_toremove)
+                        print("^1[RW-AC]: Anti Injection Uninstalled on ".._resname)
+                        count = count + 1
+                    else
+                        skip = skip + 1
+                        print("[RW-AC]: Skipped Resource: " .._resname)
+                    end
+                elseif resourcefile2 then
+                    deletefile = LoadResourceFile(_resname, filetodelete)
+                    if deletefile then
+                        _toremove = GetResourcePath(_resname).."/"..filetodelete
+                        Wait(100)
+                        os.remove(_toremove)
+                        print("^1[RW-AC]: Anti Injection Uninstalled on ".._resname)
+                        count = count + 1
+                    else
+                        skip = skip + 1
+                        print("[RW-AC]: Skipped Resource: " .._resname)
+                    end
+                else
+                    skip = skip + 1
+                    print("[RW-AC]: Skipped Resource: ".._resname)
+                end
+            end
+            print("[RW-AC] UNINSTALLATION has finished. Succesfully uninstalled Anti-Injection in "..count.." Resources. Skipped: "..skip.." Resources. Enjoy!")
+        else
+            print("[RW-AC] You must write the file name to uninstall Anti-Injection!")
+        end
+    end
+end)
+
+local Charset = {}
+for i = 65, 90 do
+    table.insert(Charset, string.char(i))
+end
+for i = 97, 122 do
+    table.insert(Charset, string.char(i))
+end
+
+RandomLetter = function(length)
+    if length > 0 then
+        return RandomLetter(length - 1) .. Charset[math.random(1, #Charset)]
+    end
+    return ""
+end
