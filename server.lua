@@ -68,28 +68,28 @@ end)
 ---------------------------
 -------- BAN BOOGERS ------
 --------------------------- 
-function cookiebanlistregenerator()
-	local o = LoadResourceFile(GetCurrentResourceName(), "cookie-bans.json")
+function banlistregenerator()
+	local o = LoadResourceFile(GetCurrentResourceName(), "ac-bans.json")
 	if not o or o == "" then
-		SaveResourceFile(GetCurrentResourceName(), "cookie-bans.json", "[]", -1)
-		print("^"..math.random(1, 9).."^3Warning! ^0Your ^1cookie-bans.json ^0is missing, Regenerating your ^1cookie-bans.json ^0file!")
+		SaveResourceFile(GetCurrentResourceName(), "ac-bans.json", "[]", -1)
+		print("^"..math.random(1, 9).."^3Warning! ^0Your ^1ac-bans.json ^0is missing, Regenerating your ^1ac-bans.json ^0file!")
 	else
 		local p = json.decode(o)
 		if not p then
-			SaveResourceFile(GetCurrentResourceName(), "cookie-bans.json", "[]", -1)
+			SaveResourceFile(GetCurrentResourceName(), "ac-bans.json", "[]", -1)
 			p = {}
-			print("^"..math.random(1, 9).."^3Warning! ^0Your ^1cookie-bans.json ^0is corrupted, Regenerating your ^1cookie-bans.json ^0file!")
+			print("^"..math.random(1, 9).."^3Warning! ^0Your ^1ac-bans.json ^0is corrupted, Regenerating your ^1ac-bans.json ^0file!")
 		end
 	end
 end
 
-function CookieBans(source,reason)
-    local config = LoadResourceFile(GetCurrentResourceName(), "cookie-bans.json")
+function AntiCheatBans(source,reason)
+    local config = LoadResourceFile(GetCurrentResourceName(), "ac-bans.json")
     local data = json.decode(config)
 	local _src = source
 
     if config == nil then
-        cookiebanlistregenerator()
+        banlistregenerator()
         return
     end
 
@@ -132,7 +132,7 @@ function CookieBans(source,reason)
         banInfo['discord'] = tostring(playerDiscord);
     end
     data[tostring(GetPlayerName(source))] = banInfo;
-    SaveResourceFile(GetCurrentResourceName(), "cookie-bans.json", json.encode(data, { indent = true }), -1)
+    SaveResourceFile(GetCurrentResourceName(), "ac-bans.json", json.encode(data, { indent = true }), -1)
 end
 
 function GetIdentifier(source)
@@ -168,7 +168,7 @@ function GetIdentifier(source)
 end
 
 function GetAndBanID()
-    local config = LoadResourceFile(GetCurrentResourceName(), "cookie-bans.json")
+    local config = LoadResourceFile(GetCurrentResourceName(), "ac-bans.json")
     local data = json.decode(config)
     local banID = 0;
     for k, v in pairs(data) do 
@@ -193,7 +193,10 @@ function sendwebhooktodc(content)
     PerformHttpRequest(Config.WebhookDiscord, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", embeds = connect}), { ['Content-Type'] = 'application/json' })
 end
 
-function sendcookies(source,content,info,c,d)
+-- kickorbancheater(source,"Content Text", "Info Text",kick,ban) c = Kick d = Ban
+-- Example use: kickorbancheater(_src,"Weapon Explosion Detected", "This Player tried to change bullet type",true,true) 
+
+function kickorbancheater(source,content,info,c,d)
     local _source = source
     local sname = GetPlayerName(source)
     --Identifiers
@@ -203,38 +206,40 @@ function sendcookies(source,content,info,c,d)
 	local live = "unknown"
 	local xbl = "unknown"
 
-	for m, n in ipairs(GetPlayerIdentifiers(_source)) do
-		if n:match("steam") then
-			steam = n
-		elseif n:match("discord") then
-			discord = n:gsub("discord:", "")
-		elseif n:match("license") then
-			license = n
-		elseif n:match("live") then
-			live = n
-		elseif n:match("xbl") then
-			xbl = n
-		end
-	end
+    if not IsPlayerAceAllowed(_source, "rwacbypass") then -- checking player perm.
+	    for m, n in ipairs(GetPlayerIdentifiers(_source)) do
+	    	if n:match("steam") then
+	    		steam = n
+	    	elseif n:match("discord") then
+	    		discord = n:gsub("discord:", "")
+	    	elseif n:match("license") then
+	    		license = n
+	    	elseif n:match("live") then
+	    		live = n
+	    	elseif n:match("xbl") then
+	    		xbl = n
+	    	end
+	    end
 
-    local discordinfo = {
-        {
-            ["color"] = "23295",
-            ["title"] = "Rawe AntiCheat",
-            ["description"] = "**Player: **"..sname.. "\n**ServerID:** ".._source.."\n**Violation:** "..content.."\n**Details:** "..info.."\n**Steam:** "..steam.."\n**License: **"..license.."\n**Xbl: **"..xbl.."\n**Live: **"..live.."\n**Discord**: <@"..discord..">",
-            ["footer"] = {
-            ["text"] = "github.com/RaweRwe/rw-anticheat",
-            },
+        local discordinfo = {
+            {
+                ["color"] = "23295",
+                ["title"] = "Rawe AntiCheat",
+                ["description"] = "**Player: **"..sname.. "\n**ServerID:** ".._source.."\n**Violation:** "..content.."\n**Details:** "..info.."\n**Steam:** "..steam.."\n**License: **"..license.."\n**Xbl: **"..xbl.."\n**Live: **"..live.."\n**Discord**: <@"..discord..">",
+                ["footer"] = {
+                ["text"] = "github.com/RaweRwe/rw-anticheat",
+                },
+            }
         }
-    }
-    PerformHttpRequest(Config.WebhookDiscord, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", embeds = discordinfo}), { ['Content-Type'] = 'application/json' })
-    
-    if d then
-        CookieBans(source,content)
-    end
+        PerformHttpRequest(Config.WebhookDiscord, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", embeds = discordinfo}), { ['Content-Type'] = 'application/json' })
 
-    if c then
-        DropPlayer(source, "Kicked : "..Config.DropMsg)
+        if d then
+            AntiCheatBans(source,content)
+        end
+
+        if c then
+            DropPlayer(source, "Kicked : "..Config.DropMsg)
+        end
     end
 end
  
@@ -263,7 +268,7 @@ end
 
 
 function getBanned(source)
-    local config = LoadResourceFile(GetCurrentResourceName(), "cookie-bans.json")
+    local config = LoadResourceFile(GetCurrentResourceName(), "ac-bans.json")
     local data = json.decode(config)
 
 	local myid = GetIdentifier(source);
@@ -301,47 +306,47 @@ AddEventHandler("8jWpZudyvjkDXQ2RVXf9", function(type)
 
     if not IsPlayerAceAllowed(_src, "rwacbypass") then
         if (_type == "invisible") then
-            sendcookies(_src,"Tried to be Invisible", "This Player tried to Invisible",true,true)
+            kickorbancheater(_src,"Tried to be Invisible", "This Player tried to Invisible",true,true)
         elseif (_type == "antiragdoll") then
-            sendcookies(_src,"AntiRagdoll Detected", "This Player tried to activate Anti-Ragdoll",true,true)
+            kickorbancheater(_src,"AntiRagdoll Detected", "This Player tried to activate Anti-Ragdoll",true,true)
         elseif (_type == "displayradar") then
-            sendcookies(_src,"Radar Detected", "This Player tried to activate Radar",true,true)
+            kickorbancheater(_src,"Radar Detected", "This Player tried to activate Radar",true,true)
         elseif (_type == "explosiveweapon") then
-            sendcookies(_src,"Weapon Explosion Detected", "This Player tried to change bullet type",true,true)
+            kickorbancheater(_src,"Weapon Explosion Detected", "This Player tried to change bullet type",true,true)
         elseif (_type == "spectatormode") then
-            sendcookies(_src,"Spectate Detected", "This Player tried to Spectate a Player",true,true)
+            kickorbancheater(_src,"Spectate Detected", "This Player tried to Spectate a Player",true,true)
         elseif (_type == "speedhack") then
-            sendcookies(_src,"SpeedHack Detected", "This Player tried to SpeedHack",true,true)
+            kickorbancheater(_src,"SpeedHack Detected", "This Player tried to SpeedHack",true,true)
         elseif (_type == "blacklistedweapons") then
-            sendcookies(_src,"Weapon in Blacklist", "This Player tried to spawn a Blacklisted Weapon",true,true)
+            kickorbancheater(_src,"Weapon in Blacklist", "This Player tried to spawn a Blacklisted Weapon",true,true)
         elseif (_type == "thermalvision") then
-            sendcookies(_src,"Thermal Camera Detected", "This Player tried to use Thermal Camera",true,true)
+            kickorbancheater(_src,"Thermal Camera Detected", "This Player tried to use Thermal Camera",true,true)
         elseif (_type == "nightvision") then
-            sendcookies(_src,"Night Vision Detected", "This Player tried to use Night Vision",true,true)
+            kickorbancheater(_src,"Night Vision Detected", "This Player tried to use Night Vision",true,true)
         elseif (_type == "antiresourcestop") then
-            sendcookies(_src,"Resource Stopped", "This Player tried to stop/start a Resource",true,true)
+            kickorbancheater(_src,"Resource Stopped", "This Player tried to stop/start a Resource",true,true)
         elseif (_type == "pedchanged") then
-            sendcookies(_src,"Ped Changed", "This Player tried to change his PED",true,true)
+            kickorbancheater(_src,"Ped Changed", "This Player tried to change his PED",true,true)
         elseif (_type == "freecam") then
-            sendcookies(_src,"FreeCam Detected", "This Player tried to use Freecam (Fallout or similar)",true,true)
+            kickorbancheater(_src,"FreeCam Detected", "This Player tried to use Freecam (Fallout or similar)",true,true)
         elseif (_type == "infiniteammo") then
-            sendcookies(_src,"Infinite Ammo Detected", "This Player tried to put Infinite Ammo",true,true)
+            kickorbancheater(_src,"Infinite Ammo Detected", "This Player tried to put Infinite Ammo",true,true)
         elseif (_type == "resourcestarted") then
-            sendcookies(_src,"AntiResourceStart", "This Player tried to start a resource",true,true)
+            kickorbancheater(_src,"AntiResourceStart", "This Player tried to start a resource",true,true)
         elseif (_type == "menyoo") then
-            sendcookies(_src,"Anti Menyoo", "This Player tried to inject Menyoo Menu",true,true)
+            kickorbancheater(_src,"Anti Menyoo", "This Player tried to inject Menyoo Menu",true,true)
         elseif (_type == "givearmour") then
-            sendcookies(_src,"Anti Give Armor", "This Player tried to Give Armor",true,true)
+            kickorbancheater(_src,"Anti Give Armor", "This Player tried to Give Armor",true,true)
         elseif (_type == "aimassist") then
-            sendcookies(_src,"Aim Assist", "This Player tried Aim Assist Detected. Mode: ",true,true)
+            kickorbancheater(_src,"Aim Assist", "This Player tried Aim Assist Detected. Mode: ",true,true)
         elseif (_type == "infinitestamina") then
-            sendcookies(_src,"Anti Infinite Stamina", "This Player tried to use Infinite Stamina",true,true)
+            kickorbancheater(_src,"Anti Infinite Stamina", "This Player tried to use Infinite Stamina",true,true)
         elseif (_type == "superjump") then
             if IsPlayerUsingSuperJump(_src) then
-                sendcookies(_src,"Superjump Detected", "This Player tried to use Superjump",true,true)
+                kickorbancheater(_src,"Superjump Detected", "This Player tried to use Superjump",true,true)
             end
         elseif (_type == "vehicleweapons") then
-            sendcookies(_src,"Vehicle Weapons Detected", "This Player tried to use Vehicle Weapons",true,true)
+            kickorbancheater(_src,"Vehicle Weapons Detected", "This Player tried to use Vehicle Weapons",true,true)
         end
     end
 end)
@@ -366,7 +371,7 @@ AddEventHandler('tYdirSYpJtB77dRC3cvX', function()
                 id = v
             })
         end
-        kickdetectedcheater("Why u cheating ?", _src)
+        kickorbancheater(_src,"Give Weapon To Ped", "This Player tried Give Weapon to Ped.",true,true)
     end
 end)
 RegisterNetEvent('PJHxig0KJQFvQsrIhd5h')
