@@ -3,7 +3,7 @@ TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 
 Config = {}
 
-Config.Version = 3.3
+Config.Version = 3.5
 
 --Discord sender
 Config.WebhookDiscord = "" -- discord webhook
