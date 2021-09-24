@@ -137,12 +137,12 @@ end
 
 function GetIdentifier(source)
     local identifiers = {
-        steam = "No Info",
-        ip = "No Info",
-        discord = "No Info",
-        license = "No Info",
-        xbl = "No Info",
-        live = "No Info"
+        steam = "",
+        ip = "",
+        discord = "",
+        license = "",
+        xbl = "",
+        live = ""
     }
 
     for i = 0, GetNumPlayerIdentifiers(source) - 1 do
@@ -195,15 +195,33 @@ end
 
 function sendcookies(source,content,info,c,d)
     local _source = source
-
     local sname = GetPlayerName(source)
-    local myid = GetIdentifier(_source);
+    --Identifiers
+    local steam = "unknown"
+	local discord = "unknown"
+	local license = "unknown"
+	local live = "unknown"
+	local xbl = "unknown"
+
+	for m, n in ipairs(GetPlayerIdentifiers(_source)) do
+		if n:match("steam") then
+			steam = n
+		elseif n:match("discord") then
+			discord = n:gsub("discord:", "")
+		elseif n:match("license") then
+			license = n
+		elseif n:match("live") then
+			live = n
+		elseif n:match("xbl") then
+			xbl = n
+		end
+	end
 
     local discordinfo = {
         {
             ["color"] = "23295",
             ["title"] = "Rawe AntiCheat",
-            ["description"] = "**Player: **"..sname.. "\n**ServerID:** "..source.."\n**Violation:** "..content.."\n**Details:** "..info.."\n**Steam:** "..myid.steam.."\n**License: **"..myid.license.."\n**Xbl: **"..myid.xbl.."\n**Live: **"..myid.live,
+            ["description"] = "**Player: **"..sname.. "\n**ServerID:** ".._source.."\n**Violation:** "..content.."\n**Details:** "..info.."\n**Steam:** "..steam.."\n**License: **"..license.."\n**Xbl: **"..xbl.."\n**Live: **"..live.."\n**Discord**: <@"..discord..">",
             ["footer"] = {
             ["text"] = "github.com/RaweRwe/rw-anticheat",
             },
