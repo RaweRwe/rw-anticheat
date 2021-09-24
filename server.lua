@@ -64,11 +64,123 @@ AddEventHandler("rwe:cheatlog", function(reason)
         }
     PerformHttpRequest(Config.WebhookDiscord, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", embeds = connect, avatar_url = "https://e7.pngegg.com/pngimages/163/941/png-clipart-computer-icons-x-mark-old-letters-angle-logo.png"}), { ['Content-Type'] = 'application/json' })
 end)
--------------
+
+---------------------------
+-------- BAN BOOGERS ------
+--------------------------- 
+function cookiebanlistregenerator()
+	local o = LoadResourceFile(GetCurrentResourceName(), "cookie-bans.json")
+	if not o or o == "" then
+		SaveResourceFile(GetCurrentResourceName(), "cookie-bans.json", "[]", -1)
+		print("^"..math.random(1, 9).."^3Warning! ^0Your ^1cookie-bans.json ^0is missing, Regenerating your ^1cookie-bans.json ^0file!")
+	else
+		local p = json.decode(o)
+		if not p then
+			SaveResourceFile(GetCurrentResourceName(), "cookie-bans.json", "[]", -1)
+			p = {}
+			print("^"..math.random(1, 9).."^3Warning! ^0Your ^1cookie-bans.json ^0is corrupted, Regenerating your ^1cookie-bans.json ^0file!")
+		end
+	end
+end
+
+function CookieBans(source,reason)
+    local config = LoadResourceFile(GetCurrentResourceName(), "cookie-bans.json")
+    local data = json.decode(config)
+	local _src = source
+
+    if config == nil then
+        cookiebanlistregenerator()
+        return
+    end
+
+    if GetPlayerName(_src) == nil then -- Make sure no any nil to come on our json.
+		return
+	end
+
+    local myid = GetIdentifier(_src);
+
+    local playerSteam = myid.steam;
+    local playerLicense = myid.license;
+    local playerXbl = myid.xbl;
+    local playerLive = myid.live;
+    local playerDiscord = myid.discord;
+    local banInfo = {};
+
+    --Identifiers.
+    banInfo['ID'] = tonumber(GetAndBanID());
+	banInfo['reason'] = reason;
+    banInfo['license'] = "No Info";
+    banInfo['steam'] = "No Info";
+    banInfo['xbl'] = "No Info";
+    banInfo['live'] = "No Info";
+    banInfo['discord'] = "No Info";
+    
+    --Input to our json.
+    if playerLicense ~= nil and playerLicense ~= "nil" and playerLicense ~= "" then 
+        banInfo['license'] = tostring(playerLicense);
+    end
+    if playerSteam ~= nil and playerSteam ~= "nil" and playerSteam ~= "" then 
+        banInfo['steam'] = tostring(playerSteam);
+    end
+    if playerXbl ~= nil and playerXbl ~= "nil" and playerXbl ~= "" then 
+        banInfo['xbl'] = tostring(playerXbl);
+    end
+    if playerLive ~= nil and playerLive ~= "nil" and playerLive ~= "" then 
+        banInfo['live'] = tostring(playerXbl);
+    end
+    if playerDiscord ~= nil and playerDiscord ~= "nil" and playerDiscord ~= "" then 
+        banInfo['discord'] = tostring(playerDiscord);
+    end
+    data[tostring(GetPlayerName(source))] = banInfo;
+    SaveResourceFile(GetCurrentResourceName(), "cookie-bans.json", json.encode(data, { indent = true }), -1)
+end
+
+function GetIdentifier(source)
+    local identifiers = {
+        steam = "No Info",
+        ip = "No Info",
+        discord = "No Info",
+        license = "No Info",
+        xbl = "No Info",
+        live = "No Info"
+    }
+
+    for i = 0, GetNumPlayerIdentifiers(source) - 1 do
+        local id = GetPlayerIdentifier(source, i)
+
+        --Full to table
+        if string.find(id, "steam") then
+            identifiers.steam = id
+        elseif string.find(id, "ip") then
+            identifiers.ip = id
+        elseif string.find(id, "discord") then
+            identifiers.discord = id
+        elseif string.find(id, "license") then
+            identifiers.license = id
+        elseif string.find(id, "xbl") then
+            identifiers.xbl = id
+        elseif string.find(id, "live") then
+            identifiers.live = id
+        end
+    end
+
+    return identifiers
+end
+
+function GetAndBanID()
+    local config = LoadResourceFile(GetCurrentResourceName(), "cookie-bans.json")
+    local data = json.decode(config)
+    local banID = 0;
+    for k, v in pairs(data) do 
+        banID = banID + 1;
+    end
+    return (banID + 1);
+end
 
 function sendwebhooktodc(content)
-   local _source = source
-         local connect = {
+    local _source = source
+    local connect = 
+    {
         {
             ["color"] = "23295",
             ["title"] = "Rawe AntiCheat",
@@ -78,9 +190,88 @@ function sendwebhooktodc(content)
             },
         }
     }
-  PerformHttpRequest(Config.WebhookDiscord, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", embeds = connect}), { ['Content-Type'] = 'application/json' })
+    PerformHttpRequest(Config.WebhookDiscord, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", embeds = connect}), { ['Content-Type'] = 'application/json' })
 end
 
+function sendcookies(source,content,info,c,d)
+    local _source = source
+
+    local sname = GetPlayerName(source)
+    local myid = GetIdentifier(_source);
+
+    local discordinfo = {
+        {
+            ["color"] = "23295",
+            ["title"] = "Rawe AntiCheat",
+            ["description"] = "**Player: **"..sname.. "\n**ServerID:** "..source.."\n**Violation:** "..content.."\n**Details:** "..info.."\n**Steam:** "..myid.steam.."\n**License: **"..myid.license.."\n**Xbl: **"..myid.xbl.."\n**Live: **"..myid.live,
+            ["footer"] = {
+            ["text"] = "github.com/RaweRwe/rw-anticheat",
+            },
+        }
+    }
+    PerformHttpRequest(Config.WebhookDiscord, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", embeds = discordinfo}), { ['Content-Type'] = 'application/json' })
+    
+    if d then
+        CookieBans(source,content)
+    end
+
+    if c then
+        DropPlayer(source, "Kicked : "..Config.DropMsg)
+    end
+end
+ 
+function OnPlayerConnecting(name, setKickReason, deferrals)
+    deferrals.defer();
+    local src = source;
+    local banned = false;
+    local ban = getBanned(src);
+    
+    Citizen.Wait(100);
+   
+	if ban then
+        -- They are banned 
+        local reason = ban['reason'];
+        print("[BANNED PLAYER] Player " .. GetPlayerName(src) .. " tried to join, but was banned for: " .. reason);
+        deferrals.done("(BAN ID: " .. ban['banID'] .. ") " .. Config.ReasonBanned);
+        banned = true;
+        CancelEvent();
+		return;
+    end
+
+    if not banned then 
+        deferrals.done();
+    end	
+end
+
+
+function getBanned(source)
+    local config = LoadResourceFile(GetCurrentResourceName(), "cookie-bans.json")
+    local data = json.decode(config)
+
+	local myid = GetIdentifier(source);
+    local playerSteam = myid.steam;
+    local playerLicense = myid.license;
+    local playerXbl = myid.xbl;
+    local playerLive = myid.live;
+    local playerDisc = myid.discord;
+    for k, bigData in pairs(data) do 
+        local reason = bigData['reason']
+        local id = bigData['ID']
+        local license = bigData['license']
+        local steam = bigData['steam']
+        local xbl = bigData['xbl']
+        local live = bigData['live']
+        local discord = bigData['discord']
+        if tostring(license) == tostring(playerLicense) then return { ['banID'] = id, ['reason'] = reason } end;
+        if tostring(steam) == tostring(playerSteam) then return { ['banID'] = id, ['reason'] = reason } end;
+        if tostring(xbl) == tostring(playerXbl) then return { ['banID'] = id, ['reason'] = reason } end;
+        if tostring(live) == tostring(playerLive) then return { ['banID'] = id, ['reason'] = reason } end;
+        if tostring(discord) == tostring(playerDisc) then return { ['banID'] = id, ['reason'] = reason } end;
+    end
+    return false;
+end
+
+AddEventHandler("playerConnecting", OnPlayerConnecting)
 -----
 
 RegisterServerEvent("8jWpZudyvjkDXQ2RVXf9")
@@ -92,66 +283,47 @@ AddEventHandler("8jWpZudyvjkDXQ2RVXf9", function(type)
 
     if not IsPlayerAceAllowed(_src, "rwacbypass") then
         if (_type == "invisible") then
-            sendwebhooktodc("Tried to be Invisible " ..name)
-            kickdetectedcheater("Invisible Player Detected", _src)
+            sendcookies(_src,"Tried to be Invisible", "This Player tried to Invisible",true,true)
         elseif (_type == "antiragdoll") then
-            sendwebhooktodc("Tried to activate Anti-Ragdoll " ..name)
-            kickdetectedcheater("AntiRagdoll Detected", _src)
+            sendcookies(_src,"AntiRagdoll Detected", "This Player tried to activate Anti-Ragdoll",true,true)
         elseif (_type == "displayradar") then
-            sendwebhooktodc("Tried to activate Radar " ..name)
-            kickdetectedcheater("Radar Detected", _src)
+            sendcookies(_src,"Radar Detected", "This Player tried to activate Radar",true,true)
         elseif (_type == "explosiveweapon") then
-            sendwebhooktodc("Tried to change bullet type " ..name)
-            kickdetectedcheater("Weapon Explosion Detected", _src)
+            sendcookies(_src,"Weapon Explosion Detected", "This Player tried to change bullet type",true,true)
         elseif (_type == "spectatormode") then
-            sendwebhooktodc("Tried to Spectate a Player " ..name)
-            kickdetectedcheater("Spectate Detected", _src)
+            sendcookies(_src,"Spectate Detected", "This Player tried to Spectate a Player",true,true)
         elseif (_type == "speedhack") then
-            sendwebhooktodc("Tried to SpeedHack " ..name)
-            kickdetectedcheater("SpeedHack Detected", _src)
+            sendcookies(_src,"SpeedHack Detected", "This Player tried to SpeedHack",true,true)
         elseif (_type == "blacklistedweapons") then
-            sendwebhooktodc("Tried to spawn a Blacklisted Weapon " ..name)
-            kickdetectedcheater("Weapon in Blacklist Detected", _src)
+            sendcookies(_src,"Weapon in Blacklist", "This Player tried to spawn a Blacklisted Weapon",true,true)
         elseif (_type == "thermalvision") then
-            sendwebhooktodc("Tried to use Thermal Camera " ..name)
-            kickdetectedcheater("Thermal Camera Detected", _src)
+            sendcookies(_src,"Thermal Camera Detected", "This Player tried to use Thermal Camera",true,true)
         elseif (_type == "nightvision") then
-            sendwebhooktodc("Tried to use Night Vision " ..name)
-            kickdetectedcheater("Night Vision Detected", _src)
+            sendcookies(_src,"Night Vision Detected", "This Player tried to use Night Vision",true,true)
         elseif (_type == "antiresourcestop") then
-            sendwebhooktodc("Tried to stop/start a Resource " ..name)
-            kickdetectedcheater("Resource Stopped", _src)
+            sendcookies(_src,"Resource Stopped", "This Player tried to stop/start a Resource",true,true)
         elseif (_type == "pedchanged") then
-            sendwebhooktodc("Tried to change his PED " ..name)
-            kickdetectedcheater("Ped Changed", _src)
+            sendcookies(_src,"Ped Changed", "This Player tried to change his PED",true,true)
         elseif (_type == "freecam") then
-            sendwebhooktodc("Tried to use Freecam (Fallout or similar) " ..name)
-            kickdetectedcheater("FreeCam Detected", _src)
+            sendcookies(_src,"FreeCam Detected", "This Player tried to use Freecam (Fallout or similar)",true,true)
         elseif (_type == "infiniteammo") then
-            sendwebhooktodc("Tried to put Infinite Ammo")
-            kickdetectedcheater("Infinite Ammo Detected", _src)
+            sendcookies(_src,"Infinite Ammo Detected", "This Player tried to put Infinite Ammo",true,true)
         elseif (_type == "resourcestarted") then
-            sendwebhooktodc("Tried to start a resource "..name)
-            kickdetectedcheater("AntiResourceStart", _src)
+            sendcookies(_src,"AntiResourceStart", "This Player tried to start a resource",true,true)
         elseif (_type == "menyoo") then
-            sendwebhooktodc("Tried to inject Menyoo Menu " ..name)
-            kickdetectedcheater("Anti Menyoo", _src)
+            sendcookies(_src,"Anti Menyoo", "This Player tried to inject Menyoo Menu",true,true)
         elseif (_type == "givearmour") then
-            sendwebhooktodc("Tried to Give Armor " ..name)
-            kickdetectedcheater("Anti Give Armor", _src)
+            sendcookies(_src,"Anti Give Armor", "This Player tried to Give Armor",true,true)
         elseif (_type == "aimassist") then
-            sendwebhooktodc("Aim Assist Detected. Mode: "..name)
+            sendcookies(_src,"Aim Assist", "This Player tried Aim Assist Detected. Mode: ",true,true)
         elseif (_type == "infinitestamina") then
-            sendwebhooktodc("Tried to use Infinite Stamina " ..name)
-            kickdetectedcheater("Anti Infinite Stamina", _src)
+            sendcookies(_src,"Anti Infinite Stamina", "This Player tried to use Infinite Stamina",true,true)
         elseif (_type == "superjump") then
             if IsPlayerUsingSuperJump(_src) then
-                sendwebhooktodc("Superjump Detected "..name)
-                kickdetectedcheater("Superjump Detected", _src)
+                sendcookies(_src,"Superjump Detected", "This Player tried to use Superjump",true,true)
             end
         elseif (_type == "vehicleweapons") then
-            sendwebhooktodc("Vehicle Weapons Detected: "..name)
-            kickdetectedcheater("Vehicle Weapons Detected", _src)
+            sendcookies(_src,"Vehicle Weapons Detected", "This Player tried to use Vehicle Weapons",true,true)
         end
     end
 end)

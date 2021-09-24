@@ -66,6 +66,9 @@ Config.BlacklistPlayer = {
     "steam:123456789asdfqwe",
 }
 
+Config.ReasonBanned = "You are restricted from connecting to our server. Please contact us!. "
+
+
 ---
 
 
