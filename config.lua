@@ -3,19 +3,16 @@ TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 
 Config = {}
 
-Config.Version = 3.5
+Config.Version = 3.6
 
 --Discord sender
-Config.WebhookDiscord = "" -- discord webhook
+Config.WebhookDiscord = "" -- Discord Webhook
 Config.DropMsg = "Don't use cheat! Discord: https://discord.gg/BW5KA78SXW"
+Config.ReasonBanned = "You are restricted from connecting to our server. Please contact us!."
 
-Config.AntiCHNG = true -- Anti Cheat Engine -- True/false
-
-Config.AntiNuke = true
-Config.AntiSpawnVehicles = true
-Config.AntiSpawnPeds = true
-
----
+------------------------------------
+------------ Detection -------------
+------------------------------------
 
 Config.BasicEnable = true -- This must be set in true do the Anticheat works as intended.
 Config.AntiExplosionDamage = true -- This prevents players from being killed by Explosions.
@@ -36,10 +33,16 @@ Config.AntiAimAssist = true -- Prevents players from activating Aim-Assist (GTA 
 Config.SuperJump = true -- Prevents player from using Super-Jump
 Config.AntiResourceStartorStop = true -- Prevents Cheaters from Stopping/Starting new Resource
 Config.AntiInfiniteStamina = true -- Detects if player is using infinite stamina cheats (BETA)
-
+Config.AntiBlacklistedTasks = true -- Detects BlacklistTask
+Config.AntiBlacklistedAnims = true -- Detects BlacklistAnims
 Config.AntiVDM = true -- Check vehicle speed
-
-Config.EventsDetect = true
+Config.EventsDetect = true -- Detects Event
+Config.AntiBlacklistedWords = true -- Detects BlacklistWord
+Config.AntiCHNG = true -- Anti Cheat Engine
+Config.AntiSpawnObjects = true
+Config.AntiSpawnVehicles = true
+Config.AntiSpawnPeds = true
+Config.DeleteBrokenCars = true -- Delete Broken Cars
 
 Config.WhitelistedResources = { -- If you get banned and the anticheat logs something like this "Resource metadata not valid in resource: or Abnormal resource injection" put here the resources that are causing that errors and everything should be fixed.
 	["discord-screenshot"] = true,
@@ -66,11 +69,14 @@ Config.BlacklistPlayer = {
     "steam:123456789asdfqwe",
 }
 
-Config.ReasonBanned = "You are restricted from connecting to our server. Please contact us!. "
-
 
 ---
 
+Config.BlacklistedKeys = {0, 121, 166, 169, 178, 207, 208, 214, 137, 171} -- Blacklisted Keys
+Config.BlacklistedTasks = {100, 101, 151, 221, 222} -- Blacklisted Task
+Config.BlacklistedAnims = { -- Format: Anim Dict, Anim Name.
+	{"rcmpaparazzo_2", "shag_loop_poppy", "anim@mp_player_intupperfinger", "idle_a_fp"}
+}
 
 Config.BlacklistedWeapons = { 
     `WEAPON_SNIPERRIFLE`, 
@@ -100,7 +106,7 @@ Config.BlacklistedWeapons = {
     `WEAPON_MUSKET`
 }
 
-Config.AntiNukeBlacklistedObjects = { 
+Config.BlacklistedObjects = { 
 	`p_crahsed_heli_s`,
 	`prop_beach_fire`,
 	`prop_rock_4_big2`,
@@ -339,7 +345,7 @@ Config.AntiNukeBlacklistedObjects = {
 	`po1_lod_slod4`
 }
 
-Config.AntiNukeBlacklistedVehicles = { -- Models/Vehicles/Airplanes etc etc.
+Config.BlacklistedVehicles = { -- Models/Vehicles/Airplanes etc etc.
 	`cargoplane`,
 	`cerberus`,
 	`cerberus2`,
@@ -419,7 +425,7 @@ Config.AntiNukeBlacklistedVehicles = { -- Models/Vehicles/Airplanes etc etc.
 	`rcmpaparazzo_2`,
 }
 
-Config.AntiNukeBlacklistedPeds = { -- Peds, animals, etc.
+Config.BlacklistedPeds = { -- Peds, animals, etc.
     `a_m_m_acult_01`,
     `a_m_y_acult_02`,
     `a_m_o_acult_01`,

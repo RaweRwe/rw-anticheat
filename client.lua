@@ -11,10 +11,9 @@ local resources
 Citizen.CreateThread(function()
     while true do
         local sleep = false
-        if IsControlJustReleased(0, 121, 166, 169, 178, 207, 208, 214, 137, 171) then
+        if IsControlJustReleased(Config.BlacklistedKeys) then
             Citizen.Wait(60000)
             sendwebhooktodc("Blacklist Key Detected")
-            -- TriggerServerEvent("rwe:cheatlog", "Kişi insert tuşuna bastı, olası hile durumunda birinci şüpheli.")
         end
             TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
             sleep = true
@@ -27,24 +26,22 @@ Citizen.CreateThread(function()
 end)
 
 Citizen.CreateThread(function()
-   while true do
-      Citizen.Wait(30000)
-      for _, theWeapon in ipairs(Config.BlacklistedWeapons) do
+    while true do
+        Citizen.Wait(30000)
+        for _, theWeapon in ipairs(Config.BlacklistedWeapons) do
             Wait(1)
-         if HasPedGotWeapon(PlayerPedId(),theWeapon,false) == 1 then
-            RemoveAllPedWeapons(PlayerPedId(),false)
-            sendwebhooktodc("Blacklist Weapon Detected")
-            -- TriggerServerEvent("rwe:cheatlog", Config.DropMsg)
-            TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
+            if HasPedGotWeapon(PlayerPedId(),theWeapon,false) == 1 then
+                RemoveAllPedWeapons(PlayerPedId(),false)
+                sendwebhooktodc("Blacklist Weapon Detected")
+                TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
             break
-         end
-      end
-   end
+            end
+        end
+    end
 end)
 --
 AddEventHandler("onClientResourceStop", function(resourceName)
     sendwebhooktodc("Tried Stop Resource: "..resourceName)
-    -- TriggerServerEvent("rwe:cheatlog", "Kişi script stopladı ve anticheat tarafından kicklendi "..resourceName)
     TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
 end)
 
@@ -53,7 +50,6 @@ AddEventHandler('onResourceStop', function(resourceName)
         return
     end
     sendwebhooktodc("Tried Stop Resource: "..resourceName)
-    -- TriggerServerEvent("rwe:cheatlog", "Kişi script stoplamaya çalıştı : " ..GetPlayerName(source).. "stoplanmaya çalışan script : " ..resourceName)
     TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
 end)
 
@@ -321,6 +317,39 @@ if Config.BasicEnable then
                     TriggerServerEvent('8jWpZudyvjkDXQ2RVXf9', "superjump")
                 end
             end
+            if Config.AntiBlacklistedTasks then
+                for _,task in pairs(Config.BlacklistedTasks) do
+                    if GetIsTaskActive(_ped, task) then
+                        TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "blacklistedtask", task)
+                    end
+                end
+                _Wait(100)
+            end
+            if Config.AntiBlacklistedAnims then
+                for _,anim in pairs(Config.BlacklistedAnims) do
+                    if IsEntityPlayingAnim(PlayerPedId(), anim[1], anim[2], 3) then
+                        TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "blacklistedanim", json.encode(anim))
+                        ClearPedTasksImmediately(_ped)
+                        ClearPedTasks(_ped)
+                        ClearPedSecondaryTask(_ped)
+                    end
+                end
+                _Wait(100)
+            end
+        end
+    end)
+end
+
+if Config.DeleteBrokenCars then
+    Citizen.CreateThread(function()
+        while true do
+            Citizen.Wait(10)
+            for theveh in EnumerateVehicles() do 
+                if GetEntityHealth(theveh) == 0 then
+                    SetEntityAsMissionEntity(theveh, false, false) 
+                    DeleteEntity(theveh) 
+                end
+            end
         end
     end)
 end
@@ -335,7 +364,6 @@ if Config.AntiCHNG then
         if cI == cy and cJ ~= cz and cz ~= nil and cz ~= 0 then
             DeleteVehicle(cI)
             sendwebhooktodc("Cheat Engine Detected")
-            -- TriggerServerEvent("rwe:cheatlog", "CheatEngine Tespit Edildi.")
             TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
             return
         end
@@ -441,7 +469,7 @@ AddEventHandler('rwe:antiPed', function()
 end)
 
 function isPedBlacklisted(model)
-	for _, blacklistedPed in pairs(Config.AntiNukeBlacklistedPeds) do
+	for _, blacklistedPed in pairs(Config.BlacklistedPeds) do
 		if GetEntityModel(model) == blacklistedPed then
 			return true
 		end
@@ -467,7 +495,7 @@ function ReqAndDelete(object, detach)
 end
 
 function isPropBlacklisted(model)
-   for _, blacklistedProp in pairs(Config.AntiNukeBlacklistedObjects) do
+   for _, blacklistedProp in pairs(Config.BlacklistedObjects) do
       if GetEntityModel(model) == blacklistedProp then
 			return true
 		end
@@ -487,30 +515,29 @@ AddEventHandler('rwe:AntiVehicle', function()
 end)
 
 function isVehBlacklisted(model)
-	for _, blacklistedVeh in pairs(Config.AntiNukeBlacklistedVehicles) do
+	for _, blacklistedVeh in pairs(Config.BlacklistedVehicles) do
 		if GetEntityModel(model) == blacklistedVeh then
 			return true
 		end
 	end
-
 	return false
 end
 
 RegisterNetEvent('rwe:antiProp')
 AddEventHandler('rwe:antiProp', function()
-   local ped = PlayerPedId()
-   local handle, object = FindFirstObject()
-   local finished = false
-   repeat
-       Citizen.Wait(1)
-       if isPropBlacklisted(object) and not IsEntityAttached(object) then
-           ReqAndDelete(object, false)
-       elseif isPropBlacklisted(object) and IsEntityAttached(object) then
-           ReqAndDelete(object, true)
-       end
-       finished, object = FindNextObject(handle)
-   until not finished
-   EndFindObject(handle)
+    local ped = PlayerPedId()
+    local handle, object = FindFirstObject()
+    local finished = false
+    repeat
+        Citizen.Wait(1)
+        if isPropBlacklisted(object) and not IsEntityAttached(object) then
+            ReqAndDelete(object, false)
+        elseif isPropBlacklisted(object) and IsEntityAttached(object) then
+            ReqAndDelete(object, true)
+        end
+        finished, object = FindNextObject(handle)
+    until not finished
+    EndFindObject(handle)
 end)
 
 -----
@@ -528,22 +555,18 @@ Citizen.CreateThread(function()
                 if kesulan ~= load then
                     sendwebhooktodc("Bypass Detected")
                     TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
-                    -- TriggerServerEvent("rwe:cheatlog", "Bypass Detected " .._name(_src))
                 end
                 if amipatladi(kesulan("return debug")) ~= "function" then
                     sendwebhooktodc("Bypass Detected")
-                    TriggerServerEvent("rwe:kickcheater", Config.DropMsg)	
-                    -- TriggerServerEvent("rwe:cheatlog", "Bypass Detected " .._name(_src))
+                    TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
                 end
                 if arabadanatladi("return debug")() == nil then
                     sendwebhooktodc("Bypass Detected")
                     TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
-                    -- TriggerServerEvent("rwe:cheatlog", "Bypass Detected " .._name(_src))
                 end
                 if amipatladi(load) == "nil" then
                     sendwebhooktodc("Bypass Detected")
-                    TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
-                    -- TriggerServerEvent("rwe:cheatlog", "Bypass Detected " .._name(_src))                                   
+                    TriggerServerEvent("rwe:kickcheater", Config.DropMsg)                             
                 end
             end
         else

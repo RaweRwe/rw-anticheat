@@ -6,26 +6,24 @@ Please share with credit.
 My Discord Server : https://discord.gg/BW5KA78SXW
 
 # Features
-+ 100 modmenu fixed 
++ Ban System
 + AntiGiveWeapon
 + AntiResourceStop 
 + AntiBlip 
 + AntiInject 
 + AntiMenu
-+ 50 modmenu commands fixed
-+ AntiNuke
-+ AntiSpawnVehicles 
++ AntiSpawnObject
++ AntiSpawnVehicle
 + AntiSpawnPed 
-+ AntiCMD added 
++ AntiCMD 
 + AntiCheatEngine 
 + AntiEventDetect
 + BlacklistedEvent
 + BlacklistedVehicles
 + BlacklistedWeapon
 + BlacklistedCommands
-+ AntiNukeBlacklistedPeds
-+ AntiNukeBlacklistedVehicles
-+ AntiNukeBlacklistedObjects
++ AntiBlacklistedPeds
++ AntiBlacklistedObjects
 + BlacklistName
 + AntiFreezeScript
 + BlacklistWords
@@ -51,6 +49,10 @@ My Discord Server : https://discord.gg/BW5KA78SXW
 + AntiVDM
 + AntiBypass
 + AntiResourceDetect
++ BlacklistKeys
++ BlacklistAnims
++ BlacklistTasks
++ BlacklistPlayer
 
 # Add in server.cfg
 
