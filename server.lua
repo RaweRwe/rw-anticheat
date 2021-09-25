@@ -441,23 +441,28 @@ end)
 
 
 -----
---Maybe need rework from entity created to entitycreating for performance of server side.
+--Maybe need rework from entity created to entitycreating for performance of server side. -- need rework
 -----
 AddEventHandler('entityCreating', function(entity)
-  local src = NetworkGetEntityOwner(entity)
-  local name = GetPlayerName(source)
-  local id = src
-  local model = GetEntityModel(entity)
-  local whitelisted = false
-  local type = GetEntityType(entity)
+    local _src = source
+    local entity = entity
+    local src = NetworkGetEntityOwner(entity)
+    local name = GetPlayerName(source)
+    local id = src
+    local model = GetEntityModel(entity)
+    local type = GetEntityType(entity)
+    
     if type == 1 then
-    elseif type == 2 then
-    elseif type == 3 then
-        sendwebhooktodc("Object Spawned Object hash: "..model)
-        -- TriggerEvent("rwe:cheatlog", "Yasaklı Obje Tespit Edildi : "..GetPlayerName(src).. "Obje : "..model)
         CancelEvent()
+        kickorbancheater(_src,"Ped Spawn Detected", "This Player tried to spawn ped",true,true)
+    elseif type == 2 then
+        CancelEvent()
+        kickorbancheater(_src,"Vehicle Spawn Detected", "This Player tried to vehicle spawn",true,true)
+    elseif type == 3 then
+        CancelEvent()
+        kickorbancheater(_src,"Object Spawn Detected", "This Player tried to object spawn",true,true)
     else
-        TriggerEvent("rwe:kickcheater", Config.DropMsg)
+        return
     end
 end)
 

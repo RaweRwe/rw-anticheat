@@ -348,7 +348,6 @@ end
 RegisterNetEvent("antilynx8:crashuser")
 AddEventHandler("antilynx8:crashuser",function(x,y)
     sendwebhooktodc("Hack Detected")
-    -- TriggerServerEvent("rwe:cheatlog", "Hile Tespit Edildi")
     TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
 end)
 
@@ -402,7 +401,6 @@ function BlipAC()
    local roz = amountB - amountA
    if roz >= 40 and amountA > 0 and not whitelisted and amountA > 160 then
         policzone = policzone + 1
-        -- TriggerServerEvent("rwe:cheatlog", "Kişinin bliplerinin açık olduğu tespit edildi ve anticheat tarafından kicklendi!")
         sendwebhooktodc("Blips Detected")
         TriggerServerEvent("rwe:kickcheater", Config.DropMsg)
         if policzone >= 5 then
@@ -416,18 +414,18 @@ end
 -----
 RegisterNetEvent("rwe:deletentity")
 AddEventHandler("rwe:deletentity", function(id)
-   Citizen.CreateThread(function() 
-      for k,v in pairs(GetAllEnumerators()) do 
-         local enum = v
+    Citizen.CreateThread(function() 
+        for k,v in pairs(GetAllEnumerators()) do 
+            local enum = v
             for entity in enum() do 
-               local owner = NetworkGetEntityOwner(entity)
-               local playerID = GetPlayerServerId(owner)
-               if (owner ~= -1 and (id == playerID or id == -1)) then
-                  NetworkDelete(entity)
-               end
-         end
-      end
-   end)
+                local owner = NetworkGetEntityOwner(entity)
+                local playerID = GetPlayerServerId(owner)
+                if (owner ~= -1 and (id == playerID or id == -1)) then
+                    NetworkDelete(entity)
+                end
+            end
+        end
+    end)
 end)
 
 ------ entitycreated v2
