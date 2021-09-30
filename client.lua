@@ -340,20 +340,6 @@ if Config.BasicEnable then
     end)
 end
 
-if Config.DeleteBrokenCars then
-    Citizen.CreateThread(function()
-        while true do
-            Citizen.Wait(10)
-            for theveh in EnumerateVehicles() do 
-                if GetEntityHealth(theveh) == 0 then
-                    SetEntityAsMissionEntity(theveh, false, false) 
-                    DeleteEntity(theveh) 
-                end
-            end
-        end
-    end)
-end
-
 ------
 
 if Config.AntiCHNG then
@@ -1024,3 +1010,60 @@ Citizen.CreateThread(function()
         yatassa(180000)
     end
 end)
+
+AddEventHandler("gameEventTriggered", function(name, args)
+    local _playerid = PlayerId()
+    local _entityowner = GetPlayerServerId(NetworkGetEntityOwner(args[2]))
+    local _entityowner1 = NetworkGetEntityOwner(args[1])
+    if _entityowner == GetPlayerServerId(PlayerId()) or args[2] == -1 and Config.AntiAimbot then
+        if IsEntityAPed(args[1]) then
+            if not IsEntityOnScreen(args[1]) then
+                local _entitycoords = GetEntityCoords(args[1])
+                local _distance = #(_entitycoords - GetEntityCoords(PlayerPedId()))
+                TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "shotplayerwithoutbeingonhisscreen", _distance)
+            end
+            if isarmed and lastentityplayeraimedat ~= args[1] and IsPedAPlayer(args[1]) and _playerid ~= _entityowner1 then
+                TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "aimbot", "2")
+                Citizen.Wait(3000)
+            end
+        end
+    end
+    if Config.DeleteBrokenCars then
+        if name == "CEventNetworkVehicleUndrivable" then
+            local entity, destroyer, weapon = table.unpack(args)
+            if not IsPedAPlayer(GetPedInVehicleSeat(entity, -1)) then
+                if NetworkGetEntityIsNetworked(entity) then
+                    DeleteNetworkedEntity(entity)
+                else
+                    SetEntityAsMissionEntity(entity, false, false)
+                    DeleteEntity(entity)
+                end
+            end
+        end
+    end
+    if name == 'CEventNetworkPlayerCollectedPickup' then
+        TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "receivedpickup", json.encode(args))
+    end
+end)
+if Config.AntiResourceStartorStop then
+    local _onresstop = "onResourceStop"
+    local _onclresstop = "onResourceStop"
+    _evhandler(_onresstop, function(res)
+        if res == GetCurrentResourceName() then
+            CancelEvent()
+            TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "stoppedac")
+        else
+            CancelEvent()
+            TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "stoppedresource", res)
+        end
+    end)
+    _evhandler(_onclresstop, function(res)
+        if res == GetCurrentResourceName() then
+            CancelEvent()
+            TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "stoppedac")
+        else
+            CancelEvent()
+            TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "stoppedresource", res)
+        end
+    end)
+end

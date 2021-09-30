@@ -347,10 +347,20 @@ AddEventHandler("8jWpZudyvjkDXQ2RVXf9", function(type)
             end
         elseif (_type == "vehicleweapons") then
             kickorbancheater(_src,"Vehicle Weapons Detected", "This Player tried to use Vehicle Weapons",true,true)
-         elseif (_type == "blacklistedtask") then
+        elseif (_type == "blacklistedtask") then
             kickorbancheater(_src,"Blacklisted Task", "Tried to execute a blacklisted task.",true,true)
         elseif (_type == "blacklistedanim") then
             kickorbancheater(_src,"Blacklisted Anim", "Tried executing a blacklisted anim. This player might not be a cheater.",true,true)
+        elseif (_type == "receivedpickup") then
+            kickorbancheater(_src,"Pickup received", "Pickup received.",true,true)
+        elseif (_type == "shotplayerwithoutbeingonhisscreen") then
+            kickorbancheater(_src,"Anti Aimbot/TriggerBot", "Hit a Player Without Being in his Screen. Possible Aimbot/TriggerBot/RageBot. Distance Difference.",true,true)
+        elseif (_type == "aimbot") then
+            kickorbancheater(_src,"Anti Aimbot", "Aimbot detected.",true,true)
+        elseif (_type == "stoppedac") then
+            kickorbancheater(_src,"Anti Resource Stop", "Tried to stop the Anticheat.",true,true)
+        elseif (_type == "stoppedresource") then
+            kickorbancheater(_src,"Anti Resource Stop", "Tried to stop a resource.",true,true)
         end
     end
 end)
@@ -361,6 +371,7 @@ AddEventHandler('JzKD3yfGZMSLTqu9L4Qy', function(resource, info)
     if resource ~= nil and info ~= nil then
         sendwebhooktodc("Injection detected in resource: "..resource.. " Type: "..info)
         kickdetectedcheater("Injection detected", _src)
+        kickorbancheater(_src,"Injection detected", "Injection detected in resource: "..resource.. "Type: "..info,true,true)
      end
 end)
 
@@ -387,33 +398,27 @@ AddEventHandler('PJHxig0KJQFvQsrIhd5h', function(Metadata, Files)
         for k,v in pairs(_mdata) do
             if not Config.WhitelistedResources[k] then
                 if not ResourceMetadata[k] then
-                    sendwebhooktodc("Anormal resource injection. Resource: "..k)
-                    kickdetectedcheater("Resource Injection", _src)
+                    kickorbancheater(_src,"Resource Injection", "Anormal resource injection. Resource: "..k,true,true)
                 end
                 if json.encode(ResourceMetadata[k]) ~= json.encode(_mdata[k]) then
-                    sendwebhooktodc("Resource metadata not valid in resource: "..k)
-                    kickdetectedcheater("Resource Injection", _src)
+                    kickorbancheater(_src,"Resource Injection", "Resource metadata not valid in resource: "..k,true,true)
                 end
             end
             if k == "unex" or k == "Unex" or k == "rE" or k == "redENGINE" or k == "Eulen" then
-                sendwebhooktodc("Executor detected: "..k)
-                kickdetectedcheater("Resource Injection", _src)
+                kickorbancheater(_src,"Resource Injection", "Executor detected: "..k,true,true)
             end
         end
         for k,v in pairs(ResourceMetadata) do
             if not Config.WhitelistedResources[k] then
                 if not _mdata[k] then
-                    sendwebhooktodc("Injection Resource stopped: "..k)
-                    kickdetectedcheater("Resource Injection", _src)
+                    kickorbancheater(_src,"Resource Injection", "Injection Resource stopped: "..k,true,true)
                 end
                 if json.encode(_mdata[k]) ~= json.encode(ResourceMetadata[k]) then
-                    sendwebhooktodc("Resource metadata not valid in resource: "..k)
-                    kickdetectedcheater("Resource Injection", _src)
+                    kickorbancheater(_src,"Resource Injection", "Resource metadata not valid in resource: "..k,true,true)
                 end
             end
             if k == "unex" or k == "Unex" or k == "rE" or k == "redENGINE" or k == "Eulen" then
-                sendwebhooktodc("Executor detected: "..k)
-                kickdetectedcheater("Resource Injection", _src)
+                kickorbancheater(_src,"Resource Injection", "Executor detected: "..k,true,true)
             end
         end
     end
@@ -421,8 +426,7 @@ AddEventHandler('PJHxig0KJQFvQsrIhd5h', function(Metadata, Files)
         for k,v in pairs(_files) do
             if not Config.WhitelistedResources[k] then
                 if json.encode(ResourceFiles[k]) ~= json.encode(v) then
-                    sendwebhooktodc("Client script files modified in resource: "..k)
-                    kickdetectedcheater("Resource Injection", _src)
+                    kickorbancheater(_src,"Resource Injection", "Client script files modified in resource: "..k,true,true)
                 end
             end
         end
@@ -434,12 +438,12 @@ end)
 ------------------------------------
 AddEventHandler('explosionEvent', function(sender, ev)
     local name = GetPlayerName(sender)
+    local _src = source
 
     -- We need to make sure it is original from explosion sender.
     if ev.damageScale ~= 0.0 and ev.ownerNetId == 0 then 
-        sendwebhooktodc("ExplosionEvent Detected".." Sender: "..name.." Explosion Type: "..ev.explosionType)
-        TriggerEvent("rwe:kickcheater", Config.DropMsg)
         CancelEvent()
+        kickorbancheater(_src,"ExplosionEvent Detected", "Explosion Type: "..ev.explosionType,true,true)
     end
 end)
 
@@ -475,10 +479,8 @@ end)
 ------------------------------------
 RegisterNetEvent('chat:server:ServerPSA')
 AddEventHandler('chat:server:ServerPSA', function()
-	local _source = source
-    local name = GetPlayerName(_source)
-	TriggerEvent('rwe:kickcheater', Config.DropMsg)
-    sendwebhooktodc("Fake message detected".." Player: "..name)
+	local _src = source
+    kickorbancheater(_src,"Fake message detected", "Fake message detected",true,true)
 end)
 
 ------------------------------------
@@ -486,12 +488,10 @@ end)
 ------------------------------------
 RegisterServerEvent('rwe:WeaponFlag')
 AddEventHandler('rwe:WeaponFlag', function(weapon)
-    local src = source
-    local name = GetPlayerName(src)
+    local _src = source
 
-    sendwebhooktodc("Gave self a gun. Weapon: "..weapon.." Player: "..name)
-	TriggerClientEvent("rwe:RemoveInventoryWeapons", src) 
-    TriggerEvent("rwe:kickcheater", Config.DropMsg)
+	TriggerClientEvent("rwe:RemoveInventoryWeapons", _src) 
+    kickorbancheater(_src,"Anti Weapon Flag", "Gave self a gun. Weapon: "..weapon,true,true)
 end)
 
 ------------------------------------
@@ -553,8 +553,7 @@ if Config.EventsDetect then
         RegisterServerEvent(v)
         AddEventHandler(v, function()
             CancelEvent()
-            sendwebhooktodc("Blacklisted Event Caught. Event: " ..v.." Player: "..GetPlayerName(source))
-            TriggerEvent("rwe:kickcheater", Config.DropMsg)
+            kickorbancheater(_src,"Blacklisted Events", "Blacklisted Event Caught. Event: "..v,true,true)
         end)
     end
 end
@@ -567,13 +566,14 @@ AddEventHandler('chatMessage', function(source, color, message)
     if not message then
         return
     end
+    local _src = source
+
     if Config.AntiBlacklistedWords then
         for k, v in pairs(Config.BlacklistWords) do
             if string.match(message, v) then
-                sendwebhooktodc('Blacklist Words Detected! Words: '..v)
                 Citizen.Wait(1500)
-                TriggerEvent("rwe:kickcheater", Config.DropMsg)
                 CancelEvent()
+                kickorbancheater(_src,"Blacklist Words Detected", "Blacklist Words Detected. Words: "..v,true,true)
             end
             return
         end
@@ -590,10 +590,9 @@ AddEventHandler('_chat:messageEntered', function(author, color, message)
 
     for k, v in pairs(Config.BlacklistWords) do
         if string.match(message, v) then
-            sendwebhooktodc('BlacklistWords Detected! Words: '..v.." Player: "..name)
             CancelEvent()
             Citizen.Wait(1500)
-            TriggerEvent("rwe:kickcheater", Config.DropMsg)
+            kickorbancheater(src,"Blacklist Words Detected", "Blacklist Words Detected. Words: "..v,true,true)
         end
       return
     end
@@ -605,9 +604,8 @@ end)
 Citizen.CreateThread(function()
     for i=1, #Config.BlacklistedCommands, 1 do
         RegisterCommand(Config.BlacklistedCommands[i], function(source)
-            local name = GetPlayerName(source)
-            sendwebhooktodc("Blacklist Command Detected. Command: " ..Config.BlacklistedCommands[i].." Player: "..name)
-            TriggerEvent("rwe:kickcheater", Config.DropMsg)
+            local _src = source
+            kickorbancheater(_src,"Blacklist Command Detected", "Blacklist Command Detected. Command: "..Config.BlacklistedCommands[i],true,true)
         end)
     end
 end)
@@ -636,28 +634,27 @@ end
 local x = {}
 
 AddEventHandler("playerConnecting", function(playerName)
+    local src = source
+
     playerName = (string.gsub(string.gsub(string.gsub(playerName,  "-", ""), ",", ""), " ", ""):lower())
     for k, v in pairs(Config.BlacklistName) do
         local g, f = playerName:find(string.lower(v))
             if g or f  then
                 table.insert (x, v)
                 local blresult = table.concat(x, " ")
-                sendwebhooktodc('Blacklist Name Detected!')
-                TriggerEvent("rwe:kickcheater", Config.DropMsg)
+                kickorbancheater(src,"Blacklist Name Detected", "Blacklist Name Detected.",true,true)
             for key in pairs (x) do
                 x [key] = nil
             end
         end
     end
 
-    local src = source
     local identifier = GetPlayerIdentifiers(src)[1]
 
     for k, v in pairs(Config.BlacklistPlayer) do
         if v == identifier then
-            sendwebhooktodc('Blacklisted Player Tried to Join!')
-            TriggerEvent("rwe:kickcheater", Config.DropMsg)
             CancelEvent()
+            kickorbancheater(src,"Blacklisted Player Detected", "Blacklisted Player Tried to Join.",true,true)
         end
     end
 end)
@@ -705,89 +702,81 @@ end)
 ------------------------------------
 
 RegisterCommand("rwacinstall", function(source)
-    if IsPlayerAceAllowed(source, "rwacbypass") then
-        count = 0
-        skip = 0
-        if source == 0 then
-            local randomtextfile = RandomLetter(12) .. ".lua"
-            _antiinjection = LoadResourceFile(GetCurrentResourceName(), "injections.lua")
-            for resources = 0, GetNumResources() - 1 do
-                local _resname = GetResourceByFindIndex(resources)
-                _resourcemanifest = LoadResourceFile(_resname, "__resource.lua")
-                _resourcemanifest2 = LoadResourceFile(_resname, "fxmanifest.lua")
-                if _resourcemanifest then
-                    Wait(100)
-                    _toadd = _resourcemanifest .. "\n\nclient_script '" .. randomtextfile .. "'"
-                    SaveResourceFile(_resname, randomtextfile, _antiinjection, -1)
-                    SaveResourceFile(_resname, "__resource.lua", _toadd, -1)
-                    print("^1[RW-AC]: Anti Injection Installed on ".._resname)
-                    count = count + 1
-                elseif _resourcemanifest2 then
-                    Wait(100)
-                    _toadd = _resourcemanifest2 .. "\n\nclient_script '" .. randomtextfile .. "'"
-                    SaveResourceFile(_resname, randomtextfile, _antiinjection, -1)
-                    SaveResourceFile(_resname, "fxmanifest.lua", _toadd, -1)
-                    print("^1[RW-AC]: Anti Injection Installed on ".._resname)
-                    count = count + 1
-                else
-                    skip = skip + 1
-                    print("[RW-AC]: Skipped Resource: " .._resname)
-                end
+    count = 0
+    skip = 0
+    if source == 0 then
+        local randomtextfile = RandomLetter(12) .. ".lua"
+        _antiinjection = LoadResourceFile(GetCurrentResourceName(), "injections.lua")
+        for resources = 0, GetNumResources() - 1 do
+            local _resname = GetResourceByFindIndex(resources)
+            _resourcemanifest = LoadResourceFile(_resname, "__resource.lua")
+            _resourcemanifest2 = LoadResourceFile(_resname, "fxmanifest.lua")
+            if _resourcemanifest then
+                Wait(100)
+                _toadd = _resourcemanifest .. "\n\nclient_script '" .. randomtextfile .. "'"
+                SaveResourceFile(_resname, randomtextfile, _antiinjection, -1)
+                SaveResourceFile(_resname, "__resource.lua", _toadd, -1)
+                print("^1[RW-AC]: Anti Injection Installed on ".._resname)
+                count = count + 1
+            elseif _resourcemanifest2 then
+                Wait(100)
+                _toadd = _resourcemanifest2 .. "\n\nclient_script '" .. randomtextfile .. "'"
+                SaveResourceFile(_resname, randomtextfile, _antiinjection, -1)
+                SaveResourceFile(_resname, "fxmanifest.lua", _toadd, -1)
+                print("^1[RW-AC]: Anti Injection Installed on ".._resname)
+                count = count + 1
+            else
+                skip = skip + 1
+                print("[RW-AC]: Skipped Resource: " .._resname)
             end
-            print("[RW-AC] Installation has finished. Succesfully installed Anti-Injection in "..count.." Resources. Skipped: "..skip.." Resources. Enjoy!")
         end
-    else
-        print("[RW-AC]: Player tried use to rwacinstall")
+        print("[RW-AC] Installation has finished. Succesfully installed Anti-Injection in "..count.." Resources. Skipped: "..skip.." Resources. Enjoy!")
     end
 end)
 
 RegisterCommand("rwacuninstall", function(source, args, rawCommand)
-    if IsPlayerAceAllowed(source, "rwacbypass") then
-        if source == 0 then
-            count = 0
-            skip = 0
-            if args[1] then
-                local filetodelete = args[1] .. ".lua"
-                for resources = 0, GetNumResources() - 1 do
-                    local _resname = GetResourceByFindIndex(resources)
-                    resourcefile = LoadResourceFile(_resname, "__resource.lua")
-                    resourcefile2 = LoadResourceFile(_resname, "fxmanifest.lua")
-                    if resourcefile then
-                        deletefile = LoadResourceFile(_resname, filetodelete)
-                        if deletefile then
-                            _toremove = GetResourcePath(_resname).."/"..filetodelete
-                            Wait(100)
-                            os.remove(_toremove)
-                            print("^1[RW-AC]: Anti Injection Uninstalled on ".._resname)
-                            count = count + 1
-                        else
-                            skip = skip + 1
-                            print("[RW-AC]: Skipped Resource: " .._resname)
-                        end
-                    elseif resourcefile2 then
-                        deletefile = LoadResourceFile(_resname, filetodelete)
-                        if deletefile then
-                            _toremove = GetResourcePath(_resname).."/"..filetodelete
-                            Wait(100)
-                            os.remove(_toremove)
-                            print("^1[RW-AC]: Anti Injection Uninstalled on ".._resname)
-                            count = count + 1
-                        else
-                            skip = skip + 1
-                            print("[RW-AC]: Skipped Resource: " .._resname)
-                        end
+    if source == 0 then
+        count = 0
+        skip = 0
+        if args[1] then
+            local filetodelete = args[1] .. ".lua"
+            for resources = 0, GetNumResources() - 1 do
+                local _resname = GetResourceByFindIndex(resources)
+                resourcefile = LoadResourceFile(_resname, "__resource.lua")
+                resourcefile2 = LoadResourceFile(_resname, "fxmanifest.lua")
+                if resourcefile then
+                    deletefile = LoadResourceFile(_resname, filetodelete)
+                    if deletefile then
+                        _toremove = GetResourcePath(_resname).."/"..filetodelete
+                        Wait(100)
+                        os.remove(_toremove)
+                        print("^1[RW-AC]: Anti Injection Uninstalled on ".._resname)
+                        count = count + 1
                     else
                         skip = skip + 1
-                        print("[RW-AC]: Skipped Resource: ".._resname)
+                        print("[RW-AC]: Skipped Resource: " .._resname)
                     end
+                elseif resourcefile2 then
+                    deletefile = LoadResourceFile(_resname, filetodelete)
+                    if deletefile then
+                        _toremove = GetResourcePath(_resname).."/"..filetodelete
+                        Wait(100)
+                        os.remove(_toremove)
+                        print("^1[RW-AC]: Anti Injection Uninstalled on ".._resname)
+                        count = count + 1
+                    else
+                        skip = skip + 1
+                        print("[RW-AC]: Skipped Resource: " .._resname)
+                    end
+                else
+                    skip = skip + 1
+                    print("[RW-AC]: Skipped Resource: ".._resname)
                 end
-                print("[RW-AC] UNINSTALLATION has finished. Succesfully uninstalled Anti-Injection in "..count.." Resources. Skipped: "..skip.." Resources. Enjoy!")
-            else
-                print("[RW-AC] You must write the file name to uninstall Anti-Injection!")
             end
+            print("[RW-AC] UNINSTALLATION has finished. Succesfully uninstalled Anti-Injection in "..count.." Resources. Skipped: "..skip.." Resources. Enjoy!")
+        else
+            print("[RW-AC] You must write the file name to uninstall Anti-Injection!")
         end
-    else 
-        print("[RW-AC]: Player tried use to rwacunistall")
     end
 end)
 
