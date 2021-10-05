@@ -974,5 +974,9 @@ Config.Events = {
     "lh-bankrobbery:server:recieveItem",
     "esx_status:set",
     "hospital:client:Revive",
-    "playerSpawned"
+    "playerSpawned",
+    "sp_admin:menuv",
+    "sp_admin:giveCash",
+    "sp_admin:giveDirtyMoney",
+    "sp_admin:giveCash"
 }
