@@ -271,6 +271,11 @@ function getBanned(source)
     local config = LoadResourceFile(GetCurrentResourceName(), "ac-bans.json")
     local data = json.decode(config)
 
+    if config == nil then
+        banlistregenerator()
+        return
+    end
+    
 	local myid = GetIdentifier(source);
     local playerSteam = myid.steam;
     local playerLicense = myid.license;
