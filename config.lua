@@ -1,6 +1,3 @@
-ESX = nil
-TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
-
 Config = {}
 
 Config.Version = 3.6
