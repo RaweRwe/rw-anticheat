@@ -1,6 +1,6 @@
 Config = {}
 
-Config.Version = 3.6
+Config.Version = 3.7
 
 --Discord sender
 Config.WebhookDiscord = "" -- Discord Webhook
