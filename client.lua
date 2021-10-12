@@ -341,8 +341,8 @@ if Config.BasicEnable then
 end
 
 ------
-
 if Config.AntiCHNG then
+Citizen.CreateThread(function()
     Citizen.Wait(2000)
     local cI = GetVehiclePedIsUsing(PlayerPedId())
     local cJ = GetEntityModel(cI)
@@ -356,6 +356,7 @@ if Config.AntiCHNG then
     end
    cy = cI
    cz = cJ
+end)
 end
 
 ------
