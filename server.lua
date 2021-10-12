@@ -474,8 +474,6 @@ AddEventHandler('entityCreating', function(entity)
     elseif type == 3 then
         CancelEvent()
         kickorbancheater(_src,"Object Spawn Detected", "This Player tried to object spawn",true,true)
-    else
-        return
     end
 end)
 
