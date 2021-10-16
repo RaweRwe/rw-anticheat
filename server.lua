@@ -1,5 +1,9 @@
 ESX = nil
-TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
+local QBCore = exports['qb-core']:GetCoreObject()
+
+if Config.FrameWork == "esx" then
+    TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
+end
 
 local ResourceMetadata = {}
 local ResourceFiles = {}
@@ -660,6 +664,11 @@ AddEventHandler("playerConnecting", function(playerName)
             kickorbancheater(src,"Blacklisted Player Detected", "Blacklisted Player Tried to Join.",true,true)
         end
     end
+end)
+
+AddEventHandler('playerDropped', function(reason)
+    local src = source
+    kickorbancheater(src,"Player Dropped", "Player Dropped. Reason: "..reason,false,false)
 end)
 
 ----- EntityCreated different version with display
