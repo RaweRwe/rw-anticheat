@@ -1,14 +1,11 @@
 ESX = nil
-local QBCore = exports['qb-core']:GetCoreObject()
 
-if Config.Framework == "esx" then
 Citizen.CreateThread(function()
     while ESX == nil do
         TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
         Citizen.Wait(10)
     end
 end)
-end
 
 local resources
 
@@ -450,11 +447,7 @@ end)
 ------ entitycreated v2
 RegisterNetEvent('rwe:antiPed')
 AddEventHandler('rwe:antiPed', function()
-    if Config.Framework == "esx" then
-        local peds = ESX.Game.GetPeds()
-    elseif Config.Framework == "qbcore" then
-        local peds = QBCore.Functions.GetPeds()
-    end
+    local peds = ESX.Game.GetPeds()
     for i=1, #peds, 1 do
         if isPedBlacklisted(peds[i]) then
             DeletePed(peds[i])
@@ -499,11 +492,7 @@ end
 
 RegisterNetEvent('rwe:AntiVehicle')
 AddEventHandler('rwe:AntiVehicle', function()
-    if Config.Framework == "esx" then
-        local vehicles = ESX.Game.GetVehicles()
-    elseif Config.Framework == "qbcore" then
-        local vehicles = QBCore.Functions.GetVehicles()
-    end
+    local vehicles = ESX.Game.GetVehicles()
 
     for i=1, #vehicles, 1 do
         if isVehBlacklisted(vehicles[i]) then

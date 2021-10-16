@@ -1,12 +1,7 @@
 Config = {}
 
-<<<<<<< Updated upstream
-Config.Version = 3.7
-=======
 Config.Version = 4.0
-
-Config.Framework = "esx" -- esx or qbcore
->>>>>>> Stashed changes
+-- Config.Framework = "esx" -- esx or qbcore
 
 --Discord sender
 Config.WebhookDiscord = "" -- Discord Webhook

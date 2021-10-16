@@ -1,9 +1,6 @@
 ESX = nil
-local QBCore = exports['qb-core']:GetCoreObject()
 
-if Config.FrameWork == "esx" then
-    TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
-end
+TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 
 local ResourceMetadata = {}
 local ResourceFiles = {}
