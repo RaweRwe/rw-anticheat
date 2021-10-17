@@ -7,64 +7,24 @@ local ResourceFiles = {}
 
 -- Version Control
 
-Citizen.CreateThread(function()
-  Citizen.Wait(1000)
-    VersionControl = function(err, result, headers)
-        if result then
-            local data = json.decode(result)
-            if data.version ~= Config.Version then
-                print("\n")
-                print("^2[RW-AntiCheat] ^0New version finded: ".. data.version .." Updates: \n".. data.updates .. "\n")
-                print("https://github.com/RaweRwe/rw-anticheat\n")
-            end
-            if data.version == Config.Version then
-                print("\n")
-                print("^2[RW-AntiCheat] ^0You using latest version: ".. data.version)
-            end
-        end
-    end
-  PerformHttpRequest("https://raw.githubusercontent.com/RaweRwe/rw-anticheat-version/main/anticheat.json", VersionControl, "GET")
-end)
-
--------
-RegisterServerEvent("rwe:kickcheater")
-AddEventHandler("rwe:kickcheater", function(reason)
-    local _src = source
-    local identifier = GetPlayerIdentifiers(_src)[1]
-
-    DropPlayer(_src, "[RW-AC] "..reason)		
-end)
-
-kickdetectedcheater = function(reason, servertarget) -- kick func
-    if not IsPlayerAceAllowed(servertarget, "rwacbypass") then
-        local target
-        local reason    = reason
-
-        if tostring(source) == "" then
-            target = tonumber(servertarget)
-        else
-            target = source
-        end
-
-        DropPlayer(target, "[RW-AC] " ..reason)
-    end
-end
--------
-RegisterServerEvent("rwe:cheatlog")
-AddEventHandler("rwe:cheatlog", function(reason)
-  local src = source
-      local connect = {
-            {
-                ["color"] = 23295,
-                ["title"] = reason,
-                ["description"] = "Player: "..GetPlayerName(src).. " "  ..GetPlayerIdentifiers(src)[1].."  ",
-                ["footer"] = {
-                ["text"] = "github.com/RaweRwe/rw-anticheat",
-                },
-            }
-        }
-    PerformHttpRequest(Config.WebhookDiscord, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", embeds = connect, avatar_url = "https://e7.pngegg.com/pngimages/163/941/png-clipart-computer-icons-x-mark-old-letters-angle-logo.png"}), { ['Content-Type'] = 'application/json' })
-end)
+-- Citizen.CreateThread(function()
+--     Citizen.Wait(1000)
+--     VersionControl = function(err, result, headers)
+--         if result then
+--             local data = json.decode(result)
+--             if data.version ~= Config.Version then
+--                 print("\n")
+--                 print("^2[RW-AntiCheat] ^0New version finded: ".. data.version .." Updates: \n".. data.updates .. "\n")
+--                 print("https://github.com/RaweRwe/rw-anticheat\n")
+--             end
+--             if data.version == Config.Version then
+--                 print("\n")
+--                 print("^2[RW-AntiCheat] ^0You using latest version: ".. data.version)
+--             end
+--         end
+--     end
+--     PerformHttpRequest("https://raw.githubusercontent.com/RaweRwe/rw-anticheat-version/main/anticheat.json", VersionControl, "GET")
+-- end)
 
 ---------------------------
 -------- BAN BOOGERS ------
@@ -613,7 +573,7 @@ end)
 ------------------------------------
 --------    Admin Command    -------
 ------------------------------------
-RegisterCommand("entitywipe", function(source, args, raw) --- only admin use
+RegisterCommand("entitywipe", function(source, args, raw)
     local playerID = args[1]
         if (playerID ~= nil and tonumber(playerID) ~= nil) then
             EntityWipe(source, tonumber(playerID))
@@ -622,7 +582,7 @@ end, false)
 
 function EntityWipe(source, target)
     local _src = source
-        TriggerClientEvent("rwe:deletentity", -1, tonumber(target))
+    TriggerClientEvent("rwe:deletentity", -1, tonumber(target))
 end
 
 ------------------------------------
@@ -643,15 +603,6 @@ AddEventHandler("playerConnecting", function(playerName)
             for key in pairs (x) do
                 x [key] = nil
             end
-        end
-    end
-
-    local identifier = GetPlayerIdentifiers(src)[1]
-
-    for k, v in pairs(Config.BlacklistPlayer) do
-        if v == identifier then
-            CancelEvent()
-            kickorbancheater(src,"Blacklisted Player Detected", "Blacklisted Player Tried to Join.",true,true)
         end
     end
 end)
