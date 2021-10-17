@@ -375,8 +375,6 @@ RegisterNetEvent('JzKD3yfGZMSLTqu9L4Qy')
 AddEventHandler('JzKD3yfGZMSLTqu9L4Qy', function(resource, info)
     local _src = source
     if resource ~= nil and info ~= nil then
-        sendwebhooktodc("Injection detected in resource: "..resource.. " Type: "..info)
-        kickdetectedcheater("Injection detected", _src)
         kickorbancheater(_src,"Injection detected", "Injection detected in resource: "..resource.. "Type: "..info,true,true)
      end
 end)
@@ -493,7 +491,6 @@ end)
 RegisterServerEvent('rwe:WeaponFlag')
 AddEventHandler('rwe:WeaponFlag', function(weapon)
     local _src = source
-
 	TriggerClientEvent("rwe:RemoveInventoryWeapons", _src) 
     kickorbancheater(_src,"Anti Weapon Flag", "Gave self a gun. Weapon: "..weapon,true,true)
 end)
@@ -507,6 +504,7 @@ AddEventHandler('entityCreated', function(entity)
         return
     end
     
+    local _src = source
     local src = NetworkGetEntityOwner(entity)
     local entID = NetworkGetNetworkIdFromEntity(entity)
     local model = GetEntityModel(entity)
@@ -518,8 +516,7 @@ AddEventHandler('entityCreated', function(entity)
             if model == objName then
                 TriggerClientEvent("rwe:DeleteCars", -1,entID)
                 Citizen.Wait(800)
-                    sendwebhooktodc("Blacklist Vehicle Spawned, **-Player: **"..SpawnerName.."\n\n**-Object Name: **"..objName.."\n\n**-Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash)
-                    TriggerEvent("rwe:kickcheater", Config.DropMsg)
+                    kickorbancheater(_src,"Blacklist Vehicle Spawned", "Object: "..objName.. " Model: "..model.. " Entity: "..entity.. " Hash: "..hash,true,true)
             end
         end
     end
@@ -529,8 +526,7 @@ AddEventHandler('entityCreated', function(entity)
             if model == objName then
                 TriggerClientEvent("rwe:DeletePeds", -1, entID)
                 Citizen.Wait(800)
-                sendwebhooktodc("BlacklistPed **-Player: **"..SpawnerName.."\n\n**-Object Name: **"..objName.."\n\n**-Nesne Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash)
-                TriggerEvent("rwe:kickcheater", Config.DropMsg)
+                kickorbancheater(_src,"Blacklist Ped Spawned", "Object: "..objName.. " Model: "..model.. " Entity: "..entity.. " Hash: "..hash,true,true)
             end
             break
         end
@@ -541,8 +537,7 @@ AddEventHandler('entityCreated', function(entity)
             if model == objName then
                 TriggerClientEvent("rwe:DeleteEntity", -1, entID)
                 Citizen.Wait(800)
-                sendwebhooktodc("Blacklist Object Spawned, **-Spawner Name: **"..SpawnerName.."\n\n**-Object Name: **"..objName.."\n\n**-Spawn Model:** "..model.."\n\n**-Entity ID:** "..entity.."\n\n**-Hash ID:** "..hash)
-                TriggerEvent("rwe:kickcheater", Config.DropMsg)
+                kickorbancheater(_src,"Blacklist Object Spawned", "Object: "..objName.. " Model: "..model.. " Entity: "..entity.. " Hash: "..hash,true,true)
                 break
             end
         end
@@ -609,7 +604,7 @@ Citizen.CreateThread(function()
     for i=1, #Config.BlacklistedCommands, 1 do
         RegisterCommand(Config.BlacklistedCommands[i], function(source)
             local _src = source
-            kickorbancheater(_src,"Blacklist Command Detected", "Blacklist Command Detected. Command: "..Config.BlacklistedCommands[i],true,true)
+            kickorbancheater(_src,"Blacklist Command Detected", "Blacklist Command Detected.",true,true)
         end)
     end
 end)
@@ -618,7 +613,7 @@ end)
 ------------------------------------
 --------    Admin Command    -------
 ------------------------------------
-RegisterCommand("entitywipe", function(source, args, raw) 
+RegisterCommand("entitywipe", function(source, args, raw) --- only admin use
     local playerID = args[1]
         if (playerID ~= nil and tonumber(playerID) ~= nil) then
             EntityWipe(source, tonumber(playerID))
@@ -627,9 +622,7 @@ end, false)
 
 function EntityWipe(source, target)
     local _src = source
-    if IsPlayerAceAllowed(_src, "rwacbypass") then
         TriggerClientEvent("rwe:deletentity", -1, tonumber(target))
-    end
 end
 
 ------------------------------------
@@ -671,34 +664,32 @@ end)
 ----- EntityCreated different version with display
 AddEventHandler('entityCreated', function(entity)
     if DoesEntityExist(entity) then
+        local src = source
         local model = GetEntityModel(entity)
         if model == 3 then
             for _, blacklistedProps in pairs(Config.BlacklistedObjects) do
                 if model == blacklistedProps then
-                    sendwebhooktodc('Blacklist Object Detected! Player: ' ..src.. 'Prop: '..blacklistedProps..'\n**Prop:** https://plebmasters.de/?search='..blacklistedProps..'&app=objects \n **Mwojtasik:** https://mwojtasik.dev/tools/gtav/objects/search?name='..blacklistedProps)
-                    TriggerClientEvent('rwe:antiProp', -1)
-                    TriggerEvent("rwe:kickcheater", Config.DropMsg)
                     CancelEvent()
+                    TriggerClientEvent('rwe:antiProp', -1)
+                    kickorbancheater(src,"Blacklist Object Detected", "Prop: "..blacklistedProps.. " https://mwojtasik.dev/tools/gtav/objects/search?name="..blacklistedProps,true,true)
                     return
                 end
             end
         elseif model == 2 then
             for _, blacklistedVeh in pairs(Config.BlacklistedVehicles) do
                 if model == blacklistedVeh then
-                    sendwebhooktodc('Blacklist Vehicle Detected: '..blacklistedVeh..'\n **Vehicle: ** https://www.gtabase.com/search?searchword='..blacklistedVeh)
-                    TriggerClientEvent('rwe:AntiVehicle', -1)
-                    TriggerEvent("rwe:kickcheater", Config.DropMsg)
                     CancelEvent()
+                    TriggerClientEvent('rwe:AntiVehicle', -1)
+                    kickorbancheater(src,"Blacklist Vehicle Detected", "Vehicle: "..blacklistedVeh.. " https://www.gtabase.com/search?searchword="..blacklistedVeh,true,true)
                     return
                 end
             end
         elseif model == 1 then
             for _, blacklistedPed in pairs(Config.BlacklistedPeds) do
                 if model == blacklistedPed then
-                    sendwebhooktodc('Blacklist Ped Detected: '..blacklistedPed..'\n **Ped:** https://docs.fivem.net/peds/'..blacklistedPed..'.png')
-                    TriggerClientEvent('rwe:antiPed', -1)
-                    TriggerEvent("rwe:kickcheater", Config.DropMsg)
                     CancelEvent()
+                    TriggerClientEvent('rwe:antiPed', -1)
+                    kickorbancheater(src,"Blacklist Ped Detected", "Ped: "..blacklistedPed.. " https://docs.fivem.net/peds/"..blacklistedPed..'.png',true,true)
                     return
                 end
             end
