@@ -605,11 +605,6 @@ AddEventHandler("playerConnecting", function(playerName)
     end
 end)
 
-AddEventHandler('playerDropped', function(reason)
-    local src = source
-    kickorbancheater(src,"Player Dropped", "Player Dropped. Reason: "..reason,false,false)
-end)
-
 ----- EntityCreated different version with display
 AddEventHandler('entityCreated', function(entity)
     if DoesEntityExist(entity) then
