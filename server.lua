@@ -159,7 +159,7 @@ end
 
 function kickorbancheater(source,content,info,c,d)
     local _source = source
-    local sname = GetPlayerName(source)
+    local sname = GetPlayerName(_source)
     --Identifiers
     local steam = "unknown"
 	local discord = "unknown"
@@ -416,23 +416,18 @@ end)
 --Maybe need rework from entity created to entitycreating for performance of server side. -- need rework
 -----
 AddEventHandler('entityCreating', function(entity)
-    local _src = source
-    local entity = entity
     local src = NetworkGetEntityOwner(entity)
-    local name = GetPlayerName(source)
-    local id = src
-    local model = GetEntityModel(entity)
     local type = GetEntityType(entity)
     
     if type == 1 then
         CancelEvent()
-        kickorbancheater(_src,"Ped Spawn Detected", "This Player tried to spawn ped",true,true)
+        kickorbancheater(src,"Ped Spawn Detected", "This Player tried to spawn ped",true,true)
     elseif type == 2 then
         CancelEvent()
-        kickorbancheater(_src,"Vehicle Spawn Detected", "This Player tried to vehicle spawn",true,true)
+        kickorbancheater(src,"Vehicle Spawn Detected", "This Player tried to vehicle spawn",true,true)
     elseif type == 3 then
         CancelEvent()
-        kickorbancheater(_src,"Object Spawn Detected", "This Player tried to object spawn",true,true)
+        kickorbancheater(src,"Object Spawn Detected", "This Player tried to object spawn",true,true)
     end
 end)
 
