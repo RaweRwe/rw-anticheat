@@ -7,24 +7,24 @@ local ResourceFiles = {}
 
 -- Version Control
 
--- Citizen.CreateThread(function()
---     Citizen.Wait(1000)
---     VersionControl = function(err, result, headers)
---         if result then
---             local data = json.decode(result)
---             if data.version ~= Config.Version then
---                 print("\n")
---                 print("^2[RW-AntiCheat] ^0New version finded: ".. data.version .." Updates: \n".. data.updates .. "\n")
---                 print("https://github.com/RaweRwe/rw-anticheat\n")
---             end
---             if data.version == Config.Version then
---                 print("\n")
---                 print("^2[RW-AntiCheat] ^0You using latest version: ".. data.version)
---             end
---         end
---     end
---     PerformHttpRequest("https://raw.githubusercontent.com/RaweRwe/rw-anticheat-version/main/anticheat.json", VersionControl, "GET")
--- end)
+Citizen.CreateThread(function()
+    Citizen.Wait(1000)
+    VersionControl = function(err, result, headers)
+        if result then
+            local data = json.decode(result)
+            if data.version ~= Config.Version then
+                print("\n")
+                print("^2[RW-AntiCheat] ^0New version finded: ".. data.version .." Updates: \n".. data.updates .. "\n")
+                print("https://github.com/RaweRwe/rw-anticheat\n")
+            end
+            if data.version == Config.Version then
+                print("\n")
+                print("^2[RW-AntiCheat] ^0You using latest version: ".. data.version)
+            end
+        end
+    end
+    PerformHttpRequest("https://raw.githubusercontent.com/RaweRwe/rw-anticheat-version/main/anticheat.json", VersionControl, "GET")
+end)
 
 ---------------------------
 -------- BAN BOOGERS ------
@@ -406,8 +406,8 @@ AddEventHandler('explosionEvent', function(sender, ev)
 
     -- We need to make sure it is original from explosion sender.
     if ev.damageScale ~= 0.0 and ev.ownerNetId == 0 then 
-        CancelEvent()
         kickorbancheater(_src,"ExplosionEvent Detected", "Explosion Type: "..ev.explosionType,true,true)
+        CancelEvent()
     end
 end)
 
@@ -422,14 +422,14 @@ if Config.AntiEntity then
         local type = GetEntityType(entity)
         
         if type == 1 then
-            CancelEvent()
             kickorbancheater(src,"Ped Spawn Detected", "This Player tried to spawn ped",true,true)
+            CancelEvent()
         elseif type == 2 then
-            CancelEvent()
             kickorbancheater(src,"Vehicle Spawn Detected", "This Player tried to vehicle spawn",true,true)
-        elseif type == 3 then
             CancelEvent()
+        elseif type == 3 then
             kickorbancheater(src,"Object Spawn Detected", "This Player tried to object spawn",true,true)
+            CancelEvent()
         end
     end)
 end
@@ -515,15 +515,14 @@ if Config.EventsDetect then
     end
 end
 
-
 ------------------------------------
 -------- Blacklisted Word ----------
 ------------------------------------
 AddEventHandler('chatMessage', function(source, color, message)
+    local _src = source
     if not message then
         return
     end
-    local _src = source
 
     if Config.AntiBlacklistedWords then
         for k, v in pairs(Config.BlacklistWords) do
@@ -613,30 +612,53 @@ AddEventHandler('entityCreated', function(entity)
         if model == 3 then
             for _, blacklistedProps in pairs(Config.BlacklistedObjects) do
                 if model == blacklistedProps then
-                    CancelEvent()
                     TriggerClientEvent('rwe:antiProp', -1)
                     kickorbancheater(src,"Blacklist Object Detected", "Prop: "..blacklistedProps.. " https://mwojtasik.dev/tools/gtav/objects/search?name="..blacklistedProps,true,true)
+                    CancelEvent()
                     return
                 end
             end
         elseif model == 2 then
             for _, blacklistedVeh in pairs(Config.BlacklistedVehicles) do
                 if model == blacklistedVeh then
-                    CancelEvent()
                     TriggerClientEvent('rwe:AntiVehicle', -1)
                     kickorbancheater(src,"Blacklist Vehicle Detected", "Vehicle: "..blacklistedVeh.. " https://www.gtabase.com/search?searchword="..blacklistedVeh,true,true)
+                    CancelEvent()
                     return
                 end
             end
         elseif model == 1 then
             for _, blacklistedPed in pairs(Config.BlacklistedPeds) do
                 if model == blacklistedPed then
-                    CancelEvent()
                     TriggerClientEvent('rwe:antiPed', -1)
                     kickorbancheater(src,"Blacklist Ped Detected", "Ped: "..blacklistedPed.. " https://docs.fivem.net/peds/"..blacklistedPed..'.png',true,true)
+                    CancelEvent()
                     return
                 end
             end
+        end
+    end
+end)
+
+--------------------------------------------
+-------- Anti Taze & Weapon Event ----------
+--------------------------------------------
+AddEventHandler("weaponDamageEvent", function(sender, data)
+    if Config.AntiTaze then
+        local _src = sender
+        if data.weaponType == 911657153 or data.weaponType == GetHashKey("WEAPON_STUNGUN") then
+            kickorbancheater(_src,"Anti Taze Player.", "Tried to shoot with a taser",true,true)
+            CancelEvent()
+        end
+    end
+end)
+
+AddEventHandler("giveWeaponEvent", function(sender,data)
+    if Config.AntiGiveWeaponEvent then
+        local _src = sender
+        if data.givenAsPickup == false then
+            kickorbancheater(_src,"Anti Give Weapon(event)", "Tried to give weapons to a Ped",true,true)
+            CancelEvent()
         end
     end
 end)

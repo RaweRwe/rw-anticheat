@@ -42,6 +42,8 @@ Config.AntiSpawnPeds = true
 Config.DeleteBrokenCars = true -- Delete Broken Cars
 Config.AntiAimbot = true -- Anti Aimbot 
 Config.AntiEntity = false -- Anti entity Creating.
+Config.AntiTaze = true -- Anti Taze Player 
+Config.AntiGiveWeaponEvent = true -- Anti Give Weapon to Player or Ped
 
 Config.WhitelistedResources = { -- If you get banned and the anticheat logs something like this "Resource metadata not valid in resource: or Abnormal resource injection" put here the resources that are causing that errors and everything should be fixed.
 	["discord-screenshot"] = true,
