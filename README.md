@@ -59,6 +59,10 @@ My Discord Server : https://discord.gg/BW5KA78SXW
 + add_ace rwacbypass allow 
 + add_ace identifier.steam:hex rwacbypass allow
 
+# Example Ban Function Use
+
++ kickorbancheater(source,"Content Text", "Info Text",kick,ban) c = Kick d = Ban
++ kickorbancheater(source,"Weapon Explosion Detected", "This Player tried to change bullet type",true,true)
 
 # Open Source AntiCheat
 Not obfuscate. Open source for everyone :)

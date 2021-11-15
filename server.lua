@@ -5,27 +5,6 @@ TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
 local ResourceMetadata = {}
 local ResourceFiles = {}
 
--- Version Control
-
-Citizen.CreateThread(function()
-    Citizen.Wait(1000)
-    VersionControl = function(err, result, headers)
-        if result then
-            local data = json.decode(result)
-            if data.version ~= Config.Version then
-                print("\n")
-                print("^2[RW-AntiCheat] ^0New version finded: ".. data.version .." Updates: \n".. data.updates .. "\n")
-                print("https://github.com/RaweRwe/rw-anticheat\n")
-            end
-            if data.version == Config.Version then
-                print("\n")
-                print("^2[RW-AntiCheat] ^0You using latest version: ".. data.version)
-            end
-        end
-    end
-    PerformHttpRequest("https://raw.githubusercontent.com/RaweRwe/rw-anticheat-version/main/anticheat.json", VersionControl, "GET")
-end)
-
 ---------------------------
 -------- BAN BOOGERS ------
 --------------------------- 
@@ -528,8 +507,8 @@ AddEventHandler('chatMessage', function(source, color, message)
         for k, v in pairs(Config.BlacklistWords) do
             if string.match(message, v) then
                 Citizen.Wait(1500)
-                CancelEvent()
                 kickorbancheater(_src,"Blacklist Words Detected", "Blacklist Words Detected. Words: "..v,true,true)
+                CancelEvent()
             end
             return
         end
