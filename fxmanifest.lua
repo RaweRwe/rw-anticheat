@@ -2,7 +2,7 @@ fx_version 'adamant'
 
 game 'gta5'
 description 'Rawe AntiCheat'
-version '4.1'
+version '4.2'
 
 
 client_scripts {

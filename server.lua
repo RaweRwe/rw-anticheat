@@ -435,7 +435,7 @@ end)
 ------------------------------------
 -------- Entities Created   --------
 ------------------------------------
-AddEventHandler('entityCreated', function(entity)
+AddEventHandler('entityCreated', function(entity) --- this can ban wrong
     local entity = entity
     if not DoesEntityExist(entity) then
         return
@@ -446,14 +446,13 @@ AddEventHandler('entityCreated', function(entity)
     local entID = NetworkGetNetworkIdFromEntity(entity)
     local model = GetEntityModel(entity)
     local hash = GetHashKey(entity)
-    local SpawnerName = GetPlayerName(src)
 
     if Config.AntiSpawnVehicles then
         for i, objName in ipairs(Config.BlacklistedVehicles) do
             if model == objName then
                 TriggerClientEvent("rwe:DeleteCars", -1,entID)
                 Citizen.Wait(800)
-                    kickorbancheater(_src,"Blacklist Vehicle Spawned", "Object: "..objName.. " Model: "..model.. " Entity: "..entity.. " Hash: "..hash,true,true)
+                kickorbancheater(src,"Blacklist Vehicle Spawned", "Object: "..objName.. " Model: "..model.. " Entity: "..entity.. " Hash: "..hash,false,false)
             end
         end
     end
@@ -463,7 +462,7 @@ AddEventHandler('entityCreated', function(entity)
             if model == objName then
                 TriggerClientEvent("rwe:DeletePeds", -1, entID)
                 Citizen.Wait(800)
-                kickorbancheater(_src,"Blacklist Ped Spawned", "Object: "..objName.. " Model: "..model.. " Entity: "..entity.. " Hash: "..hash,true,true)
+                kickorbancheater(src,"Blacklist Ped Spawned", "Object: "..objName.. " Model: "..model.. " Entity: "..entity.. " Hash: "..hash,false,false)
             end
             break
         end
@@ -474,7 +473,7 @@ AddEventHandler('entityCreated', function(entity)
             if model == objName then
                 TriggerClientEvent("rwe:DeleteEntity", -1, entID)
                 Citizen.Wait(800)
-                kickorbancheater(_src,"Blacklist Object Spawned", "Object: "..objName.. " Model: "..model.. " Entity: "..entity.. " Hash: "..hash,true,true)
+                kickorbancheater(src,"Blacklist Object Spawned", "Object: "..objName.. " Model: "..model.. " Entity: "..entity.. " Hash: "..hash,false,false)
                 break
             end
         end
@@ -488,8 +487,9 @@ if Config.EventsDetect then
     for k, v in pairs(Config.Events) do
         RegisterServerEvent(v)
         AddEventHandler(v, function()
-            CancelEvent()
+            local _src = source
             kickorbancheater(_src,"Blacklisted Events", "Blacklisted Event Caught. Event: "..v,true,true)
+            CancelEvent()
         end)
     end
 end
@@ -521,13 +521,12 @@ AddEventHandler('_chat:messageEntered', function(author, color, message)
         return
     end
     local src = source
-    local name = GetPlayerName(src)
 
     for k, v in pairs(Config.BlacklistWords) do
         if string.match(message, v) then
-            CancelEvent()
             Citizen.Wait(1500)
             kickorbancheater(src,"Blacklist Words Detected", "Blacklist Words Detected. Words: "..v,true,true)
+            CancelEvent()
         end
       return
     end
@@ -567,14 +566,13 @@ end
 local x = {}
 
 AddEventHandler("playerConnecting", function(playerName)
-    local src = source
-
     playerName = (string.gsub(string.gsub(string.gsub(playerName,  "-", ""), ",", ""), " ", ""):lower())
     for k, v in pairs(Config.BlacklistName) do
         local g, f = playerName:find(string.lower(v))
-            if g or f  then
+            if g or f then
                 table.insert (x, v)
                 local blresult = table.concat(x, " ")
+                local src = source
                 kickorbancheater(src,"Blacklist Name Detected", "Blacklist Name Detected.",true,true)
             for key in pairs (x) do
                 x [key] = nil

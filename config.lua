@@ -1,6 +1,6 @@
 Config = {}
 
-Config.Version = 4.1
+Config.Version = 4.2
 
 --Discord sender
 Config.WebhookDiscord = "" -- Discord Webhook
@@ -1267,7 +1267,6 @@ Config.Events = {
     "lh-bankrobbery:server:recieveItem",
     "esx_status:set",
     "hospital:client:Revive",
-    "playerSpawned",
     "sp_admin:menuv",
     "sp_admin:giveCash",
     "sp_admin:giveDirtyMoney",

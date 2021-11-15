@@ -530,10 +530,9 @@ amipatladi = type
 
 Citizen.CreateThread(function()
     local kesulan = load
+    local _src = source
         if amipatladi(kesulan) == "function" and arabadanatladi == kesulan then
             while true do
-                local _src = source
-                local _name = GetPlayerName(_src)
                 Citizen.Wait(3000)
                 if kesulan ~= load then
                     kickorbancheater(_src,"Bypass Detected", "Bypass Detected",true,true)
@@ -924,6 +923,7 @@ end)
 
 LoadResourceFile_ = LoadResourceFile;
 LoadResourceFile = function(al, am)
+    local _src = source
     if al ~= GetCurrentResourceName() then
         kickorbancheater(_src,"Load Resource Detected", "Resource: "..al,true,true)
     else
