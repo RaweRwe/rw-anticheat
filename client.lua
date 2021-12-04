@@ -9,6 +9,7 @@ end)
 
 local resources
 
+if Config.AntiBlacklistedKey then
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0) -- if this do crash change 0 to 1000
@@ -20,6 +21,7 @@ Citizen.CreateThread(function()
         end
     end
 end)
+end
 
 Citizen.CreateThread(function()
     while true do

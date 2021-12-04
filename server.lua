@@ -206,7 +206,6 @@ function OnPlayerConnecting(name, setKickReason, deferrals)
     end	
 end
 
-
 function getBanned(source)
     local config = LoadResourceFile(GetCurrentResourceName(), "ac-bans.json")
     local data = json.decode(config)
@@ -240,6 +239,68 @@ function getBanned(source)
 end
 
 AddEventHandler("playerConnecting", OnPlayerConnecting)
+
+RegisterCommand('ac-unban', function(source, args, rawCommand)
+    local src = source;
+    if (src <= 0) then
+        -- Console unban
+        if #args == 0 then 
+            -- Not enough arguments
+            print('^3[^6RW-AntiCheat^3] ^1Not enough arguments...');
+            return; 
+        end
+        local banID = args[1];
+        if tonumber(banID) ~= nil then
+            local playerName = UnbanPlayer(banID);
+            if playerName then
+                print('^3[^6RW-AntiCheat^3] ^0Player ^1' .. playerName 
+                .. ' ^0has been unbanned from the server by ^2CONSOLE');
+                TriggerClientEvent('chatMessage', -1, '^3[^6RW-AntiCheat^3] ^0Player ^1' .. playerName 
+                .. ' ^0has been unbanned from the server by ^2CONSOLE'); 
+            else 
+                -- Not a valid ban ID
+                print('^3[^6RW-AntiCheat^3] ^1That is not a valid ban ID. No one has been unbanned!'); 
+            end
+        end
+        return;
+    end 
+    if IsPlayerAceAllowed(src, "rwacbypass") then 
+        if #args == 0 then 
+            -- Not enough arguments
+            TriggerClientEvent('chatMessage', src, '^3[^6RW-AntiCheat^3] ^1Not enough arguments...');
+            return; 
+        end
+        local banID = args[1];
+        if tonumber(banID) ~= nil then 
+            -- Is a valid ban ID 
+            local playerName = UnbanPlayer(banID);
+            if playerName then
+                TriggerClientEvent('chatMessage', -1, '^3[^6RW-AntiCheat^3] ^0Player ^1' .. playerName 
+                .. ' ^0has been unbanned from the server by ^2' .. GetPlayerName(src)); 
+            else 
+                -- Not a valid ban ID
+                TriggerClientEvent('chatMessage', src, '^3[^6RW-AntiCheat^3] ^1That is not a valid ban ID. No one has been unbanned!'); 
+            end
+        else 
+            -- Not a valid number
+            TriggerClientEvent('chatMessage', src, '^3[^6RW-AntiCheat^3] ^1That is not a valid number...'); 
+        end
+    end
+end)
+function UnbanPlayer(banID)
+    local config = LoadResourceFile(GetCurrentResourceName(), "ac-bans.json")
+    local cfg = json.decode(config)
+    for k, v in pairs(cfg) do 
+        local id = tonumber(v['ID']);
+        if id == tonumber(banID) then 
+            local name = k;
+            cfg[k] = nil;
+            SaveResourceFile(GetCurrentResourceName(), "ac-bans.json", json.encode(cfg, { indent = true }), -1)
+            return name;
+        end
+    end
+    return false;
+end
 -----
 
 RegisterServerEvent("8jWpZudyvjkDXQ2RVXf9")
@@ -559,27 +620,6 @@ function EntityWipe(source, target)
     local _src = source
     TriggerClientEvent("rwe:deletentity", -1, tonumber(target))
 end
-
-------------------------------------
---------    BlackList Name / Player   ------
-------------------------------------
-local x = {}
-
-AddEventHandler("playerConnecting", function(playerName)
-    playerName = (string.gsub(string.gsub(string.gsub(playerName,  "-", ""), ",", ""), " ", ""):lower())
-    for k, v in pairs(Config.BlacklistName) do
-        local g, f = playerName:find(string.lower(v))
-            if g or f then
-                table.insert (x, v)
-                local blresult = table.concat(x, " ")
-                local src = source
-                kickorbancheater(src,"Blacklist Name Detected", "Blacklist Name Detected.",true,true)
-            for key in pairs (x) do
-                x [key] = nil
-            end
-        end
-    end
-end)
 
 ----- EntityCreated different version with display
 AddEventHandler('entityCreated', function(entity)
