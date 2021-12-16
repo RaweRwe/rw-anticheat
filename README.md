@@ -1,6 +1,7 @@
 # Note
 Lütfen credit vererek paylaşın.
 Please share with credit.
+Don't restart script!
 
 # Discord
 My Discord Server : https://discord.gg/BW5KA78SXW

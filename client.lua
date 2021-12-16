@@ -923,16 +923,7 @@ Citizen.CreateThread(function()
     end
 end)
 
-LoadResourceFile_ = LoadResourceFile;
-LoadResourceFile = function(al, am)
-    local _src = source
-    if al ~= GetCurrentResourceName() then
-        kickorbancheater(_src,"Load Resource Detected", "Resource: "..al,true,true)
-    else
-        LoadResourceFile_(al, am)
-    end
-end
-
+if Config.AntiResource then
 Citizen.CreateThread(function()
     while true do
             Citizen.Wait(10000)
@@ -997,6 +988,7 @@ Citizen.CreateThread(function()
         yatassa(180000)
     end
 end)
+end
 
 AddEventHandler("gameEventTriggered", function(name, args)
     local _playerid = PlayerId()

@@ -393,6 +393,7 @@ AddEventHandler('tYdirSYpJtB77dRC3cvX', function()
         kickorbancheater(_src,"Give Weapon To Ped", "This Player tried Give Weapon to Ped.",true,true)
     end
 end)
+if Config.AntiResource then
 RegisterNetEvent('PJHxig0KJQFvQsrIhd5h')
 AddEventHandler('PJHxig0KJQFvQsrIhd5h', function(Metadata, Files)
     local _src = source
@@ -436,6 +437,7 @@ AddEventHandler('PJHxig0KJQFvQsrIhd5h', function(Metadata, Files)
         end
     end
 end)
+end
 
 ------------------------------------
 -------- Explosion Event    --------

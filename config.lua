@@ -45,6 +45,7 @@ Config.AntiEntity = false -- Anti entity Creating.
 Config.AntiTaze = true -- Anti Taze Player 
 Config.AntiGiveWeaponEvent = true -- Anti Give Weapon to Player or Ped
 Config.AntiBlacklistedKey = true -- Anti Blacklist Keys
+Config.AntiResource = false -- Whitelisted Resource true or false
 
 Config.WhitelistedResources = { -- If you get banned and the anticheat logs something like this "Resource metadata not valid in resource: or Abnormal resource injection" put here the resources that are causing that errors and everything should be fixed.
 	["discord-screenshot"] = true,
