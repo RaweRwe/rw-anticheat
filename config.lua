@@ -46,6 +46,8 @@ Config.AntiTaze = true -- Anti Taze Player
 Config.AntiGiveWeaponEvent = true -- Anti Give Weapon to Player or Ped
 Config.AntiBlacklistedKey = true -- Anti Blacklist Keys
 Config.AntiResource = false -- Whitelisted Resource true or false
+Config.AntiCrash = true -- Forbidden Crash
+Config.ProtectPoliceEvent = true -- Protect Police Events
 
 Config.WhitelistedResources = { -- If you get banned and the anticheat logs something like this "Resource metadata not valid in resource: or Abnormal resource injection" put here the resources that are causing that errors and everything should be fixed.
 	["discord-screenshot"] = true,
@@ -59,6 +61,48 @@ Config.BlacklistedKeys = {0, 121, 166, 169, 178, 207, 208, 214, 137, 171} -- Bla
 Config.BlacklistedTasks = {100, 101, 151, 221, 222} -- Blacklisted Task
 Config.BlacklistedAnims = { -- Format: Anim Dict, Anim Name.
 	{"rcmpaparazzo_2", "shag_loop_poppy", "anim@mp_player_intupperfinger", "idle_a_fp"}
+}
+
+Config.BlacklistedCrash = {
+  "gta-streaming-five.dll+4AE92",
+  "citizen-scripting-lua.dll+3FA40B",
+  "citizen-scripting-lua.dll+3FB324",
+  "kernelbase.dll+3A799",
+  "ntdll.dll+1E312",
+  "ntdll.dll+FBF18",
+  "sfolder.dll+3AB6C6"
+}
+
+Config.PoliceEvents = {
+    "OG_cuffs:cuffCheckNearest",
+    "CheckHandcuff",
+    "cuffServer",
+    "cuffGranted",
+    "police:cuffGranted",
+    "esx_handcuffs:cuffing",
+    "esx_policejob:handcuff",
+    "esx_jailer:unjailTime",
+    "police:cuffGLRACranted",
+    "esx_handcuffs:cufLRACfing",
+    "esx_policejob:haLRACndcuff",
+    "esx_policejob:drag",
+    "esx_policejob:putInVehicle",
+    "esx_policejob:message",
+    "esx_policejob:requestarrest",
+    "esx_policejob:requestrelease",
+    "esx_policejob:givehandcuff",
+    "esx_sheriffjob:handcuff",
+    "esx_sheriffjob:drag",
+    "esx_sheriffjob:putInVehicle",
+    "esx_sheriffjob:OutVehicle",
+    "esx_sheriffjob:message",
+    "esx_sheriffjob:requestarrest",
+    "esx_sheriffjob:givehandcuff",
+    "esx_policejob:storeNearbyVehicle",
+    "esx_jailer:sendToJail",
+    "esx_jail:sendToJail",
+    "js:jailuser",
+    "esx-qalle-jail:jailPlayer",
 }
 
 Config.BlacklistedWeapons = { 
@@ -645,19 +689,8 @@ Config.Events = {
     "esx:giveInventoryItem",
     "NB:recruterplayer",
     "esx_billing:sendBill",
-    "esx_jailer:sendToJail",
-    "esx_jail:sendToJail",
-    "js:jailuser",
-    "esx-qalle-jail:jailPlayer",
     "esx_dmvschool:pay", 
     "LegacyFuel:PayFuel",
-    "OG_cuffs:cuffCheckNearest",
-    "CheckHandcuff",
-    "cuffServer",
-    "cuffGranted",
-    "police:cuffGranted",
-    "esx_handcuffs:cuffing",
-    "esx_policejob:handcuff",
     "bank:withdraw",
     "dmv:success",
     "esx_skin:responseSaveSkin",
@@ -699,7 +732,6 @@ Config.Events = {
     "mission:completed",
     "truckerJob:success",
     "99kr-burglary:addMoney",
-    "esx_jailer:unjailTime",
     "esx_ambulancejob:revive",
     "DiscordBot:playerDied",
     "hentailover:xdlol",
@@ -795,9 +827,6 @@ Config.Events = {
     "OG_cuffs:cuffCheckNeLRACarest",
     "cuffSeLRACrver",
     "cuffGLRACranted",
-    "police:cuffGLRACranted",
-    "esx_handcuffs:cufLRACfing",
-    "esx_policejob:haLRACndcuff",
     "bank:withdLRACraw",
     "dmv:succeLRACss",
     "esx_skin:responseSaLRACveSkin",
@@ -898,19 +927,6 @@ Config.Events = {
     "devtoolOpening",
     "CarryPeople:sync",
     "CarryPeople:stop",
-    "esx_policejob:drag",
-    "esx_policejob:putInVehicle",
-    "esx_policejob:message",
-    "esx_policejob:requestarrest",
-    "esx_policejob:requestrelease",
-    "esx_policejob:givehandcuff",
-    "esx_sheriffjob:handcuff",
-    "esx_sheriffjob:drag",
-    "esx_sheriffjob:putInVehicle",
-    "esx_sheriffjob:OutVehicle",
-    "esx_sheriffjob:message",
-    "esx_sheriffjob:requestarrest",
-    "esx_sheriffjob:givehandcuff",
     "QBCore:Server:AddItem",
     "CRPEngine:Server:AddItem",
     "InteractSound_SV:PlayOnAll",
@@ -940,7 +956,6 @@ Config.Events = {
     "esx_ambulancejob:setDeathStatus",
     "esx_ambulancejob:getDeathStatus",
     "esx_ambulancejob:storeNearbyVehicle",
-    "esx_policejob:storeNearbyVehicle",
     "esx_skin:getPlayerSkin",
     "esx_property:deleteLastProperty",
     "esx_property:saveLastProperty",

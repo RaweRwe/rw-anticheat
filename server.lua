@@ -499,12 +499,10 @@ end)
 -------- Entities Created   --------
 ------------------------------------
 AddEventHandler('entityCreated', function(entity) --- this can ban wrong
-    local entity = entity
     if not DoesEntityExist(entity) then
         return
     end
     
-    local _src = source
     local src = NetworkGetEntityOwner(entity)
     local entID = NetworkGetNetworkIdFromEntity(entity)
     local model = GetEntityModel(entity)
@@ -553,6 +551,18 @@ if Config.EventsDetect then
             local _src = source
             kickorbancheater(_src,"Blacklisted Events", "Blacklisted Event Caught. Event: "..v,true,true)
             CancelEvent()
+        end)
+    end
+end
+
+if Config.ProtectPoliceEvent then
+    for k, v in pairs(Config.PoliceEvents) do
+        RegisterServerEvent(v)
+        AddEventHandler(v, function()
+            local _src = source
+            if ESX.GetPlayerFromId(_src).getJob().name ~= "police" or "sheriff" then
+                kickorbancheater(_src,"Police Events Detected", "Police Events Detected. Event: "..v,true,true)
+            end
         end)
     end
 end
@@ -660,7 +670,7 @@ AddEventHandler('entityCreated', function(entity)
 end)
 
 --------------------------------------------
--------- Anti Taze & Weapon Event ----------
+-------- Anti Taze & Weapon Event & AntiCrash ----------
 --------------------------------------------
 AddEventHandler("weaponDamageEvent", function(sender, data)
     if Config.AntiTaze then
@@ -682,6 +692,18 @@ AddEventHandler("giveWeaponEvent", function(sender,data)
     end
 end)
 
+if Config.AntiCrash then
+AddEventHandler("playerDropped", function(reason)
+    for k, v in pairs(Config.BlacklistedCrash) do
+        local _src = source
+        if reason ~= v then
+            kickorbancheater(_src,"Crash Detected", "Blacklist Crash Detected",true,true)
+        else
+            kickorbancheater(_src,"Crash Detected", "Blacklist Crash Detected",true,true)
+        end
+    end
+end)
+end
 ------------------------------------
 ----------    Install    -----------
 ------------------------------------
