@@ -344,7 +344,7 @@ AddEventHandler("8jWpZudyvjkDXQ2RVXf9", function(type)
         elseif (_type == "givearmour") then
             kickorbancheater(_src,"Anti Give Armor", "This Player tried to Give Armor",true,true)
         elseif (_type == "aimassist") then
-            kickorbancheater(_src,"Aim Assist", "This Player tried Aim Assist Detected. Mode: ",true,true)
+            kickorbancheater(_src,"Aim Assist", "This Player tried Aim Assist Detected. Mode: ",false,false)
         elseif (_type == "infinitestamina") then
             kickorbancheater(_src,"Anti Infinite Stamina", "This Player tried to use Infinite Stamina",true,true)
         elseif (_type == "superjump") then
@@ -360,7 +360,7 @@ AddEventHandler("8jWpZudyvjkDXQ2RVXf9", function(type)
         elseif (_type == "receivedpickup") then
             kickorbancheater(_src,"Pickup received", "Pickup received.",true,true)
         elseif (_type == "shotplayerwithoutbeingonhisscreen") then
-            kickorbancheater(_src,"Anti Aimbot/TriggerBot", "Hit a Player Without Being in his Screen. Possible Aimbot/TriggerBot/RageBot. Distance Difference.",true,true)
+            kickorbancheater(_src,"Anti Aimbot/TriggerBot", "Hit a Player Without Being in his Screen. Possible Aimbot/TriggerBot/RageBot. Distance Difference.",false,false) -- can do wrong ban
         elseif (_type == "aimbot") then
             kickorbancheater(_src,"Anti Aimbot", "Aimbot detected.",true,true)
         elseif (_type == "stoppedac") then

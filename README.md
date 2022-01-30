@@ -28,10 +28,11 @@ My Discord Server : https://discord.gg/BW5KA78SXW
 + BlacklistName
 + AntiFreezeScript
 + BlacklistWords
++ DeleteBrokenCars
 + AntiMap (Istanbul kur fix)
 + AntiExplosionDamage
 + AntiGodMode
-+ AntiRagdoll,
++ AntiRagdoll
 + AntiInvisible
 + AntiRadar
 + AntiExplosiveBullets

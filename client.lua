@@ -283,9 +283,11 @@ if Config.BasicEnable then
                 _Wait(300)
             end
             if Config.AntiFreeCam then
-                local camcoords = (GetEntityCoords(_ped) - GetFinalRenderedCamCoord())
-                if (camcoords.x > 9) or (camcoords.y > 9) or (camcoords.z > 9) or (camcoords.x < -9) or (camcoords.y < -9) or (camcoords.z < -9) then
-                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "freecam") 
+                if not IsPedInAnyVehicle(_ped) or IsPedInAnyTaxi(_ped) or IsPedInAnyPoliceVehicle(_ped) or IsPedOnAnyBike(_ped) or IsPedInAnyBoat(_ped) or IsPedInAnyHeli(_ped) or IsPedInAnyPlane(_ped) then
+                    local camcoords = (GetEntityCoords(_ped) - GetFinalRenderedCamCoord())
+                    if (camcoords.x > 9) or (camcoords.y > 9) or (camcoords.z > 9) or (camcoords.x < -9) or (camcoords.y < -9) or (camcoords.z < -9) then
+                        TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "freecam") 
+                    end
                 end
                 _Wait(300)
             end

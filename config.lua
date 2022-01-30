@@ -2,7 +2,10 @@ Config = {}
 
 Config.Version = 4.2
 
---Discord sender
+------------------------------------
+------------ Discord Options -------------
+------------------------------------
+
 Config.WebhookDiscord = "" -- Discord Webhook
 Config.DropMsg = "Don't use cheat! Discord: https://discord.gg/BW5KA78SXW"
 Config.ReasonBanned = "You are restricted from connecting to our server. Please contact us!."
@@ -45,7 +48,7 @@ Config.AntiEntity = false -- Anti entity Creating.
 Config.AntiTaze = true -- Anti Taze Player 
 Config.AntiGiveWeaponEvent = true -- Anti Give Weapon to Player or Ped
 Config.AntiBlacklistedKey = true -- Anti Blacklist Keys
-Config.AntiResource = false -- Whitelisted Resource true or false
+Config.AntiResource = false -- Whitelisted Resource true or false // not recommended
 Config.AntiCrash = true -- Forbidden Crash
 Config.ProtectPoliceEvent = true -- Protect Police Events
 
@@ -64,13 +67,13 @@ Config.BlacklistedAnims = { -- Format: Anim Dict, Anim Name.
 }
 
 Config.BlacklistedCrash = {
-  "gta-streaming-five.dll+4AE92",
-  "citizen-scripting-lua.dll+3FA40B",
-  "citizen-scripting-lua.dll+3FB324",
-  "kernelbase.dll+3A799",
-  "ntdll.dll+1E312",
-  "ntdll.dll+FBF18",
-  "sfolder.dll+3AB6C6"
+    "gta-streaming-five.dll+4AE92",
+    "citizen-scripting-lua.dll+3FA40B",
+    "citizen-scripting-lua.dll+3FB324",
+    "kernelbase.dll+3A799",
+    "ntdll.dll+1E312",
+    "ntdll.dll+FBF18",
+    "sfolder.dll+3AB6C6"
 }
 
 Config.PoliceEvents = {
@@ -372,7 +375,7 @@ Config.BlacklistedObjects = {
 	`po1_lod_slod4`
 }
 
-Config.BlacklistedVehicles = { -- Models/Vehicles/Airplanes etc etc.
+Config.BlacklistedVehicles = { -- Models/Vehicles/Airplanes etc.
 	`cargoplane`,
 	`cerberus`,
 	`cerberus2`,
@@ -617,12 +620,10 @@ Config.BlacklistWords = {
 Config.Events = {
     "m3:admin:server:goto",
     "m3:admin:server:bring",
-    "m3:admin:server:setGps",
     "m3:admin:server:clearInv",
     "m3:admin:server:openInv",
     "m3:admin:server:heal",
     "m3:admin:server:revive",
-    "m3:admin:server:setGps",
     "m3:admin:server:toggleFreeze",
     "m3:admin:server:kill",
     "m3:admin:server:privateMessage",
@@ -632,10 +633,7 @@ Config.Events = {
     "m3:admin:server:giveVehicle",
     "m3:admin:server:giveMoney",
     "m3:admin:server:giveWeapon",
-    "m3:admin:server:skin",
-    "m3:admin:server:screenshot",
     "m3:admin:server:wipePlayer",
-    "m3:admin:server:selfLog",
     "m3:admin:server:selfRevive",
     "m3:admin:server:selfHeal",
     "m3:admin:server:selfKill",
@@ -654,8 +652,6 @@ Config.Events = {
     "m3:admin:server:refreshBanlist",
     "m3:admin:server:getPlayers",
     "m3:admin:server:getTargetCoord",
-    "m3:admin:server:playerSpawned",
-    "m3:admin:client:loadPermissions",
     "m3:admin:client:setCoord",
     "m3:admin:client:kill",
     "m3:admin:client:setGps",
