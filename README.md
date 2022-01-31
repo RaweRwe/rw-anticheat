@@ -66,8 +66,10 @@ My Discord Server : https://discord.gg/BW5KA78SXW
 + kickorbancheater(source,"Content Text", "Info Text",kick,ban) c = Kick d = Ban
 + kickorbancheater(source,"Weapon Explosion Detected", "This Player tried to change bullet type",true,true)
 
-# Open Source AntiCheat
-Not obfuscate. Open source for everyone :)
+# How to use commands?
++ /ac-unban <banid>
++ /ac-ban <id> <reason>
++ /allentitywipe
 
 # CREDIT
 

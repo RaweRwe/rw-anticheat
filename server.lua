@@ -26,7 +26,7 @@ end
 function AntiCheatBans(source,reason)
     local config = LoadResourceFile(GetCurrentResourceName(), "ac-bans.json")
     local data = json.decode(config)
-	local _src = source
+    local _src = source
 
     if config == nil then
         banlistregenerator()
@@ -301,6 +301,33 @@ function UnbanPlayer(banID)
     end
     return false;
 end
+
+RegisterCommand("ac-ban", function(source, args, raw) -- /acban <id> <reason> 
+    local src = source;
+    if IsPlayerAceAllowed(src, "rwacbypass") then 
+        if #args < 2 then 
+            -- Not valid enough num of arguments 
+            TriggerClientEvent('chatMessage', source, "^5[^1RW-AntiCheat^5] ^1ERROR: You have supplied invalid amount of arguments... " ..
+                "^2Proper Usage: /acban <id> <reason>");
+            return;
+        end
+        local id = args[1]
+        if GetIdentifier(args[1]) ~= nil then 
+            -- Valid player supplied 
+            local playerSteam = myid.steam;
+            local playerLicense = myid.license;
+            local playerXbl = myid.xbl;
+            local playerLive = myid.live;
+            local playerDiscord = myid.discord;
+            local reason = table.concat(args, ' '):gsub(args[1] .. " ", "");
+            AntiCheatBans(args[1], reason);
+        else 
+            -- Not a valid player supplied 
+            TriggerClientEvent('chatMessage', source, "^5[^1RW-AntiCheat^5] ^1ERROR: There is no valid player with that ID online... " ..
+                "^2Proper Usage: /acban <id> <reason>");
+        end
+    end
+end)
 -----
 
 RegisterServerEvent("8jWpZudyvjkDXQ2RVXf9")
@@ -632,6 +659,54 @@ function EntityWipe(source, target)
     local _src = source
     TriggerClientEvent("rwe:deletentity", -1, tonumber(target))
 end
+
+RegisterNetEvent('rwdeletevehiclesc', function(playerId)
+	local coords = GetEntityCoords(GetPlayerPed(playerId))
+	for _, v in pairs(GetAllVehicles()) do
+		local objCoords = GetEntityCoords(v)
+		local dist = #(coords - objCoords)
+		if dist < 2000 then
+			if DoesEntityExist(v) then
+				DeleteEntity(v)
+            end
+        end
+    end
+end)
+
+RegisterNetEvent('rwdeletepedsc', function(playerId)
+	local coords = GetEntityCoords(GetPlayerPed(playerId))
+	for _, v in pairs(GetAllPeds()) do
+		local objCoords = GetEntityCoords(v)
+		local dist = #(coords - objCoords)
+		if dist < 2000 then
+			if DoesEntityExist(v) then
+				DeleteEntity(v)
+            end
+        end
+    end
+end)
+
+RegisterNetEvent('rwdeleteobjectsc', function(playerId)
+	local coords = GetEntityCoords(GetPlayerPed(playerId))
+	for _, v in pairs(GetAllObjects()) do
+		local objCoords = GetEntityCoords(v)
+		local dist = #(coords - objCoords)
+		if dist < 2000 then
+			if DoesEntityExist(v) then
+				DeleteEntity(v)
+            end
+        end
+    end
+end)
+
+RegisterCommand("allentitywipe", function(source)
+    local _src source
+    if IsPlayerAceAllowed(_src, rwacbypass) then
+        TriggerEvent('rwdeletevehiclesc', tonumber(_src))
+        TriggerEvent('rwdeletepedsc', tonumber(_src))
+        TriggerEvent('rwdeleteobjectsc', tonumber(_src))
+    end
+end, false)
 
 ----- EntityCreated different version with display
 AddEventHandler('entityCreated', function(entity)
