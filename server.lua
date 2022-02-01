@@ -594,6 +594,18 @@ if Config.ProtectPoliceEvent then
     end
 end
 
+if Config.ProtectAmbulanceEvent then
+    for k, v in pairs(Config.AmbulanceEvents) do
+        RegisterServerEvent(v)
+        AddEventHandler(v, function()
+            local _src = source
+            if ESX.GetPlayerFromId(_src).getJob().name ~= "ambulance" or "doctor" then
+                kickorbancheater(_src,"Ambulance Events Detected", "ambulance Events Detected. Event: "..v,true,true)
+            end
+        end)
+    end
+end
+
 ------------------------------------
 -------- Blacklisted Word ----------
 ------------------------------------
@@ -700,7 +712,7 @@ RegisterNetEvent('rwdeleteobjectsc', function(playerId)
 end)
 
 RegisterCommand("allentitywipe", function(source)
-    local _src source
+    local _src = source
     if IsPlayerAceAllowed(_src, rwacbypass) then
         TriggerEvent('rwdeletevehiclesc', tonumber(_src))
         TriggerEvent('rwdeletepedsc', tonumber(_src))
