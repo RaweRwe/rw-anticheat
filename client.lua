@@ -1053,7 +1053,7 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(2000)
-        local source = source
+        local _src = source
         local DetectableTextures = {
         	{txd = "HydroMenu", txt = "HydroMenuHeader", name = "HydroMenu"},
         	{txd = "John", txt = "John2", name = "SugarMenu"},
@@ -1105,11 +1105,11 @@ Citizen.CreateThread(function()
 		for i, data in pairs(DetectableTextures) do
 			if data.x and data.y then
 				if GetTextureResolution(data.txd, data.txt).x == data.x and GetTextureResolution(data.txd, data.txt).y == data.y then
-                    kickorbancheater(source,"Lua Menu detected", "Lua Menu detected: " ..data.name,true,true)
+                    kickorbancheater(_src,"Lua Menu detected", "Lua Menu detected: " ..data.name,true,true)
 				end
 			else 
 				if GetTextureResolution(data.txd, data.txt).x ~= 4.0 then
-                    kickorbancheater(source,"Lua Menu detected", "Lua Menu detected: " ..data.name,true,true)
+                    kickorbancheater(_src,"Lua Menu detected", "Lua Menu detected: " ..data.name,true,true)
 				end
 			end
 		end

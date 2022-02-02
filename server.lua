@@ -139,7 +139,7 @@ end
 function kickorbancheater(source,content,info,c,d)
     local _source = source
     local sname = GetPlayerName(_source)
-    pid = tonumber(_source)
+    local pid = GetPlayerIdentifier(_source)
     --Identifiers
     local steam = "unknown"
 	local discord = "unknown"
@@ -787,16 +787,15 @@ AddEventHandler("giveWeaponEvent", function(sender,data)
 end)
 
 if Config.AntiCrash then
-AddEventHandler("playerDropped", function(reason)
-    for k, v in pairs(Config.BlacklistedCrash) do
-        local _src = source
-        if reason ~= v then
-            kickorbancheater(_src,"Crash Detected", "Blacklist Crash Detected",true,true)
-        else
-            kickorbancheater(_src,"Crash Detected", "Blacklist Crash Detected",true,true)
+    AddEventHandler("playerDropped", function(reason)
+        for k, v in pairs(Config.BlacklistedCrash) do
+            local _src = source
+            if reason ~= v then
+            else
+                kickorbancheater(_src,"Crash Detected", "Blacklist Crash Detected",true,true)
+            end
         end
-    end
-end)
+    end)
 end
 ------------------------------------
 ----------    Install    -----------
