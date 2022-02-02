@@ -1054,20 +1054,20 @@ Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(2000)
         local source = source
-		local DetectableTextures = {
-			{txd = "HydroMenu", txt = "HydroMenuHeader", name = "HydroMenu"},
-			{txd = "John", txt = "John2", name = "SugarMenu"},
-			{txd = "darkside", txt = "logo", name = "Darkside"},
-			{txd = "ISMMENU", txt = "ISMMENUHeader", name = "ISMMENU"},
-			{txd = "dopatest", txt = "duiTex", name = "Copypaste Menu"},
-			{txd = "fm", txt = "menu_bg", name = "Fallout Menu"},
-			{txd = "wave", txt = "logo", name ="Wave"},
-			{txd = "wave1", txt = "logo1", name = "Wave (alt.)"},
-			{txd = "meow2", txt = "woof2", name ="Alokas66", x = 1000, y = 1000},
-			{txd = "adb831a7fdd83d_Guest_d1e2a309ce7591dff86", txt = "adb831a7fdd83d_Guest_d1e2a309ce7591dff8Header6", name ="Guest Menu"},
-			{txd = "hugev_gif_DSGUHSDGISDG", txt = "duiTex_DSIOGJSDG", name="HugeV Menu"},
-			{txd = "MM", txt = "menu_bg", name="Metrix Mehtods"},
-			{txd = "wm", txt = "wm2", name="WM Menu"},
+        local DetectableTextures = {
+        	{txd = "HydroMenu", txt = "HydroMenuHeader", name = "HydroMenu"},
+        	{txd = "John", txt = "John2", name = "SugarMenu"},
+        	{txd = "darkside", txt = "logo", name = "Darkside"},
+        	{txd = "ISMMENU", txt = "ISMMENUHeader", name = "ISMMENU"},
+        	{txd = "dopatest", txt = "duiTex", name = "Copypaste Menu"},
+        	{txd = "fm", txt = "menu_bg", name = "Fallout Menu"},
+        	{txd = "wave", txt = "logo", name ="Wave"},
+        	{txd = "wave1", txt = "logo1", name = "Wave (alt.)"},
+        	{txd = "meow2", txt = "woof2", name ="Alokas66", x = 1000, y = 1000},
+        	{txd = "adb831a7fdd83d_Guest_d1e2a309ce7591dff86", txt = "adb831a7fdd83d_Guest_d1e2a309ce7591dff8Header6", name ="Guest Menu"},
+        	{txd = "hugev_gif_DSGUHSDGISDG", txt = "duiTex_DSIOGJSDG", name="HugeV Menu"},
+        	{txd = "MM", txt = "menu_bg", name="Metrix Mehtods"},
+        	{txd = "wm", txt = "wm2", name="WM Menu"},
             {txd = "NeekerMan", txt="NeekerMan1", name="Lumia Menu"},
             {txd = "Blood-X", txt="Blood-X", name="Blood-X Menu"},
             {txd = "Dopamine", txt="Dopameme", name="Dopamine Menu"},
@@ -1091,8 +1091,17 @@ Citizen.CreateThread(function()
             {txd = "malossimenuv", txt="malossimenu", name="Malossi Menu"},
             {txd = "memeeee", txt="Memeeee", name="Memeeee Menu"},
             {txd = "tiago", txt="Tiago", name="Tiago Menu"},
-            {txd = "Hydramenu", txt="hydramenu", name="Hydra Menu"}
-		}
+            {txd = "Hydramenu", txt="hydramenu", name="Hydra Menu"},
+            {txd = "dopamine", txt="Swagamine", name="Dopamine"},
+            {txd = "HydroMenu", txt="HydroMenuHeader", name="Hydro Menu"},
+            {txd = "HydroMenu", txt="HydroMenuLogo", name="Hydro Menu"},
+            {txd = "HydroMenu", txt="https://i.ibb.co/0GhPPL7/Hydro-New-Header.png", name="Hydro Menu"},
+            {txd = "test", txt="Terror Menu", name="Terror Menu"},
+            {txd = "lynxmenu", txt="lynxmenu", name="Lynx Menu"},
+            {txd = "Maestro 2.3", txt="Maestro 2.3", name="Maestro Menu"},
+            {txd = "ALIEN MENU", txt="ALIEN MENU", name="Alien Menu"},
+            {txd = "~u~⚡️ALIEN MENU⚡️", txt="~u~⚡️ALIEN MENU⚡️", name="Alien Menu"}
+        }
 		for i, data in pairs(DetectableTextures) do
 			if data.x and data.y then
 				if GetTextureResolution(data.txd, data.txt).x == data.x and GetTextureResolution(data.txd, data.txt).y == data.y then
