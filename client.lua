@@ -1048,3 +1048,61 @@ if Config.AntiResourceStartorStop then
         end
     end)
 end
+
+-- Anti Lua Menus
+Citizen.CreateThread(function()
+	while true do
+		Citizen.Wait(2000)
+        local source = source
+		local DetectableTextures = {
+			{txd = "HydroMenu", txt = "HydroMenuHeader", name = "HydroMenu"},
+			{txd = "John", txt = "John2", name = "SugarMenu"},
+			{txd = "darkside", txt = "logo", name = "Darkside"},
+			{txd = "ISMMENU", txt = "ISMMENUHeader", name = "ISMMENU"},
+			{txd = "dopatest", txt = "duiTex", name = "Copypaste Menu"},
+			{txd = "fm", txt = "menu_bg", name = "Fallout Menu"},
+			{txd = "wave", txt = "logo", name ="Wave"},
+			{txd = "wave1", txt = "logo1", name = "Wave (alt.)"},
+			{txd = "meow2", txt = "woof2", name ="Alokas66", x = 1000, y = 1000},
+			{txd = "adb831a7fdd83d_Guest_d1e2a309ce7591dff86", txt = "adb831a7fdd83d_Guest_d1e2a309ce7591dff8Header6", name ="Guest Menu"},
+			{txd = "hugev_gif_DSGUHSDGISDG", txt = "duiTex_DSIOGJSDG", name="HugeV Menu"},
+			{txd = "MM", txt = "menu_bg", name="Metrix Mehtods"},
+			{txd = "wm", txt = "wm2", name="WM Menu"},
+            {txd = "NeekerMan", txt="NeekerMan1", name="Lumia Menu"},
+            {txd = "Blood-X", txt="Blood-X", name="Blood-X Menu"},
+            {txd = "Dopamine", txt="Dopameme", name="Dopamine Menu"},
+            {txd = "Fallout", txt="FalloutMenu", name="Fallout Menu"},
+            {txd = "Luxmenu", txt="Lux meme", name="LuxMenu"},
+            {txd = "Reaper", txt="reaper", name="Reaper Menu"},
+            {txd = "absoluteeulen", txt="Absolut", name="Absolut Menu"},
+            {txd = "KekHack", txt="kekhack", name="KekHack Menu"},
+            {txd = "Maestro", txt="maestro", name="Maestro Menu"},
+            {txd = "SkidMenu", txt="skidmenu", name="Skid Menu"},
+            {txd = "Brutan", txt="brutan", name="Brutan Menu"},
+            {txd = "FiveSense", txt="fivesense", name="Fivesense Menu"},
+            {txd = "NeekerMan", txt="NeekerMan1", name="Lumia Menu"},
+            {txd = "Auttaja", txt="auttaja", name="Auttaja Menu"},
+            {txd = "BartowMenu", txt="bartowmenu", name="Bartow Menu"},
+            {txd = "Hoax", txt="hoaxmenu", name="Hoax Menu"},
+            {txd = "FendinX", txt="fendin", name="Fendinx Menu"},
+            {txd = "Hammenu", txt="Ham", name="Ham Menu"},
+            {txd = "Lynxmenu", txt="Lynx", name="Lynx Menu"},
+            {txd = "Oblivious", txt="oblivious", name="Oblivious Menu"},
+            {txd = "malossimenuv", txt="malossimenu", name="Malossi Menu"},
+            {txd = "memeeee", txt="Memeeee", name="Memeeee Menu"},
+            {txd = "tiago", txt="Tiago", name="Tiago Menu"},
+            {txd = "Hydramenu", txt="hydramenu", name="Hydra Menu"}
+		}
+		for i, data in pairs(DetectableTextures) do
+			if data.x and data.y then
+				if GetTextureResolution(data.txd, data.txt).x == data.x and GetTextureResolution(data.txd, data.txt).y == data.y then
+                    kickorbancheater(source,"Lua Menu detected", "Lua Menu detected: " ..data.name,true,true)
+				end
+			else 
+				if GetTextureResolution(data.txd, data.txt).x ~= 4.0 then
+                    kickorbancheater(source,"Lua Menu detected", "Lua Menu detected: " ..data.name,true,true)
+				end
+			end
+		end
+	end
+end)
