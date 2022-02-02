@@ -1,12 +1,13 @@
 Config = {}
 
-Config.Version = 4.2
+Config.Version = 4.3
 
 ------------------------------------
 ------------ Discord Options -------------
 ------------------------------------
 
 Config.WebhookDiscord = "" -- Discord Webhook
+Config.SSWebhook = "" -- ScreenShot Sebhook
 Config.DropMsg = "Don't use cheat! Discord: https://discord.gg/BW5KA78SXW"
 Config.ReasonBanned = "You are restricted from connecting to our server. Please contact us!."
 
@@ -52,6 +53,17 @@ Config.AntiResource = false -- Whitelisted Resource true or false // not recomme
 Config.AntiCrash = true -- Forbidden Crash
 Config.ProtectPoliceEvent = true -- Protect Police Events
 Config.ProtectAmbulanceEvent = true -- Protect Police Events
+
+Config.OnScreenMenuDetection = true -- Checks player's screen and looks for blacklisted words (Menu Detection)
+Config.OSMDCheckingTime = 10000 -- Checks for screen menus every 10 secs (Recommended to leave this right here otherwise you'll get a lot of lag and high CPU usage. You can increase this time to like 30k if players are having CPU usage problems)
+Config.BlacklistedMenuWords = { -- (OnScreenMenuDetection) Words to check
+	"fallout", "godmode", "god mode", "modmenu", "esx money", "give armor", "aimbot", "troll", "esp", "trigger", "triggerbot", "rage bot", "ragebot", "rapidfire", "fuck server", "freecam", "execute", "superjump", "noclip", "hack",
+	"lynx", "absolute", "ckgangisontop", "lumia1", "ISMMENU", "HydroMenu", "TAJNEMENUMenu", "rootMenu", "Outcasts666", "WaveCheat", "NacroxMenu", "MarketMenu", "topMenu", "FlexSkazaMenu", "SidMenu", "Crown", "Lynx8", "LynxEvo", "Maestro",
+	"Tiago", "Brutan", "redEngine", "Unex", "Eulen", "HamMafia", "HamHaxia", "Dopamine", "Dopameme", "redMENU", "falcon", "Desudo", "Onion", "explode", "rape", "Ciao", "Anticheat", "Tapatio", "Particle", "Malossi", "Nisi", "ATG", "RedStonia",
+	"Chocohax", "Inyection", "Inyected", "Dumper", "LUA Executor", "Executor", "Skid", "HoaX", "inSec", "Reaper", "Lux", "Event Blocker", "Cheats", "Cheat", "Destroyer", "Spectate", "Wallhack", "Exploit", "triggers", "crosshair", "Explosive",
+	"Alokas66", "Hacking System!", "Online Players", "Panic Button", "Destroy Menu", "Self Menu", "Server IP", "Teleport To", "Give Single Weapon", "Airstrike Player", "Taze Player", "Toga", "Magneto", "⚡️ALIEN MENU⚡️", "wave", "exec", "exeutor"
+}
+
 
 Config.WhitelistedResources = { -- If you get banned and the anticheat logs something like this "Resource metadata not valid in resource: or Abnormal resource injection" put here the resources that are causing that errors and everything should be fixed.
     ["discord-screenshot"] = true,

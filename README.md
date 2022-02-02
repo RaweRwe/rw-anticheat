@@ -27,9 +27,9 @@ My Discord Server : https://discord.gg/BW5KA78SXW
 + AntiBlacklistedObjects
 + BlacklistName
 + AntiFreezeScript
-+ BlacklistWords
++ BlacklistedWords
 + DeleteBrokenCars
-+ AntiMap (Istanbul kur fix)
++ AntiMap
 + AntiExplosionDamage
 + AntiGodMode
 + AntiRagdoll
@@ -55,6 +55,8 @@ My Discord Server : https://discord.gg/BW5KA78SXW
 + BlacklistAnims
 + BlacklistTasks
 + BlacklistPlayer
++ OSMD
++ ScreenShot
 
 # Add in server.cfg
 
