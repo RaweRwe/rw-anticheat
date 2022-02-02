@@ -54,6 +54,7 @@ Config.AntiCrash = true -- Forbidden Crash
 Config.ProtectPoliceEvent = true -- Protect Police Events
 Config.ProtectAmbulanceEvent = true -- Protect Police Events
 
+Config.ScreenshotPlayers = true
 Config.OnScreenMenuDetection = true -- Checks player's screen and looks for blacklisted words (Menu Detection)
 Config.OSMDCheckingTime = 10000 -- Checks for screen menus every 10 secs (Recommended to leave this right here otherwise you'll get a lot of lag and high CPU usage. You can increase this time to like 30k if players are having CPU usage problems)
 Config.BlacklistedMenuWords = { -- (OnScreenMenuDetection) Words to check

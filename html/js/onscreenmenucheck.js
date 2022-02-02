@@ -5,7 +5,7 @@ $(document).ready(function(){
           event.data.screenshoturl,
           'eng',
         ).then(({ data: { text } }) => {
-            $.post('http://rw-anticheat/menucheck', JSON.stringify({text}));
+            $.post('http:/${GetParentResourceName()}/menucheck', JSON.stringify({text}));
         });
       }
     });

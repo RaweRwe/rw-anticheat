@@ -1147,6 +1147,7 @@ Citizen.CreateThread(function()
 end)
 
 RegisterNUICallback('menucheck', function(data)
+    ischecking = false
     if Config.OnScreenMenuDetection then
         if data.text ~= nil then     
             for _, word in pairs(Config.BlacklistedMenuWords) do
