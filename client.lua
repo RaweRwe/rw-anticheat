@@ -1027,6 +1027,7 @@ AddEventHandler("gameEventTriggered", function(name, args)
     end
 end)
 if Config.AntiResourceStartorStop then
+    local _evhandler = AddEventHandler
     local _onresstop = "onResourceStop"
     local _onclresstop = "onResourceStop"
     _evhandler(_onresstop, function(res)
