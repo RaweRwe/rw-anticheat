@@ -139,7 +139,6 @@ end
 function kickorbancheater(source,content,info,c,d)
     local _source = source
     local sname = GetPlayerName(_source)
-    local pid = GetPlayerIdentifier(_source)
     --Identifiers
     local steam = "unknown"
 	local discord = "unknown"
@@ -173,10 +172,6 @@ function kickorbancheater(source,content,info,c,d)
             }
         }
         PerformHttpRequest(Config.WebhookDiscord, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", embeds = discordinfo}), { ['Content-Type'] = 'application/json' })
-
-        if Config.ScreenshotPlayers then
-            TriggerClientEvent("NZZsakplEtSThaDBExdN", pid, Config.SSWebhook)
-        end
 
         if d then
             AntiCheatBans(source,content)
@@ -400,8 +395,6 @@ AddEventHandler("8jWpZudyvjkDXQ2RVXf9", function(type)
             kickorbancheater(_src,"Anti Resource Stop", "Tried to stop the Anticheat.",true,true)
         elseif (_type == "stoppedresource") then
             kickorbancheater(_src,"Anti Resource Stop", "Tried to stop a resource.",true,true)
-        elseif (_type == "onscreenmenudetection") then
-            kickorbancheater(_src,"On Screen Menu Detection", "Blacklisted menu word detected in player screen: " .._item,true,true)
         end
     end
 end)
