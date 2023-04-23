@@ -781,11 +781,11 @@ end)
 
 if Config.AntiCrash then
     AddEventHandler("playerDropped", function(reason)
-        for k, v in pairs(Config.BlacklistedCrash) do
-            local _src = source
-            if reason ~= v then
-            else
+        local _src = source
+        for key, crashReason in pairs(Config.BlacklistedCrash) do
+            if reason == crashReason then
                 kickorbancheater(_src,"Crash Detected", "Blacklist Crash Detected",true,true)
+                break
             end
         end
     end)
