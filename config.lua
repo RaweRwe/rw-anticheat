@@ -11,6 +11,11 @@ Config.WebhookDiscord = "" -- Discord Webhook
 Config.DropMsg = "Don't use cheat! Discord: https://discord.gg/BW5KA78SXW"
 Config.ReasonBanned = "You are restricted from connecting to our server. Please contact us!."
 
+Config.WhitelistedPlayers = { -- Bypassing bans for admins
+    "steam:11000010a123456",
+    "license:123456789abcdef",
+}
+
 ------------------------------------
 ------------ Detection -------------
 ------------------------------------

@@ -65,10 +65,9 @@ My Discord Server : https://discord.gg/BW5KA78SXW
 + OSMD
 + ScreenShot
 
-# Add in server.cfg
+# How to bypass ban for admins?
 
-+ add_ace rwacbypass allow 
-+ add_ace identifier.steam:hex rwacbypass allow
++ Entire steamid or licenseid in Config.WhitelistedPlayers like example
 
 # Example Ban Function Use
 

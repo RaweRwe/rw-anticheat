@@ -23,6 +23,18 @@ function banlistregenerator()
 	end
 end
 
+function IsPlayerWhitelisted(playerId)
+    local identifiers = GetPlayerIdentifiers(playerId)
+    for _, id in pairs(identifiers) do
+        for _, whitelistedId in pairs(Config.WhitelistedPlayers) do
+            if id == whitelistedId then
+                return true
+            end
+        end
+    end
+    return false
+end
+
 function AntiCheatBans(source,reason)
     local config = LoadResourceFile(GetCurrentResourceName(), "ac-bans.json")
     local data = json.decode(config)
@@ -146,40 +158,42 @@ function kickorbancheater(source,content,info,c,d)
 	local live = "unknown"
 	local xbl = "unknown"
 
-    if not IsPlayerAceAllowed(_source, "rwacbypass") then -- checking player perm.
-	    for m, n in ipairs(GetPlayerIdentifiers(_source)) do
-	    	if n:match("steam") then
-	    		steam = n
-	    	elseif n:match("discord") then
-	    		discord = n:gsub("discord:", "")
-	    	elseif n:match("license") then
-	    		license = n
-	    	elseif n:match("live") then
-	    		live = n
-	    	elseif n:match("xbl") then
-	    		xbl = n
-	    	end
+    if IsPlayerWhitelisted(_source) then
+        return
+    end
+
+	for m, n in ipairs(GetPlayerIdentifiers(_source)) do
+	    if n:match("steam") then
+	    	steam = n
+	    elseif n:match("discord") then
+	    	discord = n:gsub("discord:", "")
+	    elseif n:match("license") then
+	    	license = n
+	    elseif n:match("live") then
+	    	live = n
+	    elseif n:match("xbl") then
+	    	xbl = n
 	    end
+	end
 
-        local discordinfo = {
-            {
-                ["color"] = "23295",
-                ["title"] = "Rawe AntiCheat",
-                ["description"] = "**Player: **"..sname.. "\n**ServerID:** ".._source.."\n**Violation:** "..content.."\n**Details:** "..info.."\n**Steam:** "..steam.."\n**License: **"..license.."\n**Xbl: **"..xbl.."\n**Live: **"..live.."\n**Discord**: <@"..discord..">",
-                ["footer"] = {
-                ["text"] = "github.com/RaweRwe/rw-anticheat " ..os.date("%c").. "",
-                },
-            }
+    local discordinfo = {
+        {
+            ["color"] = "23295",
+            ["title"] = "Rawe AntiCheat",
+            ["description"] = "**Player: **"..sname.. "\n**ServerID:** ".._source.."\n**Violation:** "..content.."\n**Details:** "..info.."\n**Steam:** "..steam.."\n**License: **"..license.."\n**Xbl: **"..xbl.."\n**Live: **"..live.."\n**Discord**: <@"..discord..">",
+            ["footer"] = {
+            ["text"] = "github.com/RaweRwe/rw-anticheat " ..os.date("%c").. "",
+            },
         }
-        PerformHttpRequest(Config.WebhookDiscord, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", embeds = discordinfo}), { ['Content-Type'] = 'application/json' })
+    }
+    PerformHttpRequest(Config.WebhookDiscord, function(err, text, headers) end, 'POST', json.encode({username = "RW-AC", embeds = discordinfo}), { ['Content-Type'] = 'application/json' })
 
-        if d then
-            AntiCheatBans(source,content)
-        end
+    if d then
+        AntiCheatBans(source,content)
+    end
 
-        if c then
-            DropPlayer(source, "Kicked : "..Config.DropMsg)
-        end
+    if c then
+        DropPlayer(source, "Kicked : "..Config.DropMsg)
     end
 end
  
@@ -264,7 +278,7 @@ RegisterCommand('ac-unban', function(source, args, rawCommand)
         end
         return;
     end 
-    if IsPlayerAceAllowed(src, "rwacbypass") then 
+    if IsPlayerWhitelisted(src) then 
         if #args == 0 then 
             -- Not enough arguments
             TriggerClientEvent('chatMessage', src, '^3[^6RW-AntiCheat^3] ^1Not enough arguments...');
@@ -285,6 +299,9 @@ RegisterCommand('ac-unban', function(source, args, rawCommand)
             -- Not a valid number
             TriggerClientEvent('chatMessage', src, '^3[^6RW-AntiCheat^3] ^1That is not a valid number...'); 
         end
+    else
+        TriggerClientEvent('chatMessage', src, '^3[^6RW-AntiCheat^3] ^1You do not have permission to use this command.');
+    end
     end
 end)
 function UnbanPlayer(banID)
@@ -302,30 +319,62 @@ function UnbanPlayer(banID)
     return false;
 end
 
-RegisterCommand("ac-ban", function(source, args, raw) -- /acban <id> <reason> 
+-- /acban command
+RegisterCommand("ac-ban", function(source, args, raw) -- /acban <id> <reason>
     local src = source;
-    if IsPlayerAceAllowed(src, "rwacbypass") then 
-        if #args < 2 then 
-            -- Not valid enough num of arguments 
-            TriggerClientEvent('chatMessage', source, "^5[^1RW-AntiCheat^5] ^1ERROR: You have supplied invalid amount of arguments... " ..
-                "^2Proper Usage: /acban <id> <reason>");
-            return;
+
+    -- Check if the command is run from console
+    if src <= 0 then
+        -- Console command execution
+        if #args < 2 then
+            -- Not enough arguments
+            print("^5[^1RW-AntiCheat^5] ^1ERROR: You have supplied invalid amount of arguments... " ..
+                "^2Proper Usage: /acban <id> <reason>")
+            return
         end
+        
         local id = args[1]
-        if GetIdentifier(args[1]) ~= nil then 
-            -- Valid player supplied 
-            local playerSteam = myid.steam;
-            local playerLicense = myid.license;
-            local playerXbl = myid.xbl;
-            local playerLive = myid.live;
-            local playerDiscord = myid.discord;
-            local reason = table.concat(args, ' '):gsub(args[1] .. " ", "");
-            AntiCheatBans(args[1], reason);
-        else 
-            -- Not a valid player supplied 
-            TriggerClientEvent('chatMessage', source, "^5[^1RW-AntiCheat^5] ^1ERROR: There is no valid player with that ID online... " ..
-                "^2Proper Usage: /acban <id> <reason>");
+        local playerIdentifiers = GetIdentifier(id)
+
+        if playerIdentifiers ~= nil then
+            -- Valid player ID
+            local reason = table.concat(args, ' '):gsub(id .. " ", "")
+            AntiCheatBans(id, reason)
+            print("^5[^1RW-AntiCheat^5] ^0Player ^1" .. id .. " ^0has been banned by ^2CONSOLE")
+        else
+            -- Invalid player ID
+            print("^5[^1RW-AntiCheat^5] ^1ERROR: There is no valid player with that ID online... " ..
+                "^2Proper Usage: /acban <id> <reason>")
         end
+        return
+    end
+
+    -- Whitelist check
+    if IsPlayerWhitelisted(src) then
+        if #args < 2 then
+            -- Not enough arguments
+            TriggerClientEvent('chatMessage', source, "^5[^1RW-AntiCheat^5] ^1ERROR: You have supplied invalid amount of arguments... " ..
+                "^2Proper Usage: /acban <id> <reason>")
+            return
+        end
+
+        local id = args[1]
+        local playerIdentifiers = GetIdentifier(id)
+
+        if playerIdentifiers ~= nil then
+            -- Valid player ID
+            local reason = table.concat(args, ' '):gsub(id .. " ", "")
+            AntiCheatBans(id, reason)
+            TriggerClientEvent('chatMessage', -1, "^5[^1RW-AntiCheat^5] ^0Player ^1" .. id ..
+                " ^0has been banned by ^2" .. GetPlayerName(src))
+        else
+            -- Invalid player ID
+            TriggerClientEvent('chatMessage', source, "^5[^1RW-AntiCheat^5] ^1ERROR: There is no valid player with that ID online... " ..
+                "^2Proper Usage: /acban <id> <reason>")
+        end
+    else
+        -- If not whitelisted
+        TriggerClientEvent('chatMessage', src, '^5[^1RW-AntiCheat^5] ^1ERROR: You do not have permission to use this command.')
     end
 end)
 -----
@@ -338,7 +387,6 @@ AddEventHandler("8jWpZudyvjkDXQ2RVXf9", function(type)
     local _name = GetPlayerName(_src)
     _type = string.lower(_type)
 
-    if not IsPlayerAceAllowed(_src, "rwacbypass") then
         if (_type == "invisible") then
             kickorbancheater(_src,"Tried to be Invisible", "This Player tried to Invisible",true,true)
         elseif (_type == "antiragdoll") then
@@ -396,7 +444,6 @@ AddEventHandler("8jWpZudyvjkDXQ2RVXf9", function(type)
         elseif (_type == "stoppedresource") then
             kickorbancheater(_src,"Anti Resource Stop", "Tried to stop a resource.",true,true)
         end
-    end
 end)
 
 RegisterNetEvent('JzKD3yfGZMSLTqu9L4Qy')
@@ -410,7 +457,6 @@ end)
 RegisterNetEvent('tYdirSYpJtB77dRC3cvX')
 AddEventHandler('tYdirSYpJtB77dRC3cvX', function()
     local _src = source
-    if not IsPlayerAceAllowed(_src, "rwacbypass") then
         local players = {}
         for _,v in pairs(GetPlayers()) do
             table.insert(players, {
@@ -419,7 +465,6 @@ AddEventHandler('tYdirSYpJtB77dRC3cvX', function()
             })
         end
         kickorbancheater(_src,"Give Weapon To Ped", "This Player tried Give Weapon to Ped.",true,true)
-    end
 end)
 if Config.AntiResource then
 RegisterNetEvent('PJHxig0KJQFvQsrIhd5h')
@@ -713,7 +758,7 @@ end)
 
 RegisterCommand("allentitywipe", function(source)
     local _src = source
-    if IsPlayerAceAllowed(_src, rwacbypass) then
+    if IsPlayerWhitelisted(_src) then
         TriggerEvent('rwdeletevehiclesc', tonumber(_src))
         TriggerEvent('rwdeletepedsc', tonumber(_src))
         TriggerEvent('rwdeleteobjectsc', tonumber(_src))
