@@ -439,6 +439,12 @@ AddEventHandler("8jWpZudyvjkDXQ2RVXf9", function(type)
             kickorbancheater(_src,"Anti Aimbot/TriggerBot", "Hit a Player Without Being in his Screen. Possible Aimbot/TriggerBot/RageBot. Distance Difference.",false,false) -- can do wrong ban
         elseif (_type == "aimbot") then
             kickorbancheater(_src,"Anti Aimbot", "Aimbot detected.",true,true)
+        elseif (_type == "silentaim") then
+            kickorbancheater(_src,"Silent Aim Detected", "Silent Aim logic triggered. " .. (_item or ""), true, true)
+        elseif (_type == "noclip") then
+             kickorbancheater(_src, "Noclip Detected", "Distance check triggered. " .. (_item or ""), true, true)
+        elseif (_type == "damagemodifier") then
+             kickorbancheater(_src, "Damage Modifier Detected", "Abnormal damage output. " .. (_item or ""), true, true)
         elseif (_type == "stoppedac") then
             kickorbancheater(_src,"Anti Resource Stop", "Tried to stop the Anticheat.",true,true)
         elseif (_type == "stoppedresource") then
@@ -531,20 +537,154 @@ end)
 --Maybe need rework from entity created to entitycreating for performance of server side. -- need rework
 -- Disable it for a while since it need to be reworked.
 -----
+
+------------------------------------
+--------    Heartbeat System    ----
+------------------------------------
+local PlayerHeartbeats = {}
+
+if Config.Heartbeat then
+    RegisterServerEvent("rwe:HeartbeatReturn")
+    AddEventHandler("rwe:HeartbeatReturn", function(token)
+        local _src = source
+        if PlayerHeartbeats[_src] and PlayerHeartbeats[_src].token == token then
+            PlayerHeartbeats[_src].lastBeat = os.time()
+        else
+            -- Invalid token or unknown heartbeat
+        end
+    end)
+
+    Citizen.CreateThread(function()
+        while true do
+            Citizen.Wait(Config.HeartbeatInterval or 30000)
+            local current = os.time()
+            for _, playerId in ipairs(GetPlayers()) do
+                playerId = tonumber(playerId)
+                if not PlayerHeartbeats[playerId] then
+                    PlayerHeartbeats[playerId] = { lastBeat = current, token = math.random(100000, 999999) }
+                    TriggerClientEvent("rwe:HeartbeatCheck", playerId, PlayerHeartbeats[playerId].token)
+                else
+                    if os.difftime(current, PlayerHeartbeats[playerId].lastBeat) > ((Config.HeartbeatInterval / 1000) * 3) then
+                         -- Missed 3 beats
+                         kickorbancheater(playerId, "Heartbeat Failed", "Client not responding.", true, true)
+                    else
+                        -- Send new token
+                        PlayerHeartbeats[playerId].token = math.random(100000, 999999)
+                        TriggerClientEvent("rwe:HeartbeatCheck", playerId, PlayerHeartbeats[playerId].token)
+                    end
+                end
+            end
+        end
+    end)
+    
+    AddEventHandler('playerDropped', function()
+        local _src = source
+        PlayerHeartbeats[_src] = nil
+    end)
+end
+
+------------------------------------
+--------      OCR System       -----
+------------------------------------
+function CaptureScreenshot(target)
+    if not Config.OCR then return end
+    -- This requires screenshot-basic or discord-screenshot resource
+    -- We will try to use the most common exports
+    local webhook = Config.OCRWebhook ~= "" and Config.OCRWebhook or Config.WebhookDiscord
+    
+    if GetResourceState('screenshot-basic') == 'started' then
+        exports['screenshot-basic']:requestClientScreenshot(target, {
+            encoding = 'jpg',
+            quality = 0.8
+        }, function(err, data)
+            if not err and data then
+                PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({
+                    username = "RW-AntiCheat OCR",
+                    embeds = {{
+                        title = "OCR Capture",
+                        description = "Screenshot for Player ID: " .. target,
+                        image = { url = data }
+                    }}
+                }), { ['Content-Type'] = 'application/json' })
+            end
+        end)
+    end
+end
+
+------------------------------------
+--------   Performance Init     ----
+------------------------------------
+local BlacklistedVehiclesHash = {}
+local BlacklistedPedsHash = {}
+local BlacklistedObjectsHash = {}
+
+Citizen.CreateThread(function()
+    -- Convert arrays to hash maps for O(1) lookup
+    for _, name in ipairs(Config.BlacklistedVehicles) do
+        BlacklistedVehiclesHash[GetHashKey(name)] = true
+        BlacklistedVehiclesHash[name] = true
+    end
+    for _, name in ipairs(Config.BlacklistedPeds) do
+        BlacklistedPedsHash[GetHashKey(name)] = true
+        BlacklistedPedsHash[name] = true
+    end
+    for _, name in ipairs(Config.BlacklistedObjects) do
+        BlacklistedObjectsHash[GetHashKey(name)] = true
+        BlacklistedObjectsHash[name] = true
+    end
+end)
+
+------------------------------------
+--------   Entity Protection    ----
+------------------------------------
 if Config.AntiEntity then
     AddEventHandler('entityCreating', function(entity)
-        local src = NetworkGetEntityOwner(entity)
-        local type = GetEntityType(entity)
+        if not DoesEntityExist(entity) then return end
         
-        if type == 1 then
-            kickorbancheater(src,"Ped Spawn Detected", "This Player tried to spawn ped",true,true)
-            CancelEvent()
-        elseif type == 2 then
-            kickorbancheater(src,"Vehicle Spawn Detected", "This Player tried to vehicle spawn",true,true)
-            CancelEvent()
-        elseif type == 3 then
-            kickorbancheater(src,"Object Spawn Detected", "This Player tried to object spawn",true,true)
-            CancelEvent()
+        local src = NetworkGetEntityOwner(entity)
+        local script = GetEntityScript(entity)
+        local type = GetEntityType(entity) -- 1: Ped, 2: Vehicle, 3: Object
+        local model = GetEntityModel(entity)
+        
+        -- Source 0 usually means server-side script, verify script name
+        if src == 0 or src == nil then
+            if script ~= nil then return end -- Trusted server script
+             -- If script is nil and src is 0, it might be map or unknown, proceed to blacklist check
+        end
+
+        -- If logic: Check strict control
+        -- If an entity is created by a known script, we trust it more, 
+        -- but if it matches a BLACKLIST item, we still block it unless it's whitelisted explicitly.
+        
+        if Config.StrictEntityControl and script == nil and src and src > 0 then
+            -- Player trying to spawn something without a script context (e.g., menu)
+            -- This is high risk. You might want to log this or be more aggressive.
+        end
+
+        if type == 1 and Config.AntiSpawnPeds then -- Ped
+            if BlacklistedPedsHash[model] then
+                CancelEvent()
+                if src and src > 0 then
+                    kickorbancheater(src, "Blacklisted Ped Spawn", "Spawning blacklisted ped: " .. tostring(model) .. " (Script: "..(script or "None")..")", true, true)
+                end
+                return
+            end
+        elseif type == 2 and Config.AntiSpawnVehicles then -- Vehicle
+             if BlacklistedVehiclesHash[model] then
+                CancelEvent()
+                if src and src > 0 then
+                    kickorbancheater(src, "Blacklisted Vehicle Spawn", "Spawning blacklisted vehicle: " .. tostring(model).. " (Script: "..(script or "None")..")", true, true)
+                end
+                return
+            end
+        elseif type == 3 and Config.AntiSpawnObjects then -- Object
+             if BlacklistedObjectsHash[model] then
+                CancelEvent()
+                if src and src > 0 then
+                     kickorbancheater(src, "Blacklisted Object Spawn", "Spawning blacklisted object: " .. tostring(model).. " (Script: "..(script or "None")..")", true, true)
+                end
+                return
+            end
         end
     end)
 end
@@ -568,51 +708,6 @@ AddEventHandler('rwe:WeaponFlag', function(weapon)
     kickorbancheater(_src,"Anti Weapon Flag", "Gave self a gun. Weapon: "..weapon,true,true)
 end)
 
-------------------------------------
--------- Entities Created   --------
-------------------------------------
-AddEventHandler('entityCreated', function(entity) --- this can ban wrong
-    if not DoesEntityExist(entity) then
-        return
-    end
-    
-    local src = NetworkGetEntityOwner(entity)
-    local entID = NetworkGetNetworkIdFromEntity(entity)
-    local model = GetEntityModel(entity)
-    local hash = GetHashKey(entity)
-
-    if Config.AntiSpawnVehicles then
-        for i, objName in ipairs(Config.BlacklistedVehicles) do
-            if model == objName then
-                TriggerClientEvent("rwe:DeleteCars", -1,entID)
-                Citizen.Wait(800)
-                kickorbancheater(src,"Blacklist Vehicle Spawned", "Object: "..objName.. " Model: "..model.. " Entity: "..entity.. " Hash: "..hash,false,false)
-            end
-        end
-    end
-
-    if Config.AntiSpawnPeds then
-        for i, objName in ipairs(Config.BlacklistedPeds) do
-            if model == objName then
-                TriggerClientEvent("rwe:DeletePeds", -1, entID)
-                Citizen.Wait(800)
-                kickorbancheater(src,"Blacklist Ped Spawned", "Object: "..objName.. " Model: "..model.. " Entity: "..entity.. " Hash: "..hash,false,false)
-            end
-            break
-        end
-    end
-
-   if Config.AntiSpawnObjects then
-        for i, objName in ipairs(Config.BlacklistedObjects) do
-            if model == objName then
-                TriggerClientEvent("rwe:DeleteEntity", -1, entID)
-                Citizen.Wait(800)
-                kickorbancheater(src,"Blacklist Object Spawned", "Object: "..objName.. " Model: "..model.. " Entity: "..entity.. " Hash: "..hash,false,false)
-                break
-            end
-        end
-    end
-end)
 
 ------------------------------------
 -------- Blacklisted Events --------
@@ -633,11 +728,185 @@ if Config.ProtectPoliceEvent then
         RegisterServerEvent(v)
         AddEventHandler(v, function()
             local _src = source
-            if ESX.GetPlayerFromId(_src).getJob().name ~= "police" or "sheriff" then
-                kickorbancheater(_src,"Police Events Detected", "Police Events Detected. Event: "..v,true,true)
+            local xPlayer = ESX.GetPlayerFromId(_src)
+            if xPlayer then
+                local job = xPlayer.getJob().name
+                if job ~= "police" and job ~= "sheriff" then
+                    kickorbancheater(_src, "Police Events Detected", "Police Events Detected. Event: "..v, true, true)
+                end
             end
         end)
     end
+end
+
+if Config.ProtectAmbulanceEvent then
+    for k, v in pairs(Config.AmbulanceEvents) do
+        RegisterServerEvent(v)
+        AddEventHandler(v, function()
+            local _src = source
+            local xPlayer = ESX.GetPlayerFromId(_src)
+            if xPlayer then
+                local job = xPlayer.getJob().name
+                if job ~= "ambulance" and job ~= "doctor" then
+                    kickorbancheater(_src, "Ambulance Events Detected", "Ambulance Events Detected. Event: "..v, true, true)
+                end
+            end
+        end)
+    end
+end
+
+------------------------------------
+-------- Blacklisted Word ----------
+------------------------------------
+AddEventHandler('chatMessage', function(source, color, message)
+    local _src = source
+    if not message then return end
+
+    if Config.AntiBlacklistedWords then
+        for k, v in pairs(Config.BlacklistWords) do
+            if string.match(message, v) then
+                Citizen.Wait(1500)
+                kickorbancheater(_src, "Blacklist Words Detected", "Blacklist Words Detected. Words: "..v, true, true)
+                CancelEvent()
+                return
+            end
+        end
+    end
+end)
+
+RegisterServerEvent('_chat:messageEntered')
+AddEventHandler('_chat:messageEntered', function(author, color, message)
+    if not message then return end
+    local src = source
+
+    for k, v in pairs(Config.BlacklistWords) do
+        if string.match(message, v) then
+            Citizen.Wait(1500)
+            kickorbancheater(src, "Blacklist Words Detected", "Blacklist Words Detected. Words: "..v, true, true)
+            CancelEvent()
+            return
+        end
+    end
+end)
+
+------------------------------------
+-------- Blacklisted Command -------
+------------------------------------
+Citizen.CreateThread(function()
+    for i=1, #Config.BlacklistedCommands, 1 do
+        RegisterCommand(Config.BlacklistedCommands[i], function(source)
+            local _src = source
+            kickorbancheater(_src, "Blacklist Command Detected", "Blacklist Command Detected.", true, true)
+        end)
+    end
+end)
+
+------------------------------------
+--------    Admin Command    -------
+------------------------------------
+RegisterCommand("entitywipe", function(source, args, raw)
+    local playerID = args[1]
+    if (playerID ~= nil and tonumber(playerID) ~= nil) then
+        EntityWipe(source, tonumber(playerID))
+    end
+end, false)
+
+function EntityWipe(source, target)
+    local _src = source
+    TriggerClientEvent("rwe:deletentity", -1, tonumber(target))
+end
+
+RegisterNetEvent('rwdeletevehiclesc', function(playerId)
+    local coords = GetEntityCoords(GetPlayerPed(playerId))
+    for _, v in pairs(GetAllVehicles()) do
+        local objCoords = GetEntityCoords(v)
+        local dist = #(coords - objCoords)
+        if dist < 2000 then
+            if DoesEntityExist(v) then
+                DeleteEntity(v)
+            end
+        end
+    end
+end)
+
+RegisterNetEvent('rwdeletepedsc', function(playerId)
+    local coords = GetEntityCoords(GetPlayerPed(playerId))
+    for _, v in pairs(GetAllPeds()) do
+        local objCoords = GetEntityCoords(v)
+        local dist = #(coords - objCoords)
+        if dist < 2000 then
+            if DoesEntityExist(v) then
+                DeleteEntity(v)
+            end
+        end
+    end
+end)
+
+RegisterNetEvent('rwdeleteobjectsc', function(playerId)
+    local coords = GetEntityCoords(GetPlayerPed(playerId))
+    for _, v in pairs(GetAllObjects()) do
+        local objCoords = GetEntityCoords(v)
+        local dist = #(coords - objCoords)
+        if dist < 2000 then
+            if DoesEntityExist(v) then
+                DeleteEntity(v)
+            end
+        end
+    end
+end)
+
+RegisterCommand("allentitywipe", function(source)
+    local _src = source
+    if IsPlayerWhitelisted(_src) then
+        TriggerEvent('rwdeletevehiclesc', tonumber(_src))
+        TriggerEvent('rwdeletepedsc', tonumber(_src))
+        TriggerEvent('rwdeleteobjectsc', tonumber(_src))
+    end
+end, false)
+
+--------------------------------------------
+-------- Anti Taze & Weapon Event & AntiCrash ----------
+--------------------------------------------
+AddEventHandler("weaponDamageEvent", function(sender, data)
+    if Config.AntiTaze then
+        local _src = sender
+        if data.weaponType == 911657153 or data.weaponType == GetHashKey("WEAPON_STUNGUN") then
+            kickorbancheater(_src, "Anti Taze Player.", "Tried to shoot with a taser", true, true)
+            CancelEvent()
+        end
+    end
+end)
+
+AddEventHandler("giveWeaponEvent", function(sender,data)
+    if Config.AntiGiveWeaponEvent then
+        local _src = sender
+        if data.givenAsPickup == false then
+            kickorbancheater(_src, "Anti Give Weapon(event)", "Tried to give weapons to a Ped", true, true)
+            CancelEvent()
+        end
+    end
+end)
+
+if Config.AntiCrash then
+    AddEventHandler("playerDropped", function(reason)
+        for k, v in pairs(Config.BlacklistedCrash) do
+            local _src = source
+            if reason == v then
+                kickorbancheater(_src, "Crash Detected", "Blacklist Crash Detected", true, true)
+            end
+        end
+    end)
+end
+
+local Charset = {}
+for i = 65, 90 do table.insert(Charset, string.char(i)) end
+for i = 97, 122 do table.insert(Charset, string.char(i)) end
+
+RandomLetter = function(length)
+    if length > 0 then
+        return RandomLetter(length - 1) .. Charset[math.random(1, #Charset)]
+    end
+    return ""
 end
 
 if Config.ProtectAmbulanceEvent then

@@ -21,6 +21,16 @@ Config.WhitelistedPlayers = { -- Bypassing bans for admins
 ------------------------------------
 
 Config.BasicEnable = true -- This must be set in true do the Anticheat works as intended.
+
+-- New Features
+Config.Heartbeat = true -- Enable Heartbeat system (checks if client is responsive)
+Config.HeartbeatInterval = 30000 -- Interval in ms
+Config.OCR = true -- Enable Screenshot system on ban
+Config.OCRWebhook = "" -- Webhook for screenshots (if different from main)
+Config.AntiSilentAim = true -- Detects Silent Aim (FOV check)
+Config.MaxFOV = 30.0 -- Max FOV for Silent Aim detection
+
+-- Existing Features Updated
 Config.AntiExplosionDamage = true -- This prevents players from being killed by Explosions.
 Config.AntiGodMode = true -- Detects most of GodMode Cheats and Logs/Bans them.
 Config.AntiRagdoll = true -- Detects Anti-Ragdoll cheats.
@@ -50,7 +60,7 @@ Config.AntiSpawnVehicles = true
 Config.AntiSpawnPeds = true
 Config.DeleteBrokenCars = true -- Delete Broken Cars
 Config.AntiAimbot = true -- Anti Aimbot 
-Config.AntiEntity = false -- Anti entity Creating.
+Config.AntiEntity = true -- Anti entity Creating (Enabled by default now)
 Config.AntiTaze = true -- Anti Taze Player 
 Config.AntiGiveWeaponEvent = true -- Anti Give Weapon to Player or Ped
 Config.AntiBlacklistedKey = true -- Anti Blacklist Keys
@@ -58,6 +68,11 @@ Config.AntiResource = false -- Whitelisted Resource true or false // not recomme
 Config.AntiCrash = true -- Forbidden Crash
 Config.ProtectPoliceEvent = true -- Protect Police Events
 Config.ProtectAmbulanceEvent = true -- Protect Police Events
+
+-- Advanced Features
+Config.AntiNoclip = true -- Detects abnormal position changes
+Config.AntiDamageModifier = true -- Detects weapon damage manipulation
+Config.StrictEntityControl = true -- If true, checks GetEntityScript to ensure entities are from valid resources (Advanced)
 
 Config.WhitelistedResources = { -- If you get banned and the anticheat logs something like this "Resource metadata not valid in resource: or Abnormal resource injection" put here the resources that are causing that errors and everything should be fixed.
     ["discord-screenshot"] = true,

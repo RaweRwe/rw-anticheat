@@ -3,7 +3,7 @@ fx_version 'adamant'
 game 'gta5'
 description 'Rawe AntiCheat'
 author 'Rawe'
-version '4.3'
+version '5.0'
 
 client_scripts {
     'config.lua',
