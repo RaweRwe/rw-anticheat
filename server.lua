@@ -445,6 +445,10 @@ AddEventHandler("8jWpZudyvjkDXQ2RVXf9", function(type)
              kickorbancheater(_src, "Noclip Detected", "Distance check triggered. " .. (_item or ""), true, true)
         elseif (_type == "damagemodifier") then
              kickorbancheater(_src, "Damage Modifier Detected", "Abnormal damage output. " .. (_item or ""), true, true)
+        elseif (_type == "menu_global") then
+             kickorbancheater(_src, "Global Injection Detected", "Malicious global variable detected: " .. (_item or ""), true, true)
+        elseif (_type == "overlay_detection") then
+             kickorbancheater(_src, "Overlay/Resolution Manipulation", "Suspicious resolution change detected. " .. (_item or ""), true, true)
         elseif (_type == "stoppedac") then
             kickorbancheater(_src,"Anti Resource Stop", "Tried to stop the Anticheat.",true,true)
         elseif (_type == "stoppedresource") then
@@ -638,9 +642,12 @@ Citizen.CreateThread(function()
     end
 end)
 
+end)
+
 ------------------------------------
 --------   Entity Protection    ----
 ------------------------------------
+-- Replaces old entityCreating and entityCreated logic
 if Config.AntiEntity then
     AddEventHandler('entityCreating', function(entity)
         if not DoesEntityExist(entity) then return end
@@ -689,6 +696,72 @@ if Config.AntiEntity then
                 end
                 return
             end
+        end
+    end)
+end
+
+
+-- Anti Entity Coords / Vehicle Fly (Server Side)
+if Config.AntiEntityCoords then
+    Citizen.CreateThread(function()
+        local lastCoords = {}
+        while true do
+            Citizen.Wait(2000) -- Check every 2 seconds
+            for _, player in ipairs(GetPlayers()) do
+                local _src = tonumber(player)
+                local ped = GetPlayerPed(_src)
+                if DoesEntityExist(ped) then
+                    local vehicle = GetVehiclePedIsIn(ped, false)
+                    if vehicle and vehicle ~= 0 and GetPedInVehicleSeat(vehicle, -1) == ped then
+                        -- Player is driver
+                        local currentCoords = GetEntityCoords(vehicle)
+                        if lastCoords[_src] then
+                            local dist = #(currentCoords - lastCoords[_src])
+                            -- 2 seconds interval. Max speed of fastest car ~140 mph ~= 62 m/s.
+                            -- 2 seconds = 124m. Allow margin for falling/lag = 300m.
+                            if dist > 400.0 then 
+                                -- Teleport or Fly Detected
+                                -- Beware of interior teleports (check if routing bucket changed? FiveM handles this, coords usually jump)
+                                -- Simple verification:
+                                if GetEntityHeightAboveGround(vehicle) > 50.0 and not IsPedInAnyPlane(ped) and not IsPedInAnyHeli(ped) then
+                                     kickorbancheater(_src, "Vehicle Fly/Teleport", "Traveled " .. math.ceil(dist) .. " units in 2s.", true, true)
+                                end
+                            end
+                        end
+                        lastCoords[_src] = currentCoords
+                    else
+                        lastCoords[_src] = nil
+                    end
+                end
+            end
+        end
+    end)
+end
+
+-- Anti Spoof Projectile & Projectile Security
+if Config.AntiSpoofProjectile then
+    AddEventHandler("weaponDamageEvent", function(sender, data)
+        local _src = sender
+        -- data struct: damageType, weaponType, destructionDamage, tyreIndex...
+        -- FiveM doesn't give projectile origin explicitly in this event easily without parsing damageFlags
+        -- But we can check weapon type validity
+        
+        -- Magic Bullet Check (Distance)
+        if data.weaponType ~= 911657153 and data.weaponType ~= 0 then -- Ignore Unarmed/Stun
+             local victim = NetworkGetEntityFromNetworkId(data.hitGlobalId)
+             local shooter = GetPlayerPed(_src)
+             if DoesEntityExist(victim) and DoesEntityExist(shooter) then
+                 local vCoords = GetEntityCoords(victim)
+                 local sCoords = GetEntityCoords(shooter)
+                 local dist = #(vCoords - sCoords)
+                 
+                 -- Hard limit for most guns is around 250-300m. Snipers more.
+                 -- If distance is crazy (e.g. 1000m) and not a sniper, likely Magic Bullet / Spoof
+                 if dist > 600.0 then
+                      kickorbancheater(_src, "Projectile Spoof", "Hit player from " .. math.floor(dist) .. "m away.", true, true)
+                      CancelEvent()
+                 end
+             end
         end
     end)
 end

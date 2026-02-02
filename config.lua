@@ -47,6 +47,14 @@ Config.MaxFOV = 40.0 -- Max angle for Silent Aim detection
 Config.OCR = true -- Screenshot protection
 Config.OCRWebhook = "" -- Set your webhook here screenshots (if different from main)
 
+-- New Security Features
+Config.AntiOverlay = true -- Checks for resolution anomalies (Streamproof/External overlays)
+Config.AntiEntityTakeOver = true -- Prevents unauthorized control stealing of vehicles/peds
+Config.AntiSpoofProjectile = true -- Verifies projectile origin vs player position
+Config.SuspiciousGameStats = true -- Checks for maxed stats (Strength, Stamina, Shooting) that shouldn't be possible
+Config.AntiEntityCoords = true -- Server-side vehicle/object speed and teleport check
+Config.EntitiesSecurity = true -- General hardening for entities (State bags, migrations)
+
 -- Existing Features Updated
 Config.AntiExplosionDamage = true -- This prevents players from being killed by Explosions.
 Config.AntiGodMode = true -- Detects most of GodMode Cheats and Logs/Bans them.

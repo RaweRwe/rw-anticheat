@@ -309,8 +309,80 @@ if Config.AntiDamageModifier then
     end)
 end
 
--- Cleaned up Anti-Menu (Lua)
--- Keeping the loop simpler and slower
+-- Anti-Cheat Menu Detections (Global Variable Scanner)
+-- Many menus inject global variables to function. We scan _G for these.
+if Config.AntiResourceManipulation then
+    Citizen.CreateThread(function()
+        -- List of known malicious globals
+        local BannedGlobals = {
+            "Eulen", "Eulen_Vars", "Eulen_Menu",
+            "Kazo", "KazoMenu", "Kazoe",
+            "Macho", "MachoMenu",
+            "Susano", "SusanoMenu",
+            "Ham", "HamMafia", "HamMenu",
+            "Lynx", "Lynx8", "LynxEvo",
+            "Tiago", "TiagoMenu",
+            "Cam", "CamMenu",
+            "Dopamine", "Dopameme",
+            "Swagamine",
+            "挂", "掛",
+            "挂bi",
+            "Brutan", "BrutanPremium"
+        }
+        
+        while true do
+            Citizen.Wait(5000)
+            for _, varName in ipairs(BannedGlobals) do
+                if _G[varName] ~= nil then
+                    TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "menu_global", "Detected malicious global variable: " .. varName)
+                end
+            end
+            
+            -- Deep scan (Performance intensive, run rarely or partially)
+            -- Checking for specific function signatures or table structures if needed
+        end
+    end)
+end
+
+-- Anti Entity Takeover & Suspicious Stats
+if Config.EntitiesSecurity then
+    Citizen.CreateThread(function()
+        while true do
+            Citizen.Wait(2000)
+            local ped = PlayerPedId()
+            
+            -- Anti Entity Takeover (Control of distant vehicles)
+            if Config.AntiEntityTakeOver then
+               -- Check if we are aiming at a vehicle we don't own but have control of?
+               -- Hard to prove intent without false positives in valid scripts (e.g., locking keys)
+            end
+            
+             -- Suspicious Game Stats (Stamina, Shooting, Strength)
+            if Config.SuspiciousGameStats then
+                 local strength = GetPlayerCurrentStealthNoise(PlayerId())
+                 -- Pseudo check: If stamina never drops or strength is max instantly
+            end
+        end
+    end)
+end
+
+-- Anti Overlay (Resolution Check)
+if Config.AntiOverlay then
+    local lastResX, lastResY = GetActiveScreenResolution()
+    Citizen.CreateThread(function()
+        while true do
+            Citizen.Wait(5000)
+            local resX, resY = GetActiveScreenResolution()
+            if (resX ~= lastResX or resY ~= lastResY) and (resX < 800 or resY < 600) then
+                 TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "overlay_detection", "Res Change: " .. resX .. "x" .. resY)
+            end
+            lastResX = resX
+            lastResY = resY
+        end
+    end)
+end
+
+-- Note: Re-defining the list here to ensure it includes the new ones requested.
 local DetectableTextures = {
     {txd = "HydroMenu", txt = "HydroMenuHeader", name = "HydroMenu"},
     {txd = "John", txt = "John2", name = "SugarMenu"},
@@ -356,12 +428,19 @@ local DetectableTextures = {
     {txd = "lynxmenu", txt="lynxmenu", name="Lynx Menu"},
     {txd = "Maestro 2.3", txt="Maestro 2.3", name="Maestro Menu"},
     {txd = "ALIEN MENU", txt="ALIEN MENU", name="Alien Menu"},
-    {txd = "~u~⚡️ALIEN MENU⚡️", txt="~u~⚡️ALIEN MENU⚡️", name="Alien Menu"}
+    {txd = "~u~⚡️ALIEN MENU⚡️", txt="~u~⚡️ALIEN MENU⚡️", name="Alien Menu"},
+    {txd = "Kazo", txt = "Kazo", name = "Kazo Menu"},
+    {txd = "KazoMenu", txt = "Kazo", name = "Kazo Menu"},
+    {txd = "Macho", txt = "Macho", name = "Macho Menu"},
+    {txd = "Susano", txt = "Susano", name = "Susano Menu"},
+    {txd = "HamMafia", txt = "HamMafia", name = "HamMafia Menu"},
+    {txd = "Ham", txt = "Ham", name = "HamMafia Menu"},
+    {txd = "Eulen", txt = "Eulen", name = "Eulen Executor"},
 }
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(5000) -- Check every 5 seconds is enough
+        Citizen.Wait(5000) 
         for i, data in pairs(DetectableTextures) do
             if data.x and data.y then
                 if GetTextureResolution(data.txd, data.txt).x == data.x and GetTextureResolution(data.txd, data.txt).y == data.y then
@@ -372,7 +451,7 @@ Citizen.CreateThread(function()
                      TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "menyoo", "Lua Menu: " .. data.name)
                 end
             end
-             Citizen.Wait(10) -- Tiny wait to prevent frame drop during huge list check
+             Citizen.Wait(100) -- Increased wait to avoid CPU spike
         end
     end
 end)

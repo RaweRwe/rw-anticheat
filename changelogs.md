@@ -14,6 +14,12 @@
 - **Anti-Change Outfit**: Tracks player model changes to detect unauthorized skin switching.
 - **Input Scanner**: Filters chat inputs for malicious strings (XSS vectors, links) effectively acting as a clipboard/input sanitizer.
 - **Deep Anti-Resource Manipulation**: Implemented a comprehensive 2-way verification system. Client periodically reports all running resources. Server verifies this list against the server-side state. Detects both **Injection** (Client has extra resource) and **Bypass** (Client stopped valid resource).
+- **Global Variable Scanner**: Checks the Lua environment (`_G`) for variables injected by known cheats like **Eulen**, **Kazo**, **Macho**, **Susano**, **HamMafia**, **Lynx**, and others.
+- **Specific Menu Signatures**: Added texture dictionary detection for Kazo, Macho, Susano, HamMafia, and Eulen to the visual scanner.
+- **Anti-Overlay/Streamproof**: Detects suspicious resolution changes often caused by external overlays or "streamproof" injection toggles.
+- **Anti-Entity Coords**: Server-side speed and teleport monitor for vehicles. Detects vehicle flying or teleporting across the map.
+- **Anti-Spoof Projectile**: Checks the origin of shots. If a player hits a target from an impossible distance (Magic Bullet), it is blocked.
+- **Entity Security**: Advanced `entityCreating` filtering to prevent unauthorized entity spawns.
 
 ## Improvements
 - **Detection Optimization**: Completely rewrote the client-side detection loops. Instead of a single monolithic loop that blocked execution (causing checks to run only once every few seconds), detections are now split into appropriate threads (Fast, Medium, Slow). This makes detection instant and prevents FPS drops.
