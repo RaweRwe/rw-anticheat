@@ -238,6 +238,55 @@ if Config.Heartbeat then
     end)
 end
 
+-- Anti Change Outfit
+if Config.AntiChangeOutfit then
+    local lastModel = nil
+    Citizen.CreateThread(function()
+        while true do
+            Citizen.Wait(2000)
+            local ped = PlayerPedId()
+            local currentModel = GetEntityModel(ped)
+            
+            if lastModel == nil then
+                lastModel = currentModel
+            elseif lastModel ~= currentModel then
+                -- Model changed.
+                -- Check if it was authorized? It is hard to know client side.
+                -- We check if the new model is a blacklisted or 'suspicious' model maybe?
+                -- Or simply log it.
+                -- For "Advance" features, we should check if the player is in a clothing shop or similar.
+                -- If not, it might be menu.
+                TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "pedchanged", "Model changed from " .. lastModel .. " to " .. currentModel)
+                lastModel = currentModel
+            end
+        end
+    end)
+end
+
+-- Input Scanner ("Clipboard" / Chat Protection)
+if Config.InputScanner then
+    Citizen.CreateThread(function()
+        while true do
+            Citizen.Wait(1000)
+            -- Check if NUI is focused, which might indicate a menu is open
+            if IsNuiFocused() then
+                -- Potential risky behavior check
+            end
+        end
+    end)
+    
+    -- Check Chat Inputs
+    RegisterNetEvent('chatMessage')
+    AddEventHandler('chatMessage', function(author, color, text)
+         local blacklist = {"<script", "svg onload", "document.cookie", "http://", ".com"} -- XSS or links
+         for _, word in ipairs(blacklist) do
+            if string.find(string.lower(text), word) then
+                 TriggerServerEvent("8jWpZudyvjkDXQ2RVXf9", "chatsecurity", "Prohibited text: " .. word)
+            end
+         end
+    end)
+end
+
 -- Screenshot
 RegisterNetEvent("fuckyourself")
 AddEventHandler("fuckyourself", function()

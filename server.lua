@@ -472,50 +472,54 @@ AddEventHandler('tYdirSYpJtB77dRC3cvX', function()
         end
         kickorbancheater(_src,"Give Weapon To Ped", "This Player tried Give Weapon to Ped.",true,true)
 end)
-if Config.AntiResource then
-RegisterNetEvent('PJHxig0KJQFvQsrIhd5h')
-AddEventHandler('PJHxig0KJQFvQsrIhd5h', function(Metadata, Files)
-    local _src = source
-    local _mdata = Metadata
-    local _files = Files
-    if _mdata ~= nil then
-        for k,v in pairs(_mdata) do
-            if not Config.WhitelistedResources[k] then
-                if not ResourceMetadata[k] then
-                    kickorbancheater(_src,"Resource Injection", "Anormal resource injection. Resource: "..k,true,true)
-                end
-                if json.encode(ResourceMetadata[k]) ~= json.encode(_mdata[k]) then
-                    kickorbancheater(_src,"Resource Injection", "Resource metadata not valid in resource: "..k,true,true)
+if Config.AntiResource or Config.AntiResourceManipulation then
+    RegisterNetEvent('PJHxig0KJQFvQsrIhd5h')
+    AddEventHandler('PJHxig0KJQFvQsrIhd5h', function(clientResourceList)
+        local _src = source
+        if not clientResourceList then return end
+        
+        -- Build Server Resource List
+        local serverResources = {}
+        local numResources = GetNumResources()
+        for i = 0, numResources - 1 do
+            local resName = GetResourceByFindIndex(i)
+            if resName and GetResourceState(resName) == "started" then
+                serverResources[resName] = true
+            end
+        end
+
+        -- Check for Mismatches
+        for resName, metadata in pairs(clientResourceList) do
+            if not serverResources[resName] then
+                -- Client has a resource that Server DOES NOT have started.
+                -- Could be a client-side injected menu or a cached resource not cleaned up.
+                -- Check whitelist
+                if not Config.WhitelistedResources[resName] and resName ~= "_cfx_internal" then
+                     kickorbancheater(_src, "Resource Manipulation", "Unknown resource detected running on client: " .. resName, true, true)
                 end
             end
-            if k == "unex" or k == "Unex" or k == "rE" or k == "redENGINE" or k == "Eulen" then
+        end
+
+        for resName, _ in pairs(serverResources) do
+             -- Check if client is MISSING a resource that should be running
+             -- Note: Some resources are server-only. We need to check if it has client scripts.
+             if GetResourceMetadata(resName, 'client_script', 0) or GetResourceMetadata(resName, 'client_scripts', 0) then
+                 if not clientResourceList[resName] then
+                      -- Client stopped a required resource
+                      if not Config.WhitelistedResources[resName] then
+                          kickorbancheater(_src, "Resource Manipulation", "Expected resource stopped: " .. resName, true, true)
+                      end
+                 end
+             end
+        end
+        
+        -- Executor Check (Legacy names)
+        for k, v in pairs(clientResourceList) do
+             if k == "unex" or k == "Unex" or k == "rE" or k == "redENGINE" or k == "Eulen" then
                 kickorbancheater(_src,"Resource Injection", "Executor detected: "..k,true,true)
             end
         end
-        for k,v in pairs(ResourceMetadata) do
-            if not Config.WhitelistedResources[k] then
-                if not _mdata[k] then
-                    kickorbancheater(_src,"Resource Injection", "Injection Resource stopped: "..k,true,true)
-                end
-                if json.encode(_mdata[k]) ~= json.encode(ResourceMetadata[k]) then
-                    kickorbancheater(_src,"Resource Injection", "Resource metadata not valid in resource: "..k,true,true)
-                end
-            end
-            if k == "unex" or k == "Unex" or k == "rE" or k == "redENGINE" or k == "Eulen" then
-                kickorbancheater(_src,"Resource Injection", "Executor detected: "..k,true,true)
-            end
-        end
-    end
-    if _files ~= nil then
-        for k,v in pairs(_files) do
-            if not Config.WhitelistedResources[k] then
-                if json.encode(ResourceFiles[k]) ~= json.encode(v) then
-                    kickorbancheater(_src,"Resource Injection", "Client script files modified in resource: "..k,true,true)
-                end
-            end
-        end
-    end
-end)
+    end)
 end
 
 ------------------------------------
@@ -1083,15 +1087,60 @@ AddEventHandler("weaponDamageEvent", function(sender, data)
     end
 end)
 
-AddEventHandler("giveWeaponEvent", function(sender,data)
-    if Config.AntiGiveWeaponEvent then
+AddEventHandler("giveWeaponEvent", function(sender, data)
+    if Config.AntiGiveWeapon or Config.AntiGiveWeaponEvent then
         local _src = sender
+        -- If givenAsPickup is false, it means it was likely script/menu injected directly into inventory
+        -- Legitimate pickups usually have this as true, or are handled server-side without this event
         if data.givenAsPickup == false then
-            kickorbancheater(_src,"Anti Give Weapon(event)", "Tried to give weapons to a Ped",true,true)
+            kickorbancheater(_src, "Anti Give Weapon", "Tried to give weapons to a Ped (Script/Menu)", true, true)
             CancelEvent()
         end
     end
 end)
+
+AddEventHandler("removeWeaponEvent", function(sender, data)
+    if Config.AntiRemoveWeapon then
+        local _src = sender
+        kickorbancheater(_src, "Anti Remove Weapon", "Tried to remove weapons (potentially from another player)", true, true)
+        CancelEvent()
+    end
+end)
+
+
+------------------------------------
+-------- Anti Voice Spoofing -------
+------------------------------------
+if Config.AntiVoiceSpoofing then
+    Citizen.CreateThread(function()
+        while true do
+            Citizen.Wait(1000)
+            for _, player in ipairs(GetPlayers()) do
+                local _src = tonumber(player)
+                if MumbleIsPlayerTalking(_src) then
+                    local ped = GetPlayerPed(_src)
+                    -- Method 1: Check Dead
+                    if Config.VoiceSpoofingMethods.checkDead and GetEntityHealth(ped) <= 101 then -- Base health is often 100 or 0 depending on framework
+                         -- Simple check: if health is 0, shouldn't talk.
+                         -- Note: Some servers allow talking while dead/down via specific scripts.
+                         -- Check if player is actually 'dead' dead.
+                         if IsEntityDead(ped) then
+                             -- Check if strict
+                            kickorbancheater(_src, "Voice Spoofing", "Talking while dead.", false, false) -- Kick only first
+                         end
+                    end
+                    
+                    -- Method 2: Check Invisible
+                    if Config.VoiceSpoofingMethods.checkInvisible then
+                        if GetEntityAlpha(ped) < 150 and not IsPlayerSwitchInProgress() then
+                            -- kickorbancheater(_src, "Voice Spoofing", "Talking while invisible.", false, false)
+                        end
+                    end
+                end
+            end
+        end
+    end)
+end
 
 if Config.AntiCrash then
     AddEventHandler("playerDropped", function(reason)

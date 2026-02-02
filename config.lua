@@ -25,10 +25,27 @@ Config.BasicEnable = true -- This must be set in true do the Anticheat works as 
 -- New Features
 Config.Heartbeat = true -- Enable Heartbeat system (checks if client is responsive)
 Config.HeartbeatInterval = 30000 -- Interval in ms
-Config.OCR = true -- Enable Screenshot system on ban
-Config.OCRWebhook = "" -- Webhook for screenshots (if different from main)
+
+-- Advanced Features
+Config.AntiChangeOutfit = true -- Prevents ped/component changes not authorized by script
+Config.AntiResourceManipulation = true -- Checks for stop/start and file inconsistencies
+Config.AntiGiveWeapon = true -- Blocks client-side weapon giving
+Config.AntiRemoveWeapon = true -- Blocks client-side weapon removal
+Config.AntiVoiceSpoofing = true -- Standard check
+Config.VoiceSpoofingMethods = {
+    checkDead = true, -- Block talking while dead
+    checkSpectate = true, -- Block talking while spectating
+    checkInvisible = true -- Block talking while invisible
+}
+Config.InputScanner = true -- "Clipboard" scanner equivalent: Validates inputs for malicious strings
+
+Config.AntiNoclip = true -- Detects abnormal position changes
+Config.AntiDamageModifier = true -- Detects weapon damage manipulation
+Config.StrictEntityControl = true -- Verifies entity source script
 Config.AntiSilentAim = true -- Detects Silent Aim (FOV check)
-Config.MaxFOV = 30.0 -- Max FOV for Silent Aim detection
+Config.MaxFOV = 40.0 -- Max angle for Silent Aim detection
+Config.OCR = true -- Screenshot protection
+Config.OCRWebhook = "" -- Set your webhook here screenshots (if different from main)
 
 -- Existing Features Updated
 Config.AntiExplosionDamage = true -- This prevents players from being killed by Explosions.

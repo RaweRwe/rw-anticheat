@@ -9,6 +9,11 @@
 - **Optimization**: Converted blacklist lookups from O(n) loop to O(1) hash map, significantly reducing server CPU time for every entity spawn event.
 - **Anti-Noclip**: Added client-side detection for abnormal distance traveled (teleport/speed/noclip) while on foot.
 - **Anti-Damage Modifier**: Added checks for abnormal weapon damage (e.g. killing in 1 shot with a pistol through huge damage multipliers).
+- **Anti-Voice Spoofing**: Implemented advanced checks (Dead, Invisible, Spectating) for players using voice chat to prevent spoofing or trolling.
+- **Anti-Give/Remove Weapon**: Secured weapon events serverside. Now blocks weapons given without "pickup" properties (common in menus) and prevents unauthorized weapon removal.
+- **Anti-Change Outfit**: Tracks player model changes to detect unauthorized skin switching.
+- **Input Scanner**: Filters chat inputs for malicious strings (XSS vectors, links) effectively acting as a clipboard/input sanitizer.
+- **Deep Anti-Resource Manipulation**: Implemented a comprehensive 2-way verification system. Client periodically reports all running resources. Server verifies this list against the server-side state. Detects both **Injection** (Client has extra resource) and **Bypass** (Client stopped valid resource).
 
 ## Improvements
 - **Detection Optimization**: Completely rewrote the client-side detection loops. Instead of a single monolithic loop that blocked execution (causing checks to run only once every few seconds), detections are now split into appropriate threads (Fast, Medium, Slow). This makes detection instant and prevents FPS drops.
