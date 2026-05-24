@@ -647,7 +647,7 @@ end)
 ------------------------------------
 --------   Entity Protection    ----
 ------------------------------------
--- Replaces old entityCreating and entityCreated logic
+
 if Config.AntiEntity then
     AddEventHandler('entityCreating', function(entity)
         if not DoesEntityExist(entity) then return end
@@ -706,7 +706,7 @@ if Config.AntiEntityCoords then
     Citizen.CreateThread(function()
         local lastCoords = {}
         while true do
-            Citizen.Wait(2000) -- Check every 2 seconds
+            Citizen.Wait(2000)
             for _, player in ipairs(GetPlayers()) do
                 local _src = tonumber(player)
                 local ped = GetPlayerPed(_src)
